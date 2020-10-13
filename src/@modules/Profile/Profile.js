@@ -4,6 +4,7 @@ import Posts from "../../assets/Images/posts.jpg";
 import SettingsIcon from '@material-ui/icons/Settings';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import Header from "../header/header";
 import "./Profile.css";
 
 
@@ -50,6 +51,7 @@ const Profile = () => {
 
     return (
         <div>
+            <Header/>
             <div className="Profile" onMouseOver={hideLikesAndCommentsHandler}>
                 <div className="ProfileInfoContainer">
                     <img src={ProfilePicture} alt="" className="ProfilePicture" />

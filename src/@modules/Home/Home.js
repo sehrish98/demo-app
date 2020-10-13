@@ -3,6 +3,7 @@ import "./Home.css"
 import PostImage from "../../assets/Images/posts.jpg";
 import ProfilePicture from "../../assets/Images/ProfilePicture.PNG"
 import Post from "./postcomponent/Post";
+import Header from "../header/header";
 const Home = () => {
     var [posts, setposts] = useState([
         {
@@ -37,6 +38,7 @@ const Home = () => {
     // console.log(posts);
     return (
         <div className="home">
+            <Header/>
             {
                 posts.map((post) => (
                     <Post
