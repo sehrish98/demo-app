@@ -1,0 +1,265 @@
+.Profile{
+    background-color: #fafafa;
+    padding:103px 0px 0px 0px;
+    height:100%;
+}
+.ProfileInfoContainer{
+    vertical-align: bottom;
+    height:520px;
+    border-bottom: 1px solid #7F8C8D;
+}
+.ProfilePicture{
+    border-radius: 50%;
+    width:210px;
+    height:210px;
+    margin-left:80px;
+    display: inline-block;
+}
+.ProfileInfo{
+    display: inline-block;
+    padding:0px 0px 0px 80px;
+    vertical-align: top;
+}
+.AccountName{
+    display: inline-block;
+    font-family: 'Merriweather', serif;
+    font-size: 20px;
+}
+.EditProfile{
+    margin:0px 17px 15px 0px;
+    width:100px;
+    height:30px;
+    background-color:inherit;
+    font-family: serif;
+    border:1px solid #7B7B7B ;
+    border-radius: 3px;
+    font-size: 15px;
+}
+.EditProfile:hover{
+    /* box-shadow: 2px 2px 5px black; */
+    cursor: pointer;
+}
+.EditProfile:focus{
+    outline: none;
+    vertical-align: bottom;
+}
+.settings{
+    font-size: 22px !important;
+}
+.settings:hover{
+    cursor: pointer;
+}
+.posts{
+    display:block;
+    margin:0px 38px 0px 0px;
+    font-family: 'Piazzolla', serif;
+}
+.followers{
+    display:block;
+    margin:0px 38px 0px 0px;
+    font-family: 'Piazzolla', serif;
+}
+.followers:hover{
+    cursor: pointer;
+}
+.following{
+    display:block;
+    margin:0px 38px 0px 0px;
+    font-family: 'Piazzolla', serif;
+}
+.following:hover{
+    cursor: pointer;
+}
+.followersContainer{
+    display:block;
+}
+.userName{
+    font-family: 'Piazzolla', serif;
+    font-size: 18px;
+}
+
+.hidden{
+    display: none;
+}
+.postsContainer{
+    padding:40px 0px 0px 68px;
+    background-color: #fafafa;
+}
+.postContainer{
+    display: block;
+    margin-bottom: 20px;
+}
+.post{
+    display: inline-block;
+    width:227px;
+    height:227px;
+    margin:0px 38px 0px 0px;
+}
+
+@media (min-width:400px){
+    .Profile{
+        background-color: #fafafa;
+        padding:100px 170px 0px 170px;
+        height:100%;
+    }
+    .ProfileInfoContainer{
+        vertical-align: bottom;
+        height:414px;
+        border-bottom: 1px solid #7F8C8D;
+    }
+    .ProfilePicture{
+        border-radius: 50%;
+        width:210px;
+        height:210px;
+        margin-left:80px;
+        display: inline-block;
+    }
+    .ProfileInfo{
+        display: inline-block;
+        padding:0px 0px 0px 80px;
+        vertical-align: top;
+    }
+    .AccountName{
+        display: inline-block;
+        font-family: 'Merriweather', serif;
+        font-size: 20px;
+    }
+    .EditProfile{
+        margin:0px 17px 0px 17px;
+        width:100px;
+        height:30px;
+        background-color:inherit;
+        font-family: serif;
+        border:1px solid #7B7B7B ;
+        border-radius: 3px;
+        font-size: 15px;
+    }
+    .EditProfile:hover{
+        /* box-shadow: 2px 2px 5px black; */
+        cursor: pointer;
+    }
+    .EditProfile:focus{
+        outline: none;
+        vertical-align: bottom;
+    }
+    .settings{
+        font-size: 22px !important;
+    }
+    .settings:hover{
+        cursor: pointer;
+    }
+    .posts{
+        display:inline-block;
+        margin:0px 38px 0px 0px;
+        font-family: 'Piazzolla', serif;
+    }
+    .followers{
+        display:inline-block;
+        margin:0px 38px 0px 0px;
+        font-family: 'Piazzolla', serif;
+    }
+    .followers:hover{
+        cursor: pointer;
+    }
+    .following{
+        display:inline-block;
+        margin:0px 38px 0px 0px;
+        font-family: 'Piazzolla', serif;
+    }
+    .following:hover{
+        cursor: pointer;
+    }
+    .followersContainer{
+        display:block;
+    }
+    .userName{
+        font-family: 'Piazzolla', serif;
+        font-size: 18px;
+    }
+    .postsContainer{
+        padding:40px 0px 0px 68px;
+        background-color: #fafafa;
+    }
+    .postContainer{
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    .post{
+        display: inline-block;
+        width:181px;
+        height:181px;
+        margin:0px 38px 0px 0px;
+    }
+
+}
+
+@media(min-width:800px){
+    .ProfileInfoContainer{
+        vertical-align: bottom;
+        height:428px;
+        border-bottom: 1px solid #7F8C8D;
+    }
+    .postsContainer{
+        padding:40px 0px 0px 68px;
+        background-color: #fafafa;
+    }
+    .postContainer{
+        display: inline-block;
+        margin-bottom: 38px;
+    }
+    .post{
+        display: inline-block;
+        width:271px;
+        height:271px;
+        margin:0px 38px 0px 0px;
+    }
+}
+@media(min-width:1100px){
+    .ProfileInfoContainer{
+        vertical-align: bottom;
+        height:320px;
+        border-bottom: 1px solid #7F8C8D;
+    }
+    .postsContainer{
+        padding:40px 0px 0px 174px;
+        background-color: #fafafa;
+    }
+    .post{
+        display: inline-block;
+        width:300px;
+        height:300px;
+        margin:0px 38px 0px 0px;
+    }
+    .like{
+        filter: brightness(0.80);   
+        cursor: pointer;
+    }
+    .likeIcon{
+        /* padding-top:10px;
+        font-size: 46px !important; */
+    }
+    .likesAndCommentsConatiner{
+        /* width:211px; */
+        /* position: absolute; */
+        /* top:573px;
+        left:260px; */
+        /* z-index: 1; */
+        /* color: white; */
+        /* font-size: 20px; */
+    }
+    .noOfLikes{
+        display: inline-block;
+        margin:0px 0px 0px 7px;
+    }
+    .commentContainer{
+        padding-left: 30px;
+        display: inline-block;
+    }
+    .postContainer{
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    .hidden{
+        display: none;
+    }
+}
