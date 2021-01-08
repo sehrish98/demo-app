@@ -1,59 +1,209 @@
-import React, { useState } from 'react';
-import "./Home.css"
-import PostImage from "../../assets/Images/posts.jpg";
-import ProfilePicture from "../../assets/Images/ProfilePicture.PNG"
-import Post from "./postcomponent/Post";
-import Header from "../header/header";
+import React, { useState } from "react";
+import { Typography } from "@material-ui/core";
+import DropDownIcon from "../../@components/DropDownIcon";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+
+import ScheduleDropDown from "../../@components/ScheduleDropDown";
+import CustomButton from "../../@components/CustomButton";
+import Graphs from "../../@components/Graphs";
+import Papers from "../../@components/Papers";
+import SimplePaper from "../../@components/SimplePaper";
+import DetailOrderPaper from "../../@components/DetailOrderPaper";
+
+const graphData = [
+  "3",
+  "6",
+  "4",
+  "7",
+  "2",
+  "0",
+  "5",
+  "3",
+  "6",
+  "4",
+  "7",
+  "2",
+  "0",
+  "5",
+  "3",
+  "6",
+  "4",
+  "7",
+  "2",
+  "0",
+  "5",
+];
+const total_order = [
+  "10",
+  "5",
+  "6",
+  "8",
+  "10",
+  "5",
+  "6",
+  "8",
+  "10",
+  "5",
+  "6",
+  "8",
+];
+const accepted_order = [
+  "12/1/2020",
+  "10/2/2020",
+  "13/5/2020",
+  "14/6/2020",
+  "3/7/2020",
+  "18/9/2020",
+  "12/1/2020",
+  "10/2/2020",
+  "13/5/2020",
+  "14/6/2020",
+  "3/7/2020",
+  "18/9/2020",
+  "12/1/2020",
+  "10/2/2020",
+  "13/5/2020",
+  "14/6/2020",
+  "3/7/2020",
+  "18/9/2020",
+];
+const Lists = [
+  {
+    name: "Total Sale",
+    total: "PKR 500",
+  },
+  {
+    name: "Total Sale",
+    total: "PKR 500",
+  },
+  {
+    name: "Total Sale",
+    total: "PKR 500",
+  },
+  {
+    name: "Total Sale",
+    total: "PKR 500",
+  },
+];
+const OrderLists = [
+  {
+    name: "Name",
+    title1: "Cash",
+    title2: "Card",
+    value1: "500$ | 0 | 400$",
+    value2: "500$ | 0 | 400$",
+  },
+  {
+    name: "Order Types",
+    title1: "Delivery",
+    title2: "Dive in",
+    value1: "500$ | 0 | 400$",
+    value2: "500$ | 0 | 400$",
+  },
+  {
+    name: "Order Completion",
+    title1: "Complete",
+    title2: "In complete",
+    value1: "500$ | 0 | 400$",
+    value2: "500$ | 0 | 400$",
+  },
+];
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      overflowX: "scroll",
+    },
+  })
+);
+
 const Home = () => {
-    var [posts, setposts] = useState([
-        {
-            id: 1,
-            img: ProfilePicture,
-            userName: "Sabir__Ansari",
-            postImage: PostImage,
-            noOfLikes: 12,
-            postDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Kzakjf sajkh skdjh ksjdh jvb dksajh.",
-            liked: true
-        },
-        {
-            id: 2,
-            img: ProfilePicture,
-            userName: "Silent_Knight",
-            postImage: PostImage,
-            noOfLikes: 12,
-            postDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Kzakjf sajkh skdjh ksjdh jvb dksajh.",
-            liked: false
-        }
-    ])
-    const likeHandler = (id) => {
-        // console.log("id",id)
-        const post = posts.find((p => p.id == id))
-        post.liked = !post.liked
-        const index = posts.map((e) => { return e.id; }).indexOf(id);
-        const newPosts = posts
-        newPosts[index] = post
-        setposts(newPosts)
-        // console.log(posts);
-    }
-    // console.log(posts);
-    return (
-        <div className="home">
-            <Header/>
-            {
-                posts.map((post) => (
-                    <Post
-                        id={post.id}
-                        img={post.img}
-                        userName={post.userName}
-                        postImage={post.postImage}
-                        noOfLikes={post.noOfLikes}
-                        postDescription={post.postDescription}
-                        liked={post.liked}
-                        likeHandler={likeHandler}
-                    />
-                ))
-            }
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const HandleDropDownClick = () => {
+    setOpen(!open);
+  };
+  return (
+    <div className={classes.root}>
+      <div
+        style={{
+          alignSelf: "center",
+          width: "90%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          placeItems: "center",
+        }}
+      >
+        <Typography variant="h6" color="inherit" style={{ fontWeight: "bold" }}>
+          DashBoard
+        </Typography>
+        <div style={{ display: "flex", position: "relative" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              margin: "20px 10px 0px 0px",
+            }}
+          >
+            <Typography variant="p">Viewing Reports For</Typography>
+            <Typography variant="p">Today</Typography>
+          </div>
+          <div onClick={HandleDropDownClick}>
+            <DropDownIcon />
+            {open && <ScheduleDropDown open={setOpen} />}
+          </div>
         </div>
-    );
-}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "100%",
+          placeItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {Lists.map((t) => (
+          <Papers title={t.name} value={t.total} />
+        ))}
+      </div>
+      <div style={{ display: "flex", alignSelf: "center", width: "92%" }}>
+        <CustomButton name="Sales" activ="true" />
+        <CustomButton name="Order" />
+      </div>
+      <Graphs
+        title="Total Accepted Order"
+        text1="Total Order"
+        text2="Accepted Order"
+        xaxis={accepted_order}
+        yaxis={total_order}
+        onelinecolor="rgb(238, 82, 82)"
+        seclinecolor="#F39A8F"
+        xlabel="Date"
+        ylabel="no of Orders"
+        graphData={graphData}
+      />
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "100%",
+          placeItems: "center",
+          justifyContent: "center",
+          margin: "10px 0px 0px 0px",
+        }}
+      >
+        {OrderLists.map((t, index) => (
+          <DetailOrderPaper list={t} />
+        ))}
+      </div>
+      <SimplePaper title="Dish Count" value="30" />
+    </div>
+  );
+};
 export default Home;
