@@ -85,26 +85,26 @@ const Menuitem = [
     ],
   },
 ];
-const options=[
+const options = [
   {
-    id:"1",
-    title:"Pizza Menu - Base Choice"
+    id: "1",
+    title: "Pizza Menu - Base Choice",
   },
   {
-    id:"2",
-    title:"Pizza Menu - Extra Toppings"
+    id: "2",
+    title: "Pizza Menu - Extra Toppings",
   },
-]
-const tags=[
+];
+const tags = [
   {
-    id:"1",
-    title:"tag 1"
+    id: "1",
+    title: "tag 1",
   },
   {
-    id:"2",
-    title:"tag 2"
+    id: "2",
+    title: "tag 2",
   },
-]
+];
 function Menus({ title, value }) {
   const classes = useStyles();
   const [editmenu, setEditMenu] = useState();
@@ -112,6 +112,7 @@ function Menus({ title, value }) {
   const [opendelete, setopenDelete] = useState(false);
   const [arrays, setArrays] = useState(Menuitem);
   const [arrange, setArrange] = useState(false);
+  const [currentIndex, setcurrentIndex] = useState();
   const [show, setShow] = useState(false);
   const [dstop, setDstop] = useState(true);
   // const [option, setOption] = useState("Menu");
@@ -129,6 +130,11 @@ function Menus({ title, value }) {
   // const handleArrange = () => {
   //   setArrange(true);
   // };
+  const handleclick = (index) => {
+    console.log("dasdasdad");
+    setShow(!show);
+    setcurrentIndex(index);
+  };
   return (
     <div className={classes.paper}>
       <div
@@ -159,9 +165,24 @@ function Menus({ title, value }) {
           margin: "40px 10px 40px 0px",
         }}
       >
-        <CustomButton name="Menus" activ="true" state={setArrays} array={Menuitem}/>
-        <CustomButton name="Option Set" state={setArrays} array={options} />
-        <CustomButton name="Dish Tags" state={setArrays} array={tags}/>
+        <CustomButton
+          name="Menus"
+          state={setArrays}
+          array={Menuitem}
+          activ={arrays == Menuitem ? true : ""}
+        />
+        <CustomButton
+          name="Option Set"
+          state={setArrays}
+          array={options}
+          activ={arrays == options ? true : ""}
+        />
+        <CustomButton
+          name="Dish Tags"
+          state={setArrays}
+          array={tags}
+          activ={arrays == tags ? true : ""}
+        />
       </div>
       <div style={{}}>
         <DragDropContext onDragEnd={onDragEnd}>
@@ -200,36 +221,39 @@ function Menus({ title, value }) {
                               alignItems: "center",
                             }}
                           >
-                            {
-                              arrays==Menuitem?<div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                padding: "10px 15px",
-                                cursor:"pointer"
-                              }}
-                            >
-                              {show ? (
-                                <ExpandMoreIcon
-                                  onClick={() => setShow(false)}
-                                />
-                              ) : (
-                                <ChevronRightIcon
-                                  onClick={() => setShow(true)}
-                                />
-                              )}
+                            {arrays == Menuitem ? (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  padding: "10px 15px",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                {show && index == currentIndex ? (
+                                  <ExpandMoreIcon
+                                    onClick={()=>handleclick(index)}
+                                  />
+                                ) : (
+                                  <ChevronRightIcon
+                                    onClick={()=>handleclick(index)}
+                                  />
+                                )}
 
-                              <Typography variant="p">{c.title}</Typography>
-                            </div>
-                            :(<div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                padding: "10px 15px",
-                                cursor:"pointer"
-                              }}
-                            ><Typography variant="p">{c.title}</Typography></div>)
-                            }
+                                <Typography variant="p">{c.title}</Typography>
+                              </div>
+                            ) : (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  padding: "10px 15px",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                <Typography variant="p">{c.title}</Typography>
+                              </div>
+                            )}
                             <div>
                               <Tooltip title="Edit" placement="Top">
                                 <EditIcon
@@ -265,9 +289,8 @@ function Menus({ title, value }) {
                               </Tooltip>
                             </div>
                           </div>
-                          {show && (
+                          {show && index == currentIndex && (
                             <div>
-                              {" "}
                               <MenuItems items={c.items} key={c.id} />
                             </div>
                           )}
@@ -288,7 +311,12 @@ function Menus({ title, value }) {
         >
           <div style={{ display: "flex", width: "100%" }}>
             <OutlineButton name="Save" width="50%" title="save" />
-            <OutlineButton name="Cancel" open={setArrange} width="50%" title="save"/>
+            <OutlineButton
+              name="Cancel"
+              open={setArrange}
+              width="50%"
+              title="save"
+            />
           </div>
           <Typography
             variant="p"

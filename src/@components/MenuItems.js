@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) =>
 );
 function MenuItems({ items }) {
   const [show, setShow] = useState(false);
+  const [showMenu, setShowMenu] = useState();
   const classes = useStyles();
   return (
     <div className={classes.paper}>
@@ -38,7 +39,7 @@ function MenuItems({ items }) {
                 ) : (
                   <ChevronRight onClick={() => setShow(true)} />
                 )}
-                <Typography variant="p" style={{ fontWeight: "500" }}>
+                <Typography variant="p">
                   {m.title}
                 </Typography>
               </div>
