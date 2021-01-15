@@ -1,8 +1,9 @@
 import React from "react";
-import { Typography, } from "@material-ui/core";
+import { Typography,Switch } from "@material-ui/core";
 import { createStyles,  makeStyles } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
+import CustomButton from "./CustomButton";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function OrderTime({ title, btnname, button, des, value }) {
+function OrderTime({ title, btnname, button, des, value, checked,dropdown,btn }) {
   const classes = useStyles();
   return (
     <div elevation={3} className={classes.paper}>
@@ -38,11 +39,15 @@ function OrderTime({ title, btnname, button, des, value }) {
         </Typography>
         {button && <button className={classes.btn}>{btnname}</button>}
       </div>
-      <CustomInput type="text" value={value} />
+      <div style={{margin:"8px 0px"}}>
+      {
+        checked?<Switch />:(btn?<CustomButton name={value} activ/>:<CustomInput type="text" value={value} />)
+      }
+      </div>
       <div>
         <Typography
           variant="p"
-          style={{ fontSize: "14px", color: "rgb(33, 33, 33)" }}
+          style={{ fontSize: "14px", color: "rgb(33, 33, 33)",paddingTop:"5px" }}
         >
           {des}
         </Typography>

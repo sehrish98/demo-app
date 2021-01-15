@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) =>
     input: {
       height: "40px",
       width: "100%",
-      margin: "10px 0px 10px 0px",
+      margin: "10px 1px 10px 1px",
       outline: "0",
     },
   })

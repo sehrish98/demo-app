@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 const ListItems = ({ icon, tiptext, i , route}) => {
-  // console.log("hbhgv" , i)
+  console.log("hbhgv" , i)
   // const history=useHistory()
   const classes = useStyles();
   const handleclick=()=>{
