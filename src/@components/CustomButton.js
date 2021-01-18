@@ -1,5 +1,7 @@
 import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { AddtoCartstart } from "../@store/Cart/Cart.Actions";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -42,17 +44,44 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function CustomButton({ name, activ , state , array }) {
-  const handleClick=()=>{
-    if(state)
+function CustomButton({
+  name,
+  activ,
+  state,
+  array,
+  id,
+  title,
+  type,
+  price,
+  qty,
+  open
+}) {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    if (state) 
     {
-      state(array)
+      state(array);
+    } 
+    else if (open && name == "Add to Card") {
+      const obj = {
+        id: id,
+        name: title,
+        type: type,
+        price: price,
+        qty: qty,
+      };
+      dispatch(AddtoCartstart(obj));
+      open(false);
+    } else {
     }
-  }
+  };
   const classes = useStyles();
   return (
     <div>
-      <button className={`${activ ? classes.active : classes.btn}`} onClick={handleClick}>
+      <button
+        className={`${activ ? classes.active : classes.btn}`}
+        onClick={handleClick}
+      >
         {name}
       </button>
     </div>

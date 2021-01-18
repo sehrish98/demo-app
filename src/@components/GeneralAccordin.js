@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core/";
+
 import CustomButton from "./CustomButton";
 import OrderTime from "./OrderTime";
 

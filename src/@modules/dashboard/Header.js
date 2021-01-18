@@ -1,7 +1,6 @@
 import React from "react";
-import { Typography, Paper } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { Language, Lock, ArrowDropDown, Person } from "@material-ui/icons";
+import { Language, Lock, Person } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) =>
   createStyles({

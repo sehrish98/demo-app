@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core/";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
+import { Typography,Accordion,AccordionSummary ,AccordionDetails} from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) =>
@@ -12,7 +9,6 @@ const useStyles = makeStyles((theme) =>
       width: "100%",
       marginTop: "20px",
       marginBottom: "60px",
-      //   padding: "20px 30px",
     },
   })
 );

@@ -52,3 +52,27 @@ export function AddtoCartstart(obj) {
     });
   };
   
+  export function RemoveQuantyCart(obj) {
+    return (dispatch) => {
+      RemoveQuantityfromcartSuccess(dispatch,obj);
+      dispatch({
+        type: CartActionTypes.REMOVEQUANTITY_START,
+      });
+    };
+  }
+  
+  const RemoveQuantityfromcartSuccess = (dispatch, data) => {
+    dispatch({
+      type: CartActionTypes.REMOVEQUANTITY_SUCCESS,
+      payload: data,
+    });
+  };
+  
+  const RemoveQuantityfromcartFail = (dispatch, errorMessage) => {
+    dispatch({
+      type: CartActionTypes.REMOVEQUANTITY_FAIL,
+      payload: {
+        errorMessage,
+      },
+    });
+  };
