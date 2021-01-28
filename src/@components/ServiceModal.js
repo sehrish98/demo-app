@@ -62,11 +62,12 @@ const useStyles = makeStyles((theme) =>
 );
 function ServiceModal({id, name,qty, des, type, image, price, open }) {
   const [modalStyle] = React.useState(getModalStyle);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(1);
   const classes = useStyles();
   const dispatch=useDispatch()
   const cart_items = useSelector(({ cartreducer}) => cartreducer.cart);
   const handleCart = (e) => {
+    setCart(cart+1)
     const obj={
       id:id,
         name:name,
@@ -77,6 +78,10 @@ function ServiceModal({id, name,qty, des, type, image, price, open }) {
     dispatch(AddtoCartstart(obj))
   };
   const handleremoveCart=(e)=>{
+    if(cart!=1)
+    {
+      setCart(cart-1)
+    }
     const obj={
       id:id,
       name:name,
@@ -89,6 +94,7 @@ function ServiceModal({id, name,qty, des, type, image, price, open }) {
   const handleClose = () => {
     open(false);
   };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <Close
@@ -178,15 +184,14 @@ function ServiceModal({id, name,qty, des, type, image, price, open }) {
           margin: "10px 20px 10px 20px",
         }}
       >
-        <ButtonGroup color="primary" aria-label="outlined  button group">
+        <ButtonGroup  aria-label="outlined  button group">
           <Button onClick={() => handleremoveCart(id)}>-</Button>
-          <Button>1</Button>
+          <Button>{cart}</Button>
           <Button 
           onClick={() => handleCart(name)}
           >+</Button>
         </ButtonGroup>
-
-        <CustomButton name="Add to Card" style={{ marginLeft: "10px" }} activ />
+        <CustomButton name="Add to Card" style={{ marginLeft: "10px" }} id={id} qty={qty} title={name} type={type} price={price} activ open={open} />
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Typography, Backdrop, CircularProgress } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 import CustomTabs from "../../@components/CustomTabs";
 import SearchModal from "../../@components/SearchModal";

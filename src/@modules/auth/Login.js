@@ -6,13 +6,7 @@ import {
   TextField,
   Typography,
   CardActions,
-  InputLabel,
-  InputAdornment,
-  IconButton,
-  FormControl,
-  OutlinedInput
 } from "@material-ui/core";
-import { VisibilityOff, Visibility } from "@material-ui/icons";
 import { createMuiTheme } from "@material-ui/core/styles";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 

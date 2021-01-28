@@ -5,7 +5,7 @@ import { Close } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 
 import CustomButton from "./CustomButton";
-import { AddtoCartstart,RemoveCart} from "../@store/Cart/Cart.Actions";
+import { AddtoCartstart,RemoveCart,RemoveQuantyCart} from "../@store/Cart/Cart.Actions";
 
 function getModalStyle() {
   const top = 50;
@@ -88,7 +88,6 @@ function AddtoCart({ name, des, type, image, price, open }) {
     open(false);
   };
   const handleremoveCart=(e)=>{
-    console.log("gv v g ggcgf :",e)
     const obj={
       id:e.id,
       name:e.name,
@@ -96,7 +95,7 @@ function AddtoCart({ name, des, type, image, price, open }) {
       price:e.price,
       qty:"1"
   }
-  dispatch(RemoveCart(obj))
+  dispatch(RemoveQuantyCart(obj))
   }
   const body = (
     <div style={modalStyle} className={classes.paper}>

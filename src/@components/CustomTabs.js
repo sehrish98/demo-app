@@ -1,11 +1,7 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import StoreIcon from "@material-ui/icons/Store";
-import PeopleIcon from "@material-ui/icons/People";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 const useStyles = makeStyles({
   root: {
@@ -39,7 +35,7 @@ export default function CustomTabs({ item1, item2, item3, item4, item5 }) {
         <Tab label={item4} onClick={()=>setTab(2)}/>
         <Tab label={item5} onClick={()=>setTab(2)}/>
       </Tabs>
-      {
+      {/* {
         tab==0&&<h5></h5>
       }
             {
@@ -47,7 +43,7 @@ export default function CustomTabs({ item1, item2, item3, item4, item5 }) {
       }
             {
         tab==2&&<h5></h5>
-      }
+      } */}
     </>
   );
 }

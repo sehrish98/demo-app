@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) =>
     paper: {
       width: "100%",
       marginTop: "20px",
-      marginBottom: "10px",
+      // marginBottom: "10px",
       padding: "0px 30px",
     },
     tabs:{
