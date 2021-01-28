@@ -1,7 +1,9 @@
-import React from "react";
+import React ,{useEffect}from "react";
 import AppBars from "../@components/AppBars";
 import SideBar from "../@components/SideBar";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { Redirect } from "react-router-dom";
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -18,6 +20,9 @@ const useStyles = makeStyles((theme) =>
 
 const Layout = (props) => {
   const classes = useStyles();
+    if (!localStorage.getItem("accessToken")) {
+      return <Redirect to="/login" />
+    }
   return (
     <>
       <div style={{ top: 0, position: "sticky", zIndex: "999" }}>

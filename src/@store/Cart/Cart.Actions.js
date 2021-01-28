@@ -1,4 +1,3 @@
-import axios from "axios";
 import { CartActionTypes } from "../redux/actionTypes";
 
 export function AddtoCartstart(obj) {

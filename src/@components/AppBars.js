@@ -15,6 +15,9 @@ import {
   Badge,
 } from "@material-ui/core";
 import { ArrowBack, Notifications, PowerSettingsNew } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+
+import { userloggedOut } from "../@store/auth/Auth.Actions";
 
 const theme = createMuiTheme({
   palette: {
@@ -87,6 +90,14 @@ const StyledBadge = withStyles((theme) =>
 )(Badge);
 export default function AppBars() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const handleLoggout=()=>{
+    const client=localStorage.getItem("clientId")
+    // const obj={
+    //   _id:client
+    // }
+    dispatch(userloggedOut())
+  }
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme}>
@@ -115,12 +126,13 @@ export default function AppBars() {
               </StyledBadge>
               <IconButton>
                 <Tooltip title="Loggout">
-                  <PowerSettingsNew
+                  <PowerSettingsNew 
                     style={{
                       color: "black",
                       fontWeight: "bold",
                       cursor: "pointer",
                     }}
+                    onClick={handleLoggout}
                   />
                 </Tooltip>
               </IconButton>

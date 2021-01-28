@@ -46,18 +46,31 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function OutlineButton({ name, open, width, show ,title}) {
+function OutlineButton({ name,state, open, width, show }) {
   const handleClick = () => {
-    open(true);
     if (show) {
       show(!show);
     }
-    else if(title="save")
+    else if(name=="save")
     {
       open(false)
     }
+    else if(name=="Create New Menu"){
+      open(true)
+    }
+    else if(name=="Create New dish list"){
+      open(true)
+    }
+    else if(name=="Create New option set"){
+      open(true)
+    }
+    else if(name=="Create New Menu Category"){
+      open(!state)
+    }
+    else if(name=="Create New Dish"){
+      open(!state)
+    }
     else{
-      
     }
   };
   const classes = useStyles();

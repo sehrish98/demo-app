@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -9,7 +9,10 @@ import {
 } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { useDispatch } from "react-redux";
+import {useHistory } from 'react-router-dom'
 
+import { userLogin } from "../../@store/auth/Auth.Actions";
 import BtnCustom from "../../@components/BtnCustom";
 
 const theme = createMuiTheme({
@@ -79,8 +82,18 @@ const useStyles = makeStyles({
   },
 });
 export default function Login({ data, details }) {
+  // const history=useHistory()
   const classes = useStyles();
-
+  const dispatch=useDispatch()
+  const [username , setUsername]=useState("")
+  const [password , setPassword]=useState("")
+  const handleLoginClick = (e) => {
+    const obj={
+        email:username,
+        password:password,
+    }
+    dispatch(userLogin(obj ))
+  };
   return (
     <div className={classes.login}>
       <img
@@ -100,11 +113,11 @@ export default function Login({ data, details }) {
                   style={{ marginBottom: "20px" }}
                   label="User Name"
                   autoFocus={false}
-                  type="text"
+                  type="email"
                   name="name"
                   required
                   fullWidth
-                  //   onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
 
                 <TextField
@@ -115,9 +128,9 @@ export default function Login({ data, details }) {
                   name="password"
                   required
                   fullWidth
-                  //   onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
-                <CardActions className={classes.cardAction}>
+                <CardActions className={classes.cardAction} onClick={handleLoginClick}>
                   <BtnCustom title="Log in" />
                 </CardActions>
               </MuiThemeProvider>

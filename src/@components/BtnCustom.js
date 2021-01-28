@@ -24,7 +24,12 @@ import {
   );
 function BtnCustom({title , open}) {
     const handleClose = () => {
+      if(title=="Log in")
+      {
+      }
+      else{
         open(false);
+      }
       };
     const classes = useStyles();
     return (

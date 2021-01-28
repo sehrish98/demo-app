@@ -3,16 +3,14 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Button, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 
-import { MenuItemsEdit } from "../@store/menu/Menu.Actions";
+import { MenuCategoryItemsEdit } from "../@store/menu/MenuCategoryItems.Actions";
 import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
 
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
   return {
     top: `${top}%`,
     left: `${left}%`,
@@ -52,40 +50,35 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function EditMenu({ open, data }) {
-  const { name, displayName, description } = data;
+function EditDish({ open, menuId,menucat , data }) {
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
-  // let dta = {
-  //   name: name,
-  //   displayName:displayName,
-  //   description:description,
-  // };
   useEffect(() => {
     if (data && !form) {
       setForm(data);
     }
   }, [form, setForm]);
-  const [initial, setInitial] = useState("general");
-  const [input, setInput] = useState();
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleClose = () => {
     open(false);
   };
   const handleClick = () => {
-    const data={
-      menuId:form._id,
-      name:form.name,
-      displayName:form.displayName,
-      description:form.description
-    }
-    dispatch(MenuItemsEdit(data));
+    const obj = {
+      menuId: menuId,
+      menuCategoryId: menucat,
+      menuCategoryItemId:form._id,
+      name: form.name ,
+      price: form.price,
+      displayname: form.displayName,
+      printName: form.printName,
+      description:form.description,
+    };
+    dispatch(MenuCategoryItemsEdit(obj));
   };
   const handlefieldchange = (e) => {
     e.persist();
     handleChange(e);
-    // setInput(e.target.value);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -123,67 +116,50 @@ function EditMenu({ open, data }) {
           borderBottom: "1px solid lightgray",
           padding: "10px 0px",
         }}
-      >
-        <Button
-          style={{ backgroundColor: "lightgray" }}
-          onClick={() => setInitial("general")}
-        >
-          General
-        </Button>
-        <Button variant="p" onClick={() => setInitial("credential")}>
-          Condition
-        </Button>
-      </div>
-      {initial === "general" && (
-        <>
-          <OrderTime
-            title="Name"
-            inputname="name"
-            des="A unique name for your menu"
-            value={form && form.name}
-            handlechange={handlefieldchange}
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            inputname="displayName"
-            title="Display Name"
-            des="Will override the unique name in your store"
-            handlechange={handlefieldchange}
-            value={form && form.displayName}
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            inputname="description"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
-            handlechange={handlefieldchange}
-            value={form && form.description}
-          />
-        </>
-      )}
-      {initial == "credential" && (
-        <>
-          <OrderTime
-            title="Name"
-            des="A unique name for your menu"
-            inputname="name"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Display Name"
-            des="Will override the unique name in your store"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
-          />
-        </>
-      )}
+      ></div>
+
+      <>
+        <OrderTime
+          title="Name"
+          inputname="name"
+          des="A unique name for your menu"
+          value={form && form.name}
+          handlechange={handlefieldchange}
+        />
+        <OrderTime
+          title="price"
+          inputname="price"
+          des="A unique name for your menu"
+          value={form && form.price}
+          handlechange={handlefieldchange}
+        />
+        <OrderTime
+          title="Print name"
+          inputname="printName"
+          des="A unique name for your menu"
+          value={form && form.printName}
+          handlechange={handlefieldchange}
+        />
+        <OrderTime
+          button
+          btnname="optional"
+          inputname="displayName"
+          title="Display Name"
+          des="Will override the unique name in your store"
+          value={form && form.displayName}
+          handlechange={handlefieldchange}
+        />
+        <OrderTime
+          button
+          btnname="optional"
+          inputname="description"
+          title="Description"
+          des="The number of outstanding orders before an increase in wait time is applied"
+          value={form && form.description}
+          handlechange={handlefieldchange}
+        />
+      </>
+
       <Button className={classes.btn} onClick={handleClick}>
         Save
       </Button>
@@ -204,4 +180,4 @@ function EditMenu({ open, data }) {
   );
 }
 
-export default EditMenu;
+export default EditDish;

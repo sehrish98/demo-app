@@ -5,9 +5,10 @@ import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { MenuItemsEdit } from "../@store/menu/Menu.Actions";
+import { MenuItemsCreate } from "../@store/menu/Menu.Actions";
 import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
+import { EditOptionSet } from "src/@store/optionSet/Optionset.Actions";
 
 function getModalStyle() {
   const top = 50;
@@ -52,15 +53,14 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function EditMenu({ open, data }) {
-  const { name, displayName, description } = data;
+function EditSetOption({ open , data }) {
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
-  // let dta = {
-  //   name: name,
-  //   displayName:displayName,
-  //   description:description,
-  // };
+  let dta = {
+    name: "",
+    displayName: "",
+    description: "",
+  };
   useEffect(() => {
     if (data && !form) {
       setForm(data);
@@ -75,12 +75,12 @@ function EditMenu({ open, data }) {
   };
   const handleClick = () => {
     const data={
-      menuId:form._id,
-      name:form.name,
-      displayName:form.displayName,
-      description:form.description
-    }
-    dispatch(MenuItemsEdit(data));
+    optionSetId:form._id,
+    name:form.name,
+    displayName:form.displayName,
+    description:form.description
+  }
+    dispatch(EditOptionSet(data));
   };
   const handlefieldchange = (e) => {
     e.persist();
@@ -140,8 +140,8 @@ function EditMenu({ open, data }) {
             title="Name"
             inputname="name"
             des="A unique name for your menu"
-            value={form && form.name}
             handlechange={handlefieldchange}
+            value={form && form.name}
           />
           <OrderTime
             button
@@ -204,4 +204,4 @@ function EditMenu({ open, data }) {
   );
 }
 
-export default EditMenu;
+export default EditSetOption;

@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { Modal, Button, Typography} from "@material-ui/core";
+import { Modal, Button, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
+import { MenuItemsCreate } from "../@store/menu/Menu.Actions";
 import OrderTime from "./OrderTime";
+import useForm from "./hooks/useForm";
 
 function getModalStyle() {
   const top = 50;
@@ -50,10 +54,31 @@ const useStyles = makeStyles((theme) =>
 );
 function CreateMenu({ open }) {
   const [modalStyle] = React.useState(getModalStyle);
+  const { form, setForm, handleChange } = useForm(null);
+  let dta = {
+    name: "",
+    displayName: "",
+    description: "",
+  };
+  useEffect(() => {
+    if (!form) {
+      setForm(dta);
+    }
+  }, [form]);
   const [initial, setInitial] = useState("general");
+  const [input, setInput] = useState();
   const classes = useStyles();
+  const dispatch = useDispatch();
   const handleClose = () => {
     open(false);
+  };
+  const handleClick = () => {
+    dispatch(MenuItemsCreate(form));
+  };
+  const handlefieldchange = (e) => {
+    e.persist();
+    handleChange(e);
+    // setInput(e.target.value);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -104,24 +129,37 @@ function CreateMenu({ open }) {
       </div>
       {initial === "general" && (
         <>
-          <OrderTime title="Name" des="A unique name for your menu" />
           <OrderTime
-            button
-            btnname="optional"
-            title="Display Name"
-            des="Will override the unique name in your store"
+            title="Name"
+            inputname="name"
+            des="A unique name for your menu"
+            handlechange={handlefieldchange}
           />
           <OrderTime
             button
             btnname="optional"
+            inputname="displayName"
+            title="Display Name"
+            des="Will override the unique name in your store"
+            handlechange={handlefieldchange}
+          />
+          <OrderTime
+            button
+            btnname="optional"
+            inputname="description"
             title="Description"
             des="The number of outstanding orders before an increase in wait time is applied"
+            handlechange={handlefieldchange}
           />
         </>
       )}
       {initial == "credential" && (
         <>
-          <OrderTime title="Name" des="A unique name for your menu" />
+          <OrderTime
+            title="Name"
+            des="A unique name for your menu"
+            inputname="name"
+          />
           <OrderTime
             button
             btnname="optional"
@@ -136,7 +174,7 @@ function CreateMenu({ open }) {
           />
         </>
       )}
-      <Button className={classes.btn} onClick={handleClose}>
+      <Button className={classes.btn} onClick={handleClick}>
         Save
       </Button>
     </div>

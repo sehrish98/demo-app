@@ -1,7 +1,10 @@
 import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
+import { MenuItemsCreate } from "../@store/menu/Menu.Actions";
 import CustomButton from "./CustomButton";
 
 function getModalStyle() {
@@ -54,7 +57,7 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function Delete({ open }) {
+function DeleteForm({ open, title, id }) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
   const handleClose = () => {
@@ -67,14 +70,20 @@ function Delete({ open }) {
         className={classes.detail}
       >
         <Typography variant="p" style={{ fontWeight: "500" }}>
-          Delete
+          `Delete ${title}`
         </Typography>
         <Typography variant="p">New Menu</Typography>
       </div>
       <div
         style={{ display: "flex", flexFlow: "row-reverse", marginTop: "20px" }}
       >
-        <CustomButton name="Delete" activ style={{ marginRight: "10px" }} />
+        <CustomButton
+          name="Delete"
+          activ
+          style={{ marginRight: "10px" }}
+          title={title}
+          id={id}
+        />
         <CustomButton name="Cancel" style={{ marginLeft: "10px" }} />
       </div>
     </div>
@@ -95,4 +104,4 @@ function Delete({ open }) {
   );
 }
 
-export default Delete;
+export default DeleteForm;

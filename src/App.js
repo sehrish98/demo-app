@@ -18,16 +18,16 @@ function App() {
     <div className="App">
       <div className="background"></div>
       <Router>
-          <Switch>
+        <Switch>
           <Route exact path="/login" component={Login} />
           <DashBoardRoute exact path="/dash-board" component={Dashboard} />
-            <CustomRouter exact path="/" component={Home} />
-            <CustomRouter exact path="/order" component={Order} />
-            <CustomRouter exact path="/menu" component={Menus} />
-            <CustomRouter exact path="/customer" component={Customer} />
-            <CustomRouter exact path="/staff" component={Staff} />
-            <CustomRouter exact path="/settings" component={Settings} />
-          </Switch>
+          <CustomRouter exact path="/order" component={Order} />
+          <CustomRouter exact path="/menu" component={Menus} />
+          <CustomRouter exact path="/customer" component={Customer} />
+          <CustomRouter exact path="/staff" component={Staff} />
+          <CustomRouter exact path="/settings" component={Settings} />
+          <CustomRouter exact path="/" component={Home} />
+        </Switch>
       </Router>
     </div>
   );
@@ -40,8 +40,8 @@ const DashBoardRoute = (props) => {
       component={() => (
         <>
           <props.component />
-          <Footer ></Footer>
-          </>
+          <Footer></Footer>
+        </>
       )}
     />
   );

@@ -1,7 +1,12 @@
-import axios from "axios"
+import axios, { AxiosRequestConfig } from "axios";
 
-const instance = axios.create({
-    baseURL: 'local host address',
+const RequestInterceptor = (config: AxiosRequestConfig) => {
+  config.headers.authorization = localStorage.getItem("accessToken");
+  return config;
+};
+
+export const instance = axios.create({
+  baseURL: "http://localhost:8003/api/v1",
 });
+instance.interceptors.request.use(RequestInterceptor);
 
-export default instance

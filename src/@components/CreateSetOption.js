@@ -3,11 +3,10 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Button, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 
-import { MenuItemsEdit } from "../@store/menu/Menu.Actions";
 import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
+import { CreateOptionSet } from "src/@store/optionSet/Optionset.Actions";
 
 function getModalStyle() {
   const top = 50;
@@ -52,35 +51,28 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function EditMenu({ open, data }) {
-  const { name, displayName, description } = data;
+function CreateSetOption({ open }) {
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
-  // let dta = {
-  //   name: name,
-  //   displayName:displayName,
-  //   description:description,
-  // };
+  let dta = {
+    name: "",
+    displayName: "",
+    description: "",
+  };
   useEffect(() => {
-    if (data && !form) {
-      setForm(data);
+    if (!form) {
+      setForm(dta);
     }
-  }, [form, setForm]);
+  }, [form]);
   const [initial, setInitial] = useState("general");
-  const [input, setInput] = useState();
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleClose = () => {
     open(false);
   };
   const handleClick = () => {
-    const data={
-      menuId:form._id,
-      name:form.name,
-      displayName:form.displayName,
-      description:form.description
-    }
-    dispatch(MenuItemsEdit(data));
+    const {name , displayName ,description}=form
+    dispatch(CreateOptionSet(form));
   };
   const handlefieldchange = (e) => {
     e.persist();
@@ -128,7 +120,7 @@ function EditMenu({ open, data }) {
           style={{ backgroundColor: "lightgray" }}
           onClick={() => setInitial("general")}
         >
-          General
+          General i m option set
         </Button>
         <Button variant="p" onClick={() => setInitial("credential")}>
           Condition
@@ -140,7 +132,6 @@ function EditMenu({ open, data }) {
             title="Name"
             inputname="name"
             des="A unique name for your menu"
-            value={form && form.name}
             handlechange={handlefieldchange}
           />
           <OrderTime
@@ -150,7 +141,6 @@ function EditMenu({ open, data }) {
             title="Display Name"
             des="Will override the unique name in your store"
             handlechange={handlefieldchange}
-            value={form && form.displayName}
           />
           <OrderTime
             button
@@ -159,7 +149,6 @@ function EditMenu({ open, data }) {
             title="Description"
             des="The number of outstanding orders before an increase in wait time is applied"
             handlechange={handlefieldchange}
-            value={form && form.description}
           />
         </>
       )}
@@ -204,4 +193,4 @@ function EditMenu({ open, data }) {
   );
 }
 
-export default EditMenu;
+export default CreateSetOption;
