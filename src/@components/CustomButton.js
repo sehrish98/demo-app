@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) =>
   })
 );
 function CustomButton({ name, activ , state , array }) {
-  console.log("dbc dn" , array)
   const handleClick=()=>{
     if(state)
     {

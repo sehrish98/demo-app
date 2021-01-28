@@ -56,6 +56,20 @@ function EditMenu({ open }) {
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
+      <CloseIcon
+        fontSize="Large"
+        onClick={handleClose}
+        style={{
+          cursor: "pointer",
+          borderRadius: "20px",
+          color: "white",
+          backgroundColor: "black",
+          padding: "5px",
+          position: "absolute",
+          top: "-10",
+          right: "-10",
+        }}
+      />
       <div
         style={{
           display: "flex",
@@ -72,16 +86,6 @@ function EditMenu({ open }) {
         >
           Quick Service Settings
         </Typography>
-        <CloseIcon
-          onClick={handleClose}
-          style={{
-            cursor: "pointer",
-            borderRadius: "20px",
-            color: "white",
-            backgroundColor: "black",
-            padding: "5px",
-          }}
-        />
       </div>
       <div
         style={{
