@@ -7,6 +7,7 @@ import Staff from "./@modules/staff/Staff";
 import Login from "./@modules/auth/Login";
 import Customer from "./@modules/customer/Customer";
 import CustomRouter from "./@layouts/CustomRouter";
+import Dashboard from "./@modules/dashboard/Dashboard";
 import "./App.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Router>
           <Switch>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/dash-board" component={Dashboard} />
             <CustomRouter exact path="/" component={Home} />
             <CustomRouter exact path="/order" component={Order} />
             <CustomRouter exact path="/menu" component={Menus} />
