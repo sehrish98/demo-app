@@ -1,9 +1,11 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
 
 import Header from "./Header";
 import NavBar from "./NavBar";
 import CustomCard from "../../@components/CustomCard";
+import { MenuItems } from "../../@store/menu/Menu.Actions";
 
 const list = [
   {

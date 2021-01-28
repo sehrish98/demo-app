@@ -1,6 +1,6 @@
-import React from "react";
-import { Typography,Switch } from "@material-ui/core";
-import { createStyles,  makeStyles } from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { Typography, Switch } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
@@ -23,7 +23,19 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function OrderTime({ title, btnname, button, des, value, checked,dropdown,btn }) {
+function OrderTime({
+  title,
+  btnname,
+  button,
+  des,
+  value,
+  checked,
+  dropdown,
+  btn,
+  handlechange,
+  inputname,
+}) {
+  const [name, setName] = useState("");
   const classes = useStyles();
   return (
     <div elevation={3} className={classes.paper}>
@@ -39,15 +51,28 @@ function OrderTime({ title, btnname, button, des, value, checked,dropdown,btn })
         </Typography>
         {button && <button className={classes.btn}>{btnname}</button>}
       </div>
-      <div style={{margin:"8px 0px"}}>
-      {
-        checked?<Switch />:(btn?<CustomButton name={value} activ/>:<CustomInput type="text" value={value} />)
-      }
+      <div style={{ margin: "8px 0px" }}>
+        {checked ? (
+          <Switch />
+        ) : btn ? (
+          <CustomButton name={value} activ />
+        ) : (
+          <CustomInput
+            type="text"
+            value={value}
+            handlechange={handlechange}
+            name={inputname}
+          />
+        )}
       </div>
       <div>
         <Typography
           variant="p"
-          style={{ fontSize: "14px", color: "rgb(33, 33, 33)",paddingTop:"5px" }}
+          style={{
+            fontSize: "14px",
+            color: "rgb(33, 33, 33)",
+            paddingTop: "5px",
+          }}
         >
           {des}
         </Typography>

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography, Paper, Tooltip } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-
+import { Edit, Delete, FileCopy } from "@material-ui/icons";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CreateMenu from "./CreateMenu";
 
+import CreateDish from "./CreateDish";
+import EditDish from "./EditDish";
+import DeleteForm from "./DeleteForm";
 import OutlineButton from "./OutlineButton";
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     detail: {
@@ -15,6 +18,8 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "space-between",
       padding: "8px",
       alignItems: "center",
+      backgroundColor: "white",
+      margin: "5px 2px",
     },
     paper: {
       alignSelf: "center",
@@ -22,27 +27,73 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function SubMenuItems({ items }) {
-  console.log("jghklm:", items);
+function SubMenuItems({ id, menucat, dishes }) {
   const [opencreate, setOpencreate] = useState(false);
+  const [opendelete, setopenDelete] = useState(false);
+  const [editdish, setEditDish] = useState(false);
+  const [iid, setid] = useState();
   const classes = useStyles();
   return (
     <div className={classes.paper}>
-      <Paper>
-        {
+      <div>
+        {dishes?.map((c) => (
           <div className={classes.detail}>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <CheckBoxOutlineBlankIcon fontSize="medium" />
-              <Typography variant="p" style={{ fontWeight: "500" }}>
-                Pizzano
+              <CheckBoxOutlineBlankIcon fontSize="small" />
+              <Typography variant="p" style={{ marginLeft: "5px" }}>
+                {c.name}
               </Typography>
             </div>
-            <Typography variant="p">hi</Typography>
+            <div>
+              <Tooltip title="Edit" placement="top">
+                <Edit
+                  fontSize="small"
+                  onClick={() =>(setEditDish(true),setid(c))}
+                  style={{
+                    margin: "5px",
+                    cursor: "pointer",
+                    color: "gray",
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Delete" placement="top">
+                <Delete
+                  fontSize="small"
+                  onClick={() => (
+                    setopenDelete(true), setid(c._id)
+                  )}
+                  style={{
+                    margin: "5px",
+                    cursor: "pointer",
+                    color: "gray",
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Copy" placement="Top">
+                <FileCopy
+                  // onClick={() => setOpencreate(true)}
+                  fontSize="small"
+                  style={{
+                    margin: "5px",
+                    cursor: "pointer",
+                    color: "gray",
+                  }}
+                />
+              </Tooltip>
+            </div>
           </div>
+        ))}
+        {opencreate && (
+          <CreateDish open={setOpencreate} menuId={id} menucat={menucat} />
+        )}
+        {opendelete && (
+          <DeleteForm open={setopenDelete} title="Dishes" id={iid} />
+        )}
+        {
+          editdish&&<EditDish open={setEditDish} menuId={id} menucat={menucat} data={iid}/>
         }
-        {opencreate && <CreateMenu open={setOpencreate} />}
-      </Paper>
-      <OutlineButton name="Create New Menu" open={setOpencreate} width="99%" />
+      </div>
+      <OutlineButton name="Create New Dish" open={setOpencreate} width="99%" />
     </div>
   );
 }

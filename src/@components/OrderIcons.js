@@ -35,7 +35,6 @@ const OrderIcon = ({ icon, tiptext, open,name,state, i }) => {
       if(state>=60)
       {
         open(state-20)
-        console.log("shsvhdsghdvhdsghcsd", {state})
       }
     }
     else if(name=="expand")
@@ -43,12 +42,10 @@ const OrderIcon = ({ icon, tiptext, open,name,state, i }) => {
       if(state<90)
       {
         open(state+20)
-        console.log("shsvhdsghdvhdsghcsd", {state})
       }
     }
     else if(name=="un_confirm")
     {
-      console.log("jhdbjd",state)
       open(!state)
     }
     else

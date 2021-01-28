@@ -1,7 +1,13 @@
 import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AddtoCartstart } from "../@store/Cart/Cart.Actions";
+
+import { MenuItemsDelete } from "../@store/menu/Menu.Actions";
+import { MenuCategoryDelete } from "../@store/menu/MenuCategory.Actions";
+import { MenuCategoryItemsDelete } from "../@store/menu/MenuCategoryItems.Actions";
+import { DeleteOptionSet } from "../@store/optionSet/Optionset.Actions";
+import { DisheTagDelete } from "../@store/dish/Dish.Actions";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -54,15 +60,16 @@ function CustomButton({
   type,
   price,
   qty,
-  open
+  open,
+  deleteMenu,
 }) {
   const dispatch = useDispatch();
   const handleClick = () => {
-    if (state) 
-    {
-      state(array);
-    } 
-    else if (open && name == "Add to Card") {
+    // if (state)
+    // {
+    //   state(array);
+    // }
+    if (open && name == "Add to Card") {
       const obj = {
         id: id,
         name: title,
@@ -72,6 +79,27 @@ function CustomButton({
       };
       dispatch(AddtoCartstart(obj));
       open(false);
+    } else if (title == "Menu" && id) {
+      const obj = { menuId: id };
+      dispatch(MenuItemsDelete(obj));
+    } else if (title == "Menu Category" && id) {
+      const obj = { menuCategoryId: id };
+      dispatch(MenuCategoryDelete(obj));
+    } else if (title == "Dish Tags" && id) {
+      const obj = { _id: id };
+      dispatch(DisheTagDelete(obj));
+    } else if (title == "Option Set" && id) {
+      const obj = { _id: id };
+      dispatch(DeleteOptionSet(obj));
+    } else if (title == "Dishes" && id) {
+      const obj = { menuCategoryItemId: id };
+      dispatch(MenuCategoryItemsDelete(obj));
+    } else if (name == "Menus" && state) {
+      state(array);
+    } else if (name == "Option Set" && state) {
+      state(array);
+    } else if (name == "Dish Tags" && state) {
+      state(array);
     } else {
     }
   };
