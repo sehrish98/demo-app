@@ -1,20 +1,40 @@
 import {instance as axios} from "../../@api/axios";
 import { UserActionTypes } from "../redux/actionTypes";
 import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
-export function userLogin(obj) {
+export function userLogin(obj , history) {
     return (dispatch) => {
       dispatch({
         type: UserActionTypes.LOGIN_USER_START,
       });
       axios
-        .post("http://localhost:8003/api/v1/auth/login", obj)
+        .post("http://localhost:8003/api/v1/auth/login", obj , history)
         .then((res) => {
             localStorage.setItem("accessToken",res.data.data.accessToken)
             localStorage.setItem("clientId",res.data.data._id)
-            userLoginSuccess(dispatch, res.data);
+            toast.success("Successfully Logged in");
+            userLoginSuccess(dispatch, res.data , history);
         })
         .catch((error) => {
+          if (error.message === "Request failed with status code 306") {
+            toast.error("Email is mandatory");
+          } else if (error.message === "Request failed with status code 307") {
+            toast.error("Password is mandatory");
+          }
+          else if (error.message === "Request failed with status code 308") {
+            toast.error("Email and Password is mandatory");
+          }
+          else if (error.message === "Request failed with status code 309") {
+            toast.error("Password Invalid");
+          }
+          else if (error.message === "Request failed with status code 310") {
+            toast.error("Email Invalid");
+          }
+          else{
+            toast.error("Invalid Email or Password.");
+          }
+          console.log(error.message);
           userLoginFail(dispatch, error.message);
         });
     };
@@ -25,7 +45,7 @@ export function userLogin(obj) {
         type: UserActionTypes.LOGIN_USER_SUCCESS,
         payload: data,
       })
-    //   <Redirect to={history}  />
+      history.push("/dash-board");
   };
   
   const userLoginFail = (dispatch, errorMessage) => {
@@ -38,19 +58,17 @@ export function userLogin(obj) {
   };
 
 
-  export function userloggedOut() {
+  export function userloggedOut(history) {
     const token=localStorage.getItem("accessToken")
     return (dispatch) => {
       dispatch({
         type: UserActionTypes.LOGOUT_USER_START,
       });
       axios
-        .post("/auth/logout",{headers: {
-          'Authorization': `Bearer ${token}` 
-        }})
+        .post("/auth/logout")
         .then((res) => {
+          userLoggedOutSuccess(history);
           localStorage.removeItem("accessToken");
-          userLoggedOutSuccess();
         })
         .catch((error) => {
           userLoggedOutFail(dispatch, error.message);
@@ -58,10 +76,11 @@ export function userLogin(obj) {
     };
   }
   
-  const userLoggedOutSuccess = (dispatch) => {
+  const userLoggedOutSuccess = (dispatch , history) => {
     dispatch({
       type: UserActionTypes.LOGOUT_USER_SUCCESS,
     });
+    history.push("/login");
   };
   
   const userLoggedOutFail = (dispatch, errorMessage) => {

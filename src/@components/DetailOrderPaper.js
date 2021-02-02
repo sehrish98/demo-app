@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       borderBottom: "1px solid lightgray",
     },
+    fontsize:{
+      fontSize: "14px"
+    },
+    fontweight:{
+      fontWeight: "700"
+    }
   })
 );
 function DetailOrderPaper({ list }) {
@@ -25,26 +31,26 @@ function DetailOrderPaper({ list }) {
   return (
     <Paper elevation={3} className={classes.paper}>
       <div className={classes.item}>
-        <Typography variant="p" style={{ fontWeight: "700" }}>
+        <Typography variant="p" className={classes.fontweight}>
           {list.name}
         </Typography>
-        <Typography variant="p" style={{ fontSize: "14px" }}>
+        <Typography variant="p" className={classes.fontsize}>
           Sales|Counts|Tips
         </Typography>
       </div>
       <div className={classes.item}>
-        <Typography variant="p" style={{ fontWeight: "700" }}>
+        <Typography variant="p" className={classes.fontweight}>
           {list.title1}
         </Typography>
-        <Typography variant="p" style={{ fontSize: "14px" }}>
+        <Typography variant="p" className={classes.fontsize}>
           {list.value1}
         </Typography>
       </div>
       <div className={classes.item}>
-        <Typography variant="p" style={{ fontWeight: "700" }}>
+        <Typography variant="p" className={classes.fontweight}>
           {list.title2}
         </Typography>
-        <Typography variant="p" style={{ fontSize: "14px" }}>
+        <Typography variant="p" className={classes.fontsize}>
           {list.value2}
         </Typography>
       </div>

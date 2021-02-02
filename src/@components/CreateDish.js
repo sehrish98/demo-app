@@ -3,6 +3,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Button, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { MenuCategoryItemsCreate } from "../@store/menu/MenuCategoryItems.Actions";
 import OrderTime from "./OrderTime";
@@ -45,12 +46,37 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       marginTop: "30px",
       "&:hover": {
-        background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
+        background: "rgb(238, 82, 82)",
       },
+    },
+    detail: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "15px",
+      marginTop: "10px",
+    },
+    cancelIcon: {
+      cursor: "pointer",
+      borderRadius: "20px",
+      color: "white",
+      backgroundColor: "black",
+      padding: "5px",
+      position: "absolute",
+      top: "-15px",
+      right: "-15px",
+      fontSize: "xx-large",
+    },
+    allbtn: {
+      margin: "10px 0px",
+      borderTop: "1px solid lightgray",
+      borderBottom: "1px solid lightgray",
+      padding: "10px 0px",
     },
   })
 );
-function CreateDish({ open, menuId,menucat }) {
+function CreateDish({ open, menuId, menucat }) {
+  const history = useHistory();
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
   let dta = {
@@ -71,17 +97,20 @@ function CreateDish({ open, menuId,menucat }) {
     open(false);
   };
   const handleClick = () => {
-    const {name , displayName ,printName, price,description}=form
-    const obj = {
-      menuId: menuId,
-      menuCategoryId: menucat,
-      name: name ,
-      price: price,
-      displayname: displayName,
-      printName: printName,
-      description:description,
-    };
-    dispatch(MenuCategoryItemsCreate(obj));
+    const { name, displayName, printName, price, description } = form;
+    if(name!=""&&price!="")
+    {
+      const obj = {
+        menuId: menuId,
+        menuCategoryId: menucat,
+        name: name,
+        price: price,
+        displayname: displayName,
+        printName: printName,
+        description: description,
+      };
+      dispatch(MenuCategoryItemsCreate(obj, history));
+    }
   };
   const handlefieldchange = (e) => {
     e.persist();
@@ -89,32 +118,9 @@ function CreateDish({ open, menuId,menucat }) {
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "15px",
-          marginTop: "10px",
-        }}
-      >
-        <Typography
-          variant="h5"
-          style={{ cursor: "move" }}
-          id="draggable-dialog-title"
-        >
-          Quick Service Settings
-        </Typography>
-        <CloseIcon
-          onClick={handleClose}
-          style={{
-            cursor: "pointer",
-            borderRadius: "20px",
-            color: "white",
-            backgroundColor: "black",
-            padding: "5px",
-          }}
-        />
+      <div className={classes.detail}>
+        <Typography variant="h5">Create Menu Category Items</Typography>
+        <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
       </div>
       <div
         style={{
@@ -124,47 +130,49 @@ function CreateDish({ open, menuId,menucat }) {
           padding: "10px 0px",
         }}
       ></div>
-
-      <>
-        <OrderTime
-          title="Name"
-          inputname="name"
-          des="A unique name for your menu"
-          handlechange={handlefieldchange}
-        />
-        <OrderTime
-          title="price"
-          inputname="price"
-          des="A unique name for your menu"
-          handlechange={handlefieldchange}
-        />
-        <OrderTime
-          title="Print name"
-          inputname="printName"
-          des="A unique name for your menu"
-          handlechange={handlefieldchange}
-        />
-        <OrderTime
-          button
-          btnname="optional"
-          inputname="displayName"
-          title="Display Name"
-          des="Will override the unique name in your store"
-          handlechange={handlefieldchange}
-        />
-        <OrderTime
-          button
-          btnname="optional"
-          inputname="description"
-          title="Description"
-          des="The number of outstanding orders before an increase in wait time is applied"
-          handlechange={handlefieldchange}
-        />
-      </>
-
-      <Button className={classes.btn} onClick={handleClick}>
-        Save
-      </Button>
+      <form>
+        <>
+          <OrderTime
+            title="Name"
+            inputname="name"
+            des="A unique name for your menu"
+            handlechange={handlefieldchange}
+            req={true}
+          />
+          <OrderTime
+            title="price"
+            inputname="price"
+            des="A unique name for your menu"
+            handlechange={handlefieldchange}
+            req={true}
+          />
+          <OrderTime
+            title="Print name"
+            inputname="printName"
+            des="A unique name for your menu"
+            handlechange={handlefieldchange}
+          />
+          <OrderTime
+            button
+            btnname="optional"
+            inputname="displayName"
+            title="Display Name"
+            des="Will override the unique name in your store"
+            handlechange={handlefieldchange}
+          />
+          <OrderTime
+            button
+            btnname="optional"
+            inputname="description"
+            title="Description"
+            des="The number of outstanding orders before an increase in wait time is applied"
+            handlechange={handlefieldchange}
+          />
+        </>
+        <Button className={classes.btn} onClick={handleClick} type="submit">
+          Save
+        </Button>
+      </form>
     </div>
   );
   return (

@@ -117,6 +117,44 @@ const useStyles = makeStyles((theme) =>
       flexDirection: "column",
       overflowX: "scroll",
     },
+    detail: {
+      alignSelf: "center",
+      width: "90%",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      placeItems: "center",
+    },
+    orderlist: {
+      display: "flex",
+      flexWrap: "wrap",
+      width: "100%",
+      placeItems: "center",
+      justifyContent: "center",
+      margin: "10px 0px 0px 0px",
+    },
+    cusbtn: {
+      display: "flex",
+      alignSelf: "center",
+      width: "92%",
+    },
+    list_order: {
+      display: "flex",
+      flexWrap: "wrap",
+      width: "100%",
+      placeItems: "center",
+      justifyContent: "center",
+    },
+    equally__distribute: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      margin: "20px 10px 0px 0px",
+    },
+    equally__distribute__up: {
+      display: "flex",
+      position: "relative",
+    },
   })
 );
 
@@ -128,28 +166,12 @@ const Home = () => {
   };
   return (
     <div className={classes.root}>
-      <div
-        style={{
-          alignSelf: "center",
-          width: "90%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          placeItems: "center",
-        }}
-      >
+      <div className={classes.detail}>
         <Typography variant="h6" color="inherit" style={{ fontWeight: "bold" }}>
           DashBoard
         </Typography>
-        <div style={{ display: "flex", position: "relative" }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: "20px 10px 0px 0px",
-            }}
-          >
+        <div className={classes.qually__distribute__up}>
+          <div className={classes.equally__distribute}>
             <Typography variant="p">Viewing Reports For</Typography>
             <Typography variant="p">Today</Typography>
           </div>
@@ -159,20 +181,12 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          width: "100%",
-          placeItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className={classes.list_order}>
         {Lists.map((t) => (
           <Papers title={t.name} value={t.total} />
         ))}
       </div>
-      <div style={{ display: "flex", alignSelf: "center", width: "92%" }}>
+      <div className={classes.cusbtn}>
         <CustomButton name="Sales" activ="true" />
         <CustomButton name="Order" />
       </div>
@@ -188,16 +202,7 @@ const Home = () => {
         ylabel="no of Orders"
         graphData={graphData}
       />
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          width: "100%",
-          placeItems: "center",
-          justifyContent: "center",
-          margin: "10px 0px 0px 0px",
-        }}
-      >
+      <div className={classes.orderlist}>
         {OrderLists.map((t, index) => (
           <DetailOrderPaper list={t} />
         ))}

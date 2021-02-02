@@ -7,19 +7,25 @@ import GeneralAccordin from "./GeneralAccordin";
 const useStyles = makeStyles((theme) =>
   createStyles({
     detail: {
-     Width: "720px",
+      Width: "720px",
       margin: "0px auto",
     },
     paper: {
       width: "100%",
-    //   marginTop: "20px",
       marginBottom: "60px",
-    //   padding: "20px 30px",
     },
-    general:{
-        width:"100%",
-        alignItems: "center",
-    }
+    general: {
+      width: "100%",
+      alignItems: "center",
+    },
+    subdetail: {
+      padding: "10px 20px",
+      display: "flex",
+      fontWeight: "500",
+      width: "100%",
+      backgroundColor: "rgb(247, 247, 247)",
+      borderTop: "1px solid rgb(230, 230, 230)",
+    },
   })
 );
 
@@ -28,17 +34,16 @@ function General() {
   return (
     <div className={classes.paper}>
       <div className={classes.detail}>
-          <div className={classes.general}>
-          <Typography
-          variant="p"
-          style={{padding:"10px 20px",display:"flex",fontWeight:"500",width:"100%",backgroundColor:"rgb(247, 247, 247)",borderTop:"1px solid rgb(230, 230, 230)"}}
-        >
-         Bussiness
-        </Typography>
-        <CustomAccordin title="General" color="white" open={<GeneralAccordin />}/>
-          </div>
+        <div className={classes.general}>
+          <Typography variant="p" className={classes.subdetail}>Bussiness</Typography>
+          <CustomAccordin
+            title="General"
+            color="white"
+            open={<GeneralAccordin />}
+          />
         </div>
       </div>
+    </div>
   );
 }
 

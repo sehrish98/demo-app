@@ -44,6 +44,11 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       outline: "0",
     },
+    detail: {
+      display: "flex",
+      justifyContent: "space-between",
+      width: "100%",
+    },
   })
 );
 function ScheduleDropDown({ open }) {
@@ -54,23 +59,11 @@ function ScheduleDropDown({ open }) {
   return (
     <ClickAwayListener onClickAway={HandleDropDownClick}>
       <Paper className={classes.paper}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
+        <div className={classes.detail}>
           <Typography>Date Range</Typography>
           <Typography>Change Date</Typography>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
+        <div className={classes.detail}>
           <div style={{ display: "flex" }}>
             <button className={classes.active}>Day</button>
             <button className={classes.btn}>Week</button>

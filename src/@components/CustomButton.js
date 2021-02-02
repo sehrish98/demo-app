@@ -2,6 +2,7 @@ import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { AddtoCartstart } from "../@store/Cart/Cart.Actions";
+import { useHistory } from "react-router-dom";
 
 import { MenuItemsDelete } from "../@store/menu/Menu.Actions";
 import { MenuCategoryDelete } from "../@store/menu/MenuCategory.Actions";
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) =>
 );
 function CustomButton({
   name,
+  handlechange,
   activ,
   state,
   array,
@@ -64,36 +66,24 @@ function CustomButton({
   deleteMenu,
 }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const handleClick = () => {
-    // if (state)
-    // {
-    //   state(array);
-    // }
     if (open && name == "Add to Card") {
-      const obj = {
-        id: id,
-        name: title,
-        type: type,
-        price: price,
-        qty: qty,
-      };
-      dispatch(AddtoCartstart(obj));
-      open(false);
     } else if (title == "Menu" && id) {
       const obj = { menuId: id };
-      dispatch(MenuItemsDelete(obj));
+      dispatch(MenuItemsDelete(obj , history));
     } else if (title == "Menu Category" && id) {
       const obj = { menuCategoryId: id };
-      dispatch(MenuCategoryDelete(obj));
+      dispatch(MenuCategoryDelete(obj, history));
     } else if (title == "Dish Tags" && id) {
       const obj = { _id: id };
-      dispatch(DisheTagDelete(obj));
+      dispatch(DisheTagDelete(obj, history));
     } else if (title == "Option Set" && id) {
       const obj = { _id: id };
-      dispatch(DeleteOptionSet(obj));
+      dispatch(DeleteOptionSet(obj, history));
     } else if (title == "Dishes" && id) {
       const obj = { menuCategoryItemId: id };
-      dispatch(MenuCategoryItemsDelete(obj));
+      dispatch(MenuCategoryItemsDelete(obj, history));
     } else if (name == "Menus" && state) {
       state(array);
     } else if (name == "Option Set" && state) {
@@ -108,7 +98,7 @@ function CustomButton({
     <div>
       <button
         className={`${activ ? classes.active : classes.btn}`}
-        onClick={handleClick}
+        onClick={handlechange}
       >
         {name}
       </button>

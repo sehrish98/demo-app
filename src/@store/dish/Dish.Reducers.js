@@ -71,6 +71,22 @@ const dish__Reducer = function (state = initial_state, action) {
         };
       }
 
+      case DishActionTypes.DISHDRAG_START: {
+        return {
+          ...state,
+        };
+      }
+      case DishActionTypes.DISHDRAG_SUCCESS: {
+        return {
+          ...state,
+        };
+      }
+      case DishActionTypes.DISHDRAG_FAIL: {
+        return {
+          state: action.payload,
+        };
+      }
+
     default: {
       return state;
     }

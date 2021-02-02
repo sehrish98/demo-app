@@ -33,7 +33,7 @@ const MenuItemsFail = (dispatch, errorMessage) => {
   });
 };
 
-export function MenuItemsCreate(obj) {
+export function MenuItemsCreate(obj, history) {
   return (dispatch) => {
     dispatch({
       type: MenuItemsActionTypes.MENUITEMSCREATE_START,
@@ -41,7 +41,7 @@ export function MenuItemsCreate(obj) {
     axios
       .post("/menu", obj)
       .then((res) => {
-        MenuItemsCreateSuccess(dispatch, res.data);
+        MenuItemsCreateSuccess(dispatch, res.data, history);
       })
       .catch((error) => {
         MenuItemsCreateFail(dispatch, error.message);
@@ -54,6 +54,7 @@ const MenuItemsCreateSuccess = (dispatch, data, history) => {
     type: MenuItemsActionTypes.MENUITEMSCREATE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const MenuItemsCreateFail = (dispatch, errorMessage) => {
@@ -65,7 +66,7 @@ const MenuItemsCreateFail = (dispatch, errorMessage) => {
   });
 };
 
-export function MenuItemsEdit(obj) {
+export function MenuItemsEdit(obj, history) {
   return (dispatch) => {
     dispatch({
       type: MenuItemsActionTypes.MENUITEMSEDIT_START,
@@ -73,7 +74,7 @@ export function MenuItemsEdit(obj) {
     axios
       .put("/menu", obj)
       .then((res) => {
-        MenuItemsEditSuccess(dispatch, res.data);
+        MenuItemsEditSuccess(dispatch, res.data, history);
       })
       .catch((error) => {
         MenuItemsEditFail(dispatch, error.message);
@@ -86,6 +87,7 @@ const MenuItemsEditSuccess = (dispatch, data, history) => {
     type: MenuItemsActionTypes.MENUITEMSEDIT_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const MenuItemsEditFail = (dispatch, errorMessage) => {
@@ -97,7 +99,7 @@ const MenuItemsEditFail = (dispatch, errorMessage) => {
   });
 };
 
-export function MenuItemsDelete(obj) {
+export function MenuItemsDelete(obj, history) {
   return (dispatch) => {
     dispatch({
       type: MenuItemsActionTypes.MENUITEMSDELETE_START,
@@ -105,7 +107,7 @@ export function MenuItemsDelete(obj) {
     axios
       .delete("/menu", { data: obj })
       .then((res) => {
-        MenuItemsDeleteSuccess(dispatch, res.data);
+        MenuItemsDeleteSuccess(dispatch, res.data, history);
       })
       .catch((error) => {
         MenuItemsDeleteFail(dispatch, error.message);
@@ -118,11 +120,49 @@ const MenuItemsDeleteSuccess = (dispatch, data, history) => {
     type: MenuItemsActionTypes.MENUITEMSDELETE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const MenuItemsDeleteFail = (dispatch, errorMessage) => {
   dispatch({
     type: MenuItemsActionTypes.MENUITEMSDELETE_FAIL,
+    payload: {
+      errorMessage,
+    },
+  });
+};
+
+export function MenuItemsDrag(obj) {
+  console.log("hi i mdrag menu:", obj);
+  return (dispatch) => {
+    dispatch({
+      type: MenuItemsActionTypes.MENUITEMSDRAG_START,
+    });
+    axios
+      .put("/menu/drag", { data: obj })
+      .then((res) => {
+        MenuItemsDragSuccess(dispatch, res.data);
+      })
+      .catch((error) => {
+        console.log("asdasdas", error);
+        MenuItemsDragFail(dispatch, error.message);
+      });
+  };
+}
+
+const MenuItemsDragSuccess = (dispatch, data) => {
+  dispatch(GetMenuItems());
+
+  dispatch({
+    type: MenuItemsActionTypes.MENUITEMSDRAG_SUCCESS,
+    payload: data,
+  });
+  // history.push("/menu");
+};
+
+const MenuItemsDragFail = (dispatch, errorMessage) => {
+  dispatch({
+    type: MenuItemsActionTypes.MENUITEMSDRAG_FAIL,
     payload: {
       errorMessage,
     },

@@ -47,8 +47,33 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       marginTop: "30px",
       "&:hover": {
-        background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
+        background: "rgb(238, 82, 82)",
       },
+    },
+    detail: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "15px",
+      marginTop: "10px",
+      position:"relative"
+    },
+    cancelIcon: {
+      cursor: "pointer",
+      borderRadius: "20px",
+      color: "white",
+      backgroundColor: "black",
+      padding: "5px",
+      position: "absolute",
+      top: "-45px",
+      right: "-45px",
+      fontSize: "xx-large",
+    },
+    allbtn: {
+      margin: "10px 0px",
+      borderTop: "1px solid lightgray",
+      borderBottom: "1px solid lightgray",
+      padding: "10px 0px",
     },
   })
 );
@@ -66,14 +91,17 @@ function CreateMenu({ open }) {
     }
   }, [form]);
   const [initial, setInitial] = useState("general");
-  const [input, setInput] = useState();
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleClose = () => {
     open(false);
   };
   const handleClick = () => {
-    dispatch(MenuItemsCreate(form));
+    const {name , displayName , description}=form
+    if(name!=""){
+      dispatch(MenuItemsCreate(form, history));
+    }
   };
   const handlefieldchange = (e) => {
     e.persist();
@@ -82,41 +110,11 @@ function CreateMenu({ open }) {
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "15px",
-          marginTop: "10px",
-        }}
-      >
-        <Typography
-          variant="h5"
-          style={{ cursor: "move" }}
-          id="draggable-dialog-title"
-        >
-          Quick Service Settings
-        </Typography>
-        <CloseIcon
-          onClick={handleClose}
-          style={{
-            cursor: "pointer",
-            borderRadius: "20px",
-            color: "white",
-            backgroundColor: "black",
-            padding: "5px",
-          }}
-        />
+      <div className={classes.detail}>
+        <Typography variant="h5">Create Menu</Typography>
+        <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
       </div>
-      <div
-        style={{
-          margin: "10px 0px",
-          borderTop: "1px solid lightgray",
-          borderBottom: "1px solid lightgray",
-          padding: "10px 0px",
-        }}
-      >
+      <div className={classes.allbtn}>
         <Button
           style={{ backgroundColor: "lightgray" }}
           onClick={() => setInitial("general")}
@@ -127,6 +125,7 @@ function CreateMenu({ open }) {
           Condition
         </Button>
       </div>
+      <form>
       {initial === "general" && (
         <>
           <OrderTime
@@ -134,6 +133,7 @@ function CreateMenu({ open }) {
             inputname="name"
             des="A unique name for your menu"
             handlechange={handlefieldchange}
+            req={true}
           />
           <OrderTime
             button
@@ -142,6 +142,7 @@ function CreateMenu({ open }) {
             title="Display Name"
             des="Will override the unique name in your store"
             handlechange={handlefieldchange}
+            req={false}
           />
           <OrderTime
             button
@@ -150,6 +151,7 @@ function CreateMenu({ open }) {
             title="Description"
             des="The number of outstanding orders before an increase in wait time is applied"
             handlechange={handlefieldchange}
+            req={false}
           />
         </>
       )}
@@ -174,9 +176,10 @@ function CreateMenu({ open }) {
           />
         </>
       )}
-      <Button className={classes.btn} onClick={handleClick}>
-        Save
+      <Button className={classes.btn} onClick={handleClick} type="submit">
+        Create Menu
       </Button>
+      </form>
     </div>
   );
   return (

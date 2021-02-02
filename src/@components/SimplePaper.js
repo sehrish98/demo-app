@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "space-between",
       padding: "8px",
       alignItems: "center",
+      borderBottom: "1px solid lightgray"
     },
     paper: {
       alignSelf: "center",
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) =>
       height: "80px",
       margin: "10px 0px 10px 0px",
     },
+    typo:{
+      fontWeight: "500"
+    }
   })
 );
 function Papers({ title, value }) {
@@ -25,10 +29,9 @@ function Papers({ title, value }) {
   return (
     <Paper elevation={5} className={classes.paper}>
       <div
-        style={{ borderBottom: "1px solid lightgray" }}
         className={classes.detail}
       >
-        <Typography variant="p" style={{ fontWeight: "500" }}>
+        <Typography variant="p">
           {title}
         </Typography>
         <Typography variant="p">{value}</Typography>

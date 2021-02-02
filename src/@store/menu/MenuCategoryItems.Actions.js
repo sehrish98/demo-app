@@ -33,7 +33,7 @@ const MenuCategoryItemsFail = (dispatch, errorMessage) => {
   });
 };
 
-export function MenuCategoryItemsCreate(obj) {
+export function MenuCategoryItemsCreate(obj, history) {
   return (dispatch) => {
     dispatch({
       type: MenuCategoryItemsActionTypes.MENUCATEGORYITEMSCREATE_START,
@@ -41,7 +41,7 @@ export function MenuCategoryItemsCreate(obj) {
     axios
       .post("/menuCategoryItem",obj)
       .then((res) => {
-        MenuCategoryItemsCreateSuccess(dispatch, res.data);
+        MenuCategoryItemsCreateSuccess(dispatch, res.data , history);
       })
       .catch((error) => {
         MenuCategoryItemsCreateFail(dispatch, error.message);
@@ -54,6 +54,7 @@ const MenuCategoryItemsCreateSuccess = (dispatch, data, history) => {
     type: MenuCategoryItemsActionTypes.MENUCATEGORYITEMSCREATE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const MenuCategoryItemsCreateFail = (dispatch, errorMessage) => {
@@ -65,7 +66,7 @@ const MenuCategoryItemsCreateFail = (dispatch, errorMessage) => {
   });
 };
 
-export function MenuCategoryItemsEdit(obj) {
+export function MenuCategoryItemsEdit(obj , history) {
   return (dispatch) => {
     dispatch({
       type: MenuCategoryItemsActionTypes.MENUCATEGORYITEMSEDIT_START,
@@ -73,7 +74,7 @@ export function MenuCategoryItemsEdit(obj) {
     axios
       .put("/menuCategoryItem" , obj)
       .then((res) => {
-        MenuCategoryItemsEditSuccess(dispatch, res.data);
+        MenuCategoryItemsEditSuccess(dispatch, res.data , history);
       })
       .catch((error) => {
         MenuCategoryItemsEditFail(dispatch, error.message);
@@ -86,6 +87,7 @@ const MenuCategoryItemsEditSuccess = (dispatch, data, history) => {
     type: MenuCategoryItemsActionTypes.MENUCATEGORYITEMSEDIT_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const MenuCategoryItemsEditFail = (dispatch, errorMessage) => {
@@ -97,7 +99,7 @@ const MenuCategoryItemsEditFail = (dispatch, errorMessage) => {
   });
 };
 
-export function MenuCategoryItemsDelete(obj) {
+export function MenuCategoryItemsDelete(obj , history) {
   const token = localStorage.getItem("accessToken");
   return (dispatch) => {
     dispatch({
@@ -108,7 +110,7 @@ export function MenuCategoryItemsDelete(obj) {
         data: obj,
       })
       .then((res) => {
-        MenuCategoryItemsDeleteSuccess(dispatch, res.data);
+        MenuCategoryItemsDeleteSuccess(dispatch, res.data , history);
       })
       .catch((error) => {
         MenuCategoryItemsDeleteFail(dispatch, error.message);
@@ -121,11 +123,47 @@ const MenuCategoryItemsDeleteSuccess = (dispatch, data, history) => {
     type: MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDELETE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const MenuCategoryItemsDeleteFail = (dispatch, errorMessage) => {
   dispatch({
     type: MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDELETE_FAIL,
+    payload: {
+      errorMessage,
+    },
+  });
+};
+
+
+export function MenuCategoryItemsDrag(obj , history) {
+  console.log("hi i mdrag menu category items:",obj)
+  return (dispatch) => {
+    dispatch({
+      type: MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDRAG_START,
+    });
+    axios
+      .put("/menuCategoryItem/drag", { data: obj })
+      .then((res) => {
+        MenuCategoryItemsDragSuccess(dispatch, res.data , history);
+      })
+      .catch((error) => {
+        MenuCategoryItemsDragFail(dispatch, error.message);
+      });
+  };
+}
+
+const MenuCategoryItemsDragSuccess = (dispatch, data, history) => {
+  dispatch({
+    type: MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDRAG_SUCCESS,
+    payload: data,
+  });
+  history.push("/menu");
+};
+
+const MenuCategoryItemsDragFail = (dispatch, errorMessage) => {
+  dispatch({
+    type: MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDRAG_FAIL,
     payload: {
       errorMessage,
     },

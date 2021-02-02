@@ -3,6 +3,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Button, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { MenuCategoryItemsEdit } from "../@store/menu/MenuCategoryItems.Actions";
 import OrderTime from "./OrderTime";
@@ -45,12 +46,37 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       marginTop: "30px",
       "&:hover": {
-        background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
+        background: "rgb(238, 82, 82)",
       },
+    },
+    detail: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "15px",
+      marginTop: "10px",
+    },
+    cancelIcon: {
+      cursor: "pointer",
+      borderRadius: "20px",
+      color: "white",
+      backgroundColor: "black",
+      padding: "5px",
+      position: "absolute",
+      top: "-15px",
+      right: "-15px",
+      fontSize: "xx-large",
+    },
+    allbtn: {
+      margin: "10px 0px",
+      borderTop: "1px solid lightgray",
+      borderBottom: "1px solid lightgray",
+      padding: "10px 0px",
     },
   })
 );
-function EditDish({ open, menuId,menucat , data }) {
+function EditDish({ open, menuId, menucat, data }) {
+  const history = useHistory();
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
   useEffect(() => {
@@ -67,14 +93,16 @@ function EditDish({ open, menuId,menucat , data }) {
     const obj = {
       menuId: menuId,
       menuCategoryId: menucat,
-      menuCategoryItemId:form._id,
-      name: form.name ,
+      menuCategoryItemId: form._id,
+      name: form.name,
       price: form.price,
       displayname: form.displayName,
       printName: form.printName,
-      description:form.description,
+      description: form.description,
     };
-    dispatch(MenuCategoryItemsEdit(obj));
+    if(form.name!="" && form.price){
+    dispatch(MenuCategoryItemsEdit(obj , history));
+    }
   };
   const handlefieldchange = (e) => {
     e.persist();
@@ -82,41 +110,11 @@ function EditDish({ open, menuId,menucat , data }) {
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "15px",
-          marginTop: "10px",
-        }}
-      >
-        <Typography
-          variant="h5"
-          style={{ cursor: "move" }}
-          id="draggable-dialog-title"
-        >
-          Quick Service Settings
-        </Typography>
-        <CloseIcon
-          onClick={handleClose}
-          style={{
-            cursor: "pointer",
-            borderRadius: "20px",
-            color: "white",
-            backgroundColor: "black",
-            padding: "5px",
-          }}
-        />
+      <div className={classes.detail}>
+        <Typography variant="h5">Edit Dish</Typography>
+        <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
       </div>
-      <div
-        style={{
-          margin: "10px 0px",
-          borderTop: "1px solid lightgray",
-          borderBottom: "1px solid lightgray",
-          padding: "10px 0px",
-        }}
-      ></div>
+      <div className={classes.allbtn}></div>
 
       <>
         <OrderTime

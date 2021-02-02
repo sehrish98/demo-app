@@ -3,9 +3,10 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Typography, ButtonGroup, Button } from "@material-ui/core";
 import { FileCopy, Close } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import CustomButton from "./CustomButton";
-import { AddtoCartstart,RemoveCart} from "../@store/Cart/Cart.Actions";
+import { AddtoCartstart, RemoveCart } from "../@store/Cart/Cart.Actions";
 
 function getModalStyle() {
   const top = 50;
@@ -57,44 +58,63 @@ const useStyles = makeStyles((theme) =>
         backgroundColor: "red",
         width: "100%",
       },
+      cancelIcon: {
+        cursor: "pointer",
+        borderRadius: "20px",
+        color: "white",
+        backgroundColor: "black",
+        padding: "5px",
+        position: "absolute",
+        top: "-10",
+        right: "-10",
+      },
     },
   })
 );
-function ServiceModal({id, name,qty, des, type, image, price, open }) {
+function ServiceModal({ id, name, qty, des, type, image, price, open }) {
   const [modalStyle] = React.useState(getModalStyle);
   const [cart, setCart] = useState(1);
   const classes = useStyles();
-  const dispatch=useDispatch()
-  const cart_items = useSelector(({ cartreducer}) => cartreducer.cart);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const cart_items = useSelector(({ cartreducer }) => cartreducer.cart);
   const handleCart = (e) => {
-    setCart(cart+1)
-    const obj={
-      id:id,
-        name:name,
-        type:type,
-        price:price,
-        qty:qty
-    }
-    dispatch(AddtoCartstart(obj))
+    setCart(cart + 1)
   };
-  const handleremoveCart=(e)=>{
-    if(cart!=1)
-    {
-      setCart(cart-1)
+  const handleremoveCart = (e) => {
+    if (cart != 1) {
+      setCart(cart - 1);
     }
-    const obj={
-      id:id,
-      name:name,
-      type:type,
-      price:price,
-      qty:qty
-  }
-  dispatch(RemoveCart(obj))
-  }
+    const obj = {
+      id: id,
+      name: name,
+      type: type,
+      price: price,
+      qty: qty,
+    };
+    dispatch(RemoveCart(obj, history));
+  };
   const handleClose = () => {
     open(false);
   };
-
+  const handlecartchange = (e) => {
+    let quantity;
+    if(cart>0)
+    {
+      quantity=cart
+    }
+    else{
+      quantity=qty
+    }
+    const obj = {
+      id: id,
+      name: name,
+      type: type,
+      price: price,
+      qty: quantity,
+    };
+    dispatch(AddtoCartstart(obj, history));
+  };
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <Close
@@ -184,14 +204,25 @@ function ServiceModal({id, name,qty, des, type, image, price, open }) {
           margin: "10px 20px 10px 20px",
         }}
       >
-        <ButtonGroup  aria-label="outlined  button group">
+        <ButtonGroup aria-label="outlined  button group">
           <Button onClick={() => handleremoveCart(id)}>-</Button>
           <Button>{cart}</Button>
-          <Button 
-          onClick={() => handleCart(name)}
-          >+</Button>
+          <Button onClick={() => handleCart(name)}>+</Button>
         </ButtonGroup>
-        <CustomButton name="Add to Card" style={{ marginLeft: "10px" }} id={id} qty={qty} title={name} type={type} price={price} activ open={open} />
+        <CustomButton
+          name="Add to Card"
+          handlechange={() => {
+            handlecartchange(id, qty, type, name, price);
+          }}
+          style={{ marginLeft: "10px" }}
+          id={id}
+          qty={qty}
+          title={name}
+          type={type}
+          price={price}
+          activ
+          open={open}
+        />
       </div>
     </div>
   );

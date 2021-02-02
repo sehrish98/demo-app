@@ -5,7 +5,11 @@ import { Close } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 
 import CustomButton from "./CustomButton";
-import { AddtoCartstart,RemoveCart,RemoveQuantyCart} from "../@store/Cart/Cart.Actions";
+import {
+  AddtoCartstart,
+  RemoveCart,
+  RemoveQuantyCart,
+} from "../@store/Cart/Cart.Actions";
 
 function getModalStyle() {
   const top = 50;
@@ -58,6 +62,45 @@ const useStyles = makeStyles((theme) =>
         backgroundColor: "red",
         width: "100%",
       },
+      // cancelIcon: {
+      //   cursor: "pointer",
+      //   borderRadius: "20px",
+      //   color: "white",
+      //   backgroundColor: "black",
+      //   padding: "5px",
+      //   position: "absolute",
+      //   top: "-10",
+      //   right: "-10",
+      // },
+      typoCart: {
+        fontWeight: "800",
+        fontSize: "20px",
+      },
+      ordertip: {
+        backgroundColor: "rgb(250, 250, 250)",
+        padding: "10px 20px",
+        display: "flex",
+        alignItems: "center",
+        borderBottom: "1px solid rgb(204, 204, 204)",
+      },
+      items: {
+        fontWeight: "600",
+        flexGrow: "1",
+        marginLeft: "10px",
+      },
+      quantity: {
+        display: "flex",
+        padding: "3px 20px",
+        borderBottom: "1px dashed lightgray",
+        alignItems: "center",
+      },
+      name: {
+        display: "flex",
+        flexDirection: "column",
+        lineHeight: "1.8",
+        flexGrow: "1",
+        marginLeft: "20px",
+      },
     },
   })
 );
@@ -82,21 +125,21 @@ const list = [
 function AddtoCart({ name, des, type, image, price, open }) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const cart_items = useSelector(({ cartreducer }) => cartreducer.cart);
   const handleClose = () => {
     open(false);
   };
-  const handleremoveCart=(e)=>{
-    const obj={
-      id:e.id,
-      name:e.name,
-      type:e.type,
-      price:e.price,
-      qty:"1"
-  }
-  dispatch(RemoveQuantyCart(obj))
-  }
+  const handleremoveCart = (e) => {
+    const obj = {
+      id: e.id,
+      name: e.name,
+      type: e.type,
+      price: e.price,
+      qty: "1",
+    };
+    dispatch(RemoveQuantyCart(obj));
+  };
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <Close
@@ -116,19 +159,25 @@ function AddtoCart({ name, des, type, image, price, open }) {
       {/* <img style={{ height: "280px" }} src={image} /> */}
       <div style={{ padding: "10px 20px" }}>
         <div className={classes.detail}>
-          <Typography
-            variant="h6"
-            style={{ fontWeight: "800", fontSize: "20px" }}
-          >
+          <Typography variant="h6" className={classes.typoCart}>
             Cart
           </Typography>
         </div>
       </div>
       {!cart_items.length > 0 ? (
-        <Typography variant="p" style={{display:"flex",justifyContent:"center",padding:"15px 5px"}}>Empty Cart ! Keep Shopping</Typography>
+        <Typography
+          variant="p"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "15px 5px",
+          }}
+        >
+          Empty Cart ! Keep Shopping
+        </Typography>
       ) : (
         <>
-          <div style={{ display: "flex",padding:"0px 15px"}}>
+          <div style={{ display: "flex", padding: "0px 15px" }}>
             <Typography
               variant="p"
               style={{
@@ -137,14 +186,7 @@ function AddtoCart({ name, des, type, image, price, open }) {
             >
               Qty
             </Typography>
-            <Typography
-              variant="p"
-              style={{
-                fontWeight: "600",
-                flexGrow: "1",
-                marginLeft: "10px",
-              }}
-            >
+            <Typography variant="p" className={classes.items}>
               Items
             </Typography>
             <Typography
@@ -158,28 +200,16 @@ function AddtoCart({ name, des, type, image, price, open }) {
           </div>
 
           {cart_items.map((c) => (
-            <div
-              style={{
-                display: "flex",
-                padding: "3px 20px",
-                borderBottom: "1px dashed lightgray",
-                alignItems: "center",
-              }}
-            >
+            <div className={classes.quantity}>
               <Typography variant="p">{c.qty}</Typography>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  lineHeight: "1.8",
-                  flexGrow: "1",
-                  marginLeft: "20px",
-                }}
-              >
+              <div className={classes.name}>
                 <Typography variant="p">{c.name}</Typography>
                 <div style={{ display: "flex", color: "rgb(238, 82, 82)" }}>
                   <Typography style={{ cursor: "pointer" }}>Edit</Typography>
-                  <Typography style={{ cursor: "pointer", marginLeft: "10px" }} onClick={()=>handleremoveCart(c)}>
+                  <Typography
+                    style={{ cursor: "pointer", marginLeft: "10px" }}
+                    onClick={() => handleremoveCart(c)}
+                  >
                     Remove
                   </Typography>
                 </div>
@@ -208,17 +238,7 @@ function AddtoCart({ name, des, type, image, price, open }) {
             </Typography>
           </div>
 
-          <div
-            style={{
-              backgroundColor: "rgb(250, 250, 250)",
-              padding: "10px 20px",
-              display: "flex",
-              alignItems: "center",
-              borderBottom: "1px solid rgb(204, 204, 204)",
-            }}
-          >
-            Order Tip
-          </div>
+          <div className={classes.ordertip}>Order Tip</div>
 
           <div
             style={{

@@ -48,12 +48,36 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       marginTop: "30px",
       "&:hover": {
-        background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
+        background: "rgb(238, 82, 82)",
       },
+    },
+    detail: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "15px",
+      marginTop: "10px",
+    },
+    cancelIcon: {
+      cursor: "pointer",
+      borderRadius: "20px",
+      color: "white",
+      backgroundColor: "black",
+      padding: "5px",
+      position: "absolute",
+      top: "-15px",
+      right: "-15px",
+      fontSize: "xx-large",
+    },
+    allbtn: {
+      margin: "10px 0px",
+      borderTop: "1px solid lightgray",
+      borderBottom: "1px solid lightgray",
+      padding: "10px 0px",
     },
   })
 );
-function EditSetOption({ open , data }) {
+function EditSetOption({ open, data }) {
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
   let dta = {
@@ -61,69 +85,46 @@ function EditSetOption({ open , data }) {
     displayName: "",
     description: "",
   };
+  const history = useHistory();
   useEffect(() => {
     if (data && !form) {
       setForm(data);
     }
   }, [form, setForm]);
   const [initial, setInitial] = useState("general");
-  const [input, setInput] = useState();
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleClose = () => {
     open(false);
   };
   const handleClick = () => {
-    const data={
-    optionSetId:form._id,
-    name:form.name,
-    displayName:form.displayName,
-    description:form.description
-  }
-    dispatch(EditOptionSet(data));
+    const data = {
+      optionSetId: form._id,
+      name: form.name,
+      displayName: form.displayName,
+      description: form.description,
+    };
+    if(form.name!=""){
+    dispatch(EditOptionSet(data , history));
+    }
   };
   const handlefieldchange = (e) => {
     e.persist();
     handleChange(e);
-    // setInput(e.target.value);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "15px",
-          marginTop: "10px",
-        }}
-      >
+      <div className={classes.detail}>
         <Typography
           variant="h5"
           style={{ cursor: "move" }}
           id="draggable-dialog-title"
         >
-          Quick Service Settings
+          Edit Option set
         </Typography>
-        <CloseIcon
-          onClick={handleClose}
-          style={{
-            cursor: "pointer",
-            borderRadius: "20px",
-            color: "white",
-            backgroundColor: "black",
-            padding: "5px",
-          }}
-        />
+        <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
       </div>
-      <div
-        style={{
-          margin: "10px 0px",
-          borderTop: "1px solid lightgray",
-          borderBottom: "1px solid lightgray",
-          padding: "10px 0px",
-        }}
-      >
+      <div className={classes.allbtn}>
         <Button
           style={{ backgroundColor: "lightgray" }}
           onClick={() => setInitial("general")}
@@ -134,6 +135,7 @@ function EditSetOption({ open , data }) {
           Condition
         </Button>
       </div>
+      <form>
       {initial === "general" && (
         <>
           <OrderTime
@@ -142,6 +144,7 @@ function EditSetOption({ open , data }) {
             des="A unique name for your menu"
             handlechange={handlefieldchange}
             value={form && form.name}
+            req={true}
           />
           <OrderTime
             button
@@ -184,9 +187,10 @@ function EditSetOption({ open , data }) {
           />
         </>
       )}
-      <Button className={classes.btn} onClick={handleClick}>
+      <Button className={classes.btn} onClick={handleClick} type="submit">
         Save
       </Button>
+      </form>
     </div>
   );
   return (

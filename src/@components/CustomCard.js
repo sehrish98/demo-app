@@ -19,27 +19,43 @@ const useStyles = makeStyles((theme) =>
       width: "32%",
       cursor: "pointer",
       margin: "20px 1px 10px 1px",
-      backgroundColor:"white",
+      backgroundColor: "white",
     },
     image: {
       height: "120px",
       alignItems: "center",
       width: "150px",
-      backgroundSize:"cover",
-      backgroundPosition: 'center',
+      backgroundSize: "cover",
+      backgroundPosition: "center",
     },
     btn: {
       border: "0",
       padding: "8px 15px",
       backgroundColor: "f2f2f2",
       borderTopLeftRadius: "5px",
-      fontWeight:"600",
-      fontSize:"16px",
-      color:"#323232"
+      fontWeight: "600",
+      fontSize: "16px",
+      color: "#323232",
+    },
+    name: {
+      display: "flex",
+      flexDirection: "column",
+      flexGrow: "1",
+      padding: "25px 20px 10px 5px",
+    },
+    type: {
+      fontWeight: "500",
+      fontSize: "16px",
+      fontStyle: "italic",
+    },
+    price: {
+      display: "flex",
+      justifyContent: "flex-end",
+      width: "100%",
     },
   })
 );
-function CustomCard({ id,name, des, type, image ,price,qty}) {
+function CustomCard({ id, name, des, type, image, price, qty }) {
   const classes = useStyles();
   const [openservice, setService] = useState(false);
   return (
@@ -51,25 +67,11 @@ function CustomCard({ id,name, des, type, image ,price,qty}) {
       >
         <div style={{ display: "flex" }}>
           {image && <img className={classes.image} src={image}></img>}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              flexGrow: "1",
-              padding: "25px 20px 10px 5px",
-            }}
-          >
+          <div className={classes.name}>
             <Typography variant="p" style={{ fontSize: "16px" }}>
               {name}
             </Typography>
-            <Typography
-              variant="p"
-              style={{
-                fontWeight: "500",
-                fontSize: "16px",
-                fontStyle: "italic",
-              }}
-            >
+            <Typography variant="p" className={classes.type}>
               {type}
             </Typography>
             <Typography variant="p" style={{ fontSize: "16px" }}>
@@ -77,13 +79,22 @@ function CustomCard({ id,name, des, type, image ,price,qty}) {
             </Typography>
           </div>
         </div>
-        <div
-          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
-        >
+        <div className={classes.price}>
           <button className={classes.btn}>PKR {price}</button>
         </div>
       </div>
-      {openservice && <ServiceModal open={setService} qty={qty} id={id} des={des} name={name} image={image} type={type} price={price}/>}
+      {openservice && (
+        <ServiceModal
+          open={setService}
+          qty={qty}
+          id={id}
+          des={des}
+          name={name}
+          image={image}
+          type={type}
+          price={price}
+        />
+      )}
     </>
   );
 }

@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "space-between",
       padding: "8px",
       alignItems: "center",
+      borderBottom: "1px solid lightgray",
     },
     btn: {
       background: "linear-gradient(45deg,rgb(61, 54, 54), red)",
@@ -55,9 +56,17 @@ const useStyles = makeStyles((theme) =>
         background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
       },
     },
+    allbtn: {
+      display: "flex",
+      flexFlow: "row-reverse",
+      marginTop: "20px",
+    },
+    cstmbtn:{
+      margin:"10px"
+    }
   })
 );
-function DeleteForm({ open, title, id }) {
+function DeleteForm({ open, title, id, handledelete }) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
   const handleClose = () => {
@@ -65,42 +74,34 @@ function DeleteForm({ open, title, id }) {
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{ borderBottom: "1px solid lightgray" }}
-        className={classes.detail}
-      >
+      <div className={classes.detail}>
         <Typography variant="p" style={{ fontWeight: "500" }}>
-          `Delete ${title}`
+          {`Delete ${title}`}
         </Typography>
         <Typography variant="p">New Menu</Typography>
       </div>
-      <div
-        style={{ display: "flex", flexFlow: "row-reverse", marginTop: "20px" }}
-      >
+      <div className={classes.allbtn}>
         <CustomButton
           name="Delete"
           activ
-          style={{ marginRight: "10px" }}
+          className={classes.cstmbtn}
           title={title}
           id={id}
+          handlechange={handledelete}
         />
-        <CustomButton name="Cancel" style={{ marginLeft: "10px" }} />
+        <CustomButton name="Cancel" className={classes.cstmbtn} />
       </div>
     </div>
   );
   return (
-    <div>
-      {/* <Slide in={open}> */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {body}
-      </Modal>
-      {/* </Slide> */}
-    </div>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+    >
+      {body}
+    </Modal>
   );
 }
 

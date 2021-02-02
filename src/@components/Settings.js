@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-// import {Settings} from "@material-ui/icons";
 import { Typography } from "@material-ui/core/";
+
 import CustomTabs from "./CustomTabs";
 import General from "./General"
 
@@ -19,11 +19,16 @@ const useStyles = makeStyles((theme) =>
     paper: {
       width: "100%",
       marginTop: "20px",
-      // marginBottom: "10px",
       padding: "0px 30px",
     },
     tabs:{
         backgroundColor:"white"
+    },
+    title:{
+      marginBottom: "10px",
+      display:"flex",
+      marginLeft:"0px",
+      justifyItems:"start"
     }
   })
 );
@@ -35,12 +40,7 @@ function Settings() {
       <div className={classes.detail}>
         <Typography
           variant="h4"
-          style={{
-            marginBottom: "10px",
-            display:"flex",
-            marginLeft:"0px",
-            justifyItems:"start"
-          }}
+          className={classes.title}
         >
           Settings
         </Typography>

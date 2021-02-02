@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 import { Typography } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import {Apps ,Remove,Add,Visibility,Settings,Autorenew ,Help,List} from "@material-ui/icons";
+import {
+  Apps,
+  Remove,
+  Add,
+  Visibility,
+  Settings,
+  Autorenew,
+  Help,
+  List,
+} from "@material-ui/icons";
 
 import OrderIcons from "../../@components/OrderIcons";
 import SettingModal from "../../@components/SettingModal";
 import OrderReview from "../../@components/OrderReview";
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     detail: {
@@ -15,14 +25,36 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "space-between",
       padding: "8px",
       alignItems: "center",
-      alignSelf:"center"
+      alignSelf: "center",
+      borderBottom: "1px solid lightgray",
     },
     paper: {
       alignSelf: "center",
       width: "100%",
       margin: "10px 0px 10px 0px",
-      position:"relative",
-      justifyContent:"center",
+      position: "relative",
+      justifyContent: "center",
+    },
+    order__review: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    order: {
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+      justifyContent: "center",
+    },
+    sub__order: {
+      display: "flex",
+      flexWrap: "wrap",
+      margin: "10px 5px 5px 20px",
+      overflowX: "scroll",
+      justifyContent: "flex-end",
+      alignSelf: "center",
+    },
+    font__weight: {
+      fontWeight: "700",
     },
   })
 );
@@ -100,10 +132,10 @@ const unconfirm_list = [
   },
 ];
 function Order({ title, value }) {
-    const classes = useStyles();
-    const [un_confirm, setUn_confirm] = useState(false);
-    const [openModal, setOpenModal] = useState(false);
-    const [compress, setCompress] = useState(90);
+  const classes = useStyles();
+  const [un_confirm, setUn_confirm] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [compress, setCompress] = useState(90);
   const IconList = [
     {
       name: "Board",
@@ -116,28 +148,29 @@ function Order({ title, value }) {
     {
       name: "Compress Layout",
       icon: <Remove style={{ fontSize: "1rem" }} />,
-      setstate:setCompress,
-      state:compress,
-      title:"compress"
+      setstate: setCompress,
+      state: compress,
+      title: "compress",
     },
     {
       name: "Expand Layout",
       icon: <Add style={{ fontSize: "1rem" }} />,
-      setstate:setCompress,
-      state:compress,
-      title:"expand"
+      setstate: setCompress,
+      state: compress,
+      title: "expand",
     },
     {
-      name: un_confirm ? "Hide Unconfirmed":"Show Unconfirmed",
+      name: un_confirm ? "Hide Unconfirmed" : "Show Unconfirmed",
       icon: <Visibility style={{ fontSize: "1rem" }} />,
-      setstate:setUn_confirm,
-      state:un_confirm,
-      title:"un_confirm"
+      setstate: setUn_confirm,
+      state: un_confirm,
+      title: "un_confirm",
     },
     {
       name: "Quick Settings",
       icon: <Settings style={{ fontSize: "1rem" }} />,
-      state:setOpenModal
+      setstate: setOpenModal,
+      state: openModal,
     },
     {
       name: "Refresh",
@@ -148,13 +181,26 @@ function Order({ title, value }) {
       icon: <Help style={{ fontSize: "1rem" }} />,
     },
   ];
+  const handlechange = (e) => {
+    console.log("hi i m hndle chnge",e)
+    if (e == "compress") {
+      if (compress >= 60) {
+        setCompress(compress - 20);
+      }
+    } else if (e == "expand") {
+      if (compress < 90) {
+        setCompress(compress + 20);
+      }
+    } else if (e == "un_confirm") {
+      setUn_confirm(!un_confirm);
+    } else {
+      setOpenModal(!openModal);
+    }
+  };
   return (
     <div className={classes.paper}>
-      <div
-        style={{ borderBottom: "1px solid lightgray" }}
-        className={classes.detail}
-      >
-        <Typography variant="h5" style={{ fontWeight: "700" }}>
+      <div className={classes.detail}>
+        <Typography variant="h5" className={classes.font__weight}>
           Order
         </Typography>
         <div style={{ display: "flex" }}>
@@ -167,25 +213,35 @@ function Order({ title, value }) {
               open={l.setstate}
               state={l.state}
               name={l.title}
+              handlechange={() => {
+                handlechange(l.title);
+              }}
             />
           ))}
         </div>
       </div>
-      <div style={{display:"flex", alignItems:"center", width:"100%", justifyContent:"center"}}>
-      <div
-        style={{
-          display: "flex",
-          flexWrap:"wrap",
-          margin: "10px 5px 5px 20px",
-          width: `${compress}%`,
-          overflowX: "scroll",
-          justifyContent:"flex-end",
-          alignSelf:"center"
-        }}
-      >
-        {un_confirm && (
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {unconfirm_list.map((l, index) => (
+      <div className={classes.order}>
+        <div
+          className={classes.sub__order}
+          style={{
+            width: `${compress}%`,
+          }}
+        >
+          {un_confirm && (
+            <div className={classes.order__review}>
+              {unconfirm_list.map((l, index) => (
+                <OrderReview
+                  title={l.title}
+                  content={l.content}
+                  i={index}
+                  bg={l.bgolor}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className={classes.order__review}>
+            {confirmed_list.map((l, index) => (
               <OrderReview
                 title={l.title}
                 content={l.content}
@@ -194,63 +250,49 @@ function Order({ title, value }) {
               />
             ))}
           </div>
-        )}
-
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {confirmed_list.map((l, index) => (
-            <OrderReview
-              title={l.title}
-              content={l.content}
-              i={index}
-              bg={l.bgolor}
-            />
-          ))}
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {Ready_list.map((l, index) => (
-            <OrderReview
-              title={l.title}
-              content={l.content}
-              i={index}
-              bg={l.bgolor}
-            />
-          ))}
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {On_Route.map((l, index) => (
-            <OrderReview
-              title={l.title}
-              content={l.content}
-              i={index}
-              bg={l.bgolor}
-            />
-          ))}
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {Complete_list.map((l, index) => (
-            <OrderReview
-              title={l.title}
-              content={l.content}
-              i={index}
-              bg={l.bgolor}
-            />
-          ))}
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {Cancel_list.map((l, index) => (
-            <OrderReview
-              title={l.title}
-              content={l.content}
-              i={index}
-              bg={l.bgolor}
-            />
-          ))}
+          <div className={classes.order__review}>
+            {Ready_list.map((l, index) => (
+              <OrderReview
+                title={l.title}
+                content={l.content}
+                i={index}
+                bg={l.bgolor}
+              />
+            ))}
+          </div>
+          <div className={classes.order__review}>
+            {On_Route.map((l, index) => (
+              <OrderReview
+                title={l.title}
+                content={l.content}
+                i={index}
+                bg={l.bgolor}
+              />
+            ))}
+          </div>
+          <div className={classes.order__review}>
+            {Complete_list.map((l, index) => (
+              <OrderReview
+                title={l.title}
+                content={l.content}
+                i={index}
+                bg={l.bgolor}
+              />
+            ))}
+          </div>
+          <div className={classes.order__review}>
+            {Cancel_list.map((l, index) => (
+              <OrderReview
+                title={l.title}
+                content={l.content}
+                i={index}
+                bg={l.bgolor}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      </div>
-      {
-          openModal&&<SettingModal open={setOpenModal} />
-      }
+      {openModal && <SettingModal open={setOpenModal} />}
     </div>
   );
 }

@@ -33,13 +33,13 @@ const GetDishesFail = (dispatch, errorMessage) => {
   });
 };
 
-export function CreateDishes(obj) {
+export function CreateDishes(obj , history) {
   return (dispatch) => {
     dispatch({
       type: DishActionTypes.DISHCREATE_START,
     });
     axios
-      .post("/dishTag", obj)
+      .post("/dishTag", obj , history)
       .then((res) => {
         CreateDishesSuccess(dispatch, res.data);
       })
@@ -54,6 +54,7 @@ const CreateDishesSuccess = (dispatch, data, history) => {
     type: DishActionTypes.DISHCREATE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const CreateDishesFail = (dispatch, errorMessage) => {
@@ -65,13 +66,13 @@ const CreateDishesFail = (dispatch, errorMessage) => {
   });
 };
 
-export function DishEdit(obj) {
+export function DishEdit(obj , history) {
   return (dispatch) => {
     dispatch({
       type: DishActionTypes.DISHEDIT_START,
     });
     axios
-      .put("/dishTag", obj)
+      .put("/dishTag", obj , history)
       .then((res) => {
         DishEditSuccess(dispatch, res.data);
       })
@@ -86,6 +87,7 @@ const DishEditSuccess = (dispatch, data, history) => {
     type: DishActionTypes.DISHEDIT_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const DishEditFail = (dispatch, errorMessage) => {
@@ -97,7 +99,7 @@ const DishEditFail = (dispatch, errorMessage) => {
   });
 };
 
-export function DisheTagDelete(obj) {
+export function DisheTagDelete(obj , history) {
   return (dispatch) => {
     dispatch({
       type: DishActionTypes.DISHDELETE_START,
@@ -107,7 +109,7 @@ export function DisheTagDelete(obj) {
         data: obj,
       })
       .then((res) => {
-        DisheDeleteSuccess(dispatch, res.data);
+        DisheDeleteSuccess(dispatch, res.data , history);
       })
       .catch((error) => {
         DisheDeleteFail(dispatch, error.message);
@@ -120,11 +122,45 @@ const DisheDeleteSuccess = (dispatch, data, history) => {
     type: DishActionTypes.DISHDELETE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const DisheDeleteFail = (dispatch, errorMessage) => {
   dispatch({
     type: DishActionTypes.DISHDELETE_FAIL,
+    payload: {
+      errorMessage,
+    },
+  });
+};
+
+export function DisheTagDrag(obj , history) {
+  return (dispatch) => {
+    dispatch({
+      type: DishActionTypes.DISHDRAG_START,
+    });
+    axios
+      .put("/dishTag/drag", { data: obj })
+      .then((res) => {
+        DisheTagDragSuccess(dispatch, res.data);
+      })
+      .catch((error) => {
+        DisheTagDragFail(dispatch, error.message);
+      });
+  };
+}
+
+const DisheTagDragSuccess = (dispatch, data, history) => {
+  dispatch({
+    type: DishActionTypes.DISHDRAG_SUCCESS,
+    payload: data,
+  });
+  history.push("/menu");
+};
+
+const DisheTagDragFail = (dispatch, errorMessage) => {
+  dispatch({
+    type: DishActionTypes.DISHDRAG_FAIL,
     payload: {
       errorMessage,
     },

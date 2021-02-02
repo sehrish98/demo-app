@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function CustomInput({ type, placeholder, handlechange, name ,value}) {
+function CustomInput({ type, placeholder, handlechange, name ,value , req}) {
   const classes = useStyles();
   return (
     <div>
@@ -21,6 +21,7 @@ function CustomInput({ type, placeholder, handlechange, name ,value}) {
         onChange={handlechange}
         name={name}
         value={value}
+        required={req}
       />
     </div>
   );

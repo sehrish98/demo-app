@@ -70,7 +70,7 @@ function NavBar() {
             }}
             onClick={()=>setAddtocart(true)}
           >
-            Book
+            Items
           </Typography>
           <Typography
             variant="p"
@@ -81,7 +81,7 @@ function NavBar() {
               borderLeft: "1px solid #df676a",
             }}
           >
-            Order {cart_items.length}
+            Cart {cart_items.length}
           </Typography>
         </div>
       </div>
