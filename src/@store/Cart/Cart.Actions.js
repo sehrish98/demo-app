@@ -1,19 +1,21 @@
 import { CartActionTypes } from "../redux/actionTypes";
 
-export function AddtoCartstart(obj) {
+export function AddtoCartstart(obj , history) {
+  console.log("hi i m triggered",obj)
     return (dispatch) => {
-      AddtocartSuccess(dispatch, obj);
+      AddtocartSuccess(dispatch, obj , history);
       dispatch({
         type: CartActionTypes.ADDTOCART_START,
       });
     };
   }
   
-  const AddtocartSuccess = (dispatch, data) => {
+  const AddtocartSuccess = (dispatch, data , history) => {
     dispatch({
       type: CartActionTypes.ADDTOCART_SUCCESS,
       payload: data,
     });
+    history.push("/dash-board")
   };
   
   const AddtocartFail = (dispatch, errorMessage) => {

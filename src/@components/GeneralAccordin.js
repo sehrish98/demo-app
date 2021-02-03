@@ -14,11 +14,13 @@ const useStyles = makeStyles((theme) =>
       width: "100%",
       marginTop: "20px",
       marginBottom: "60px",
-      //   padding: "20px 30px",
     },
     general: {
       width: "100%",
       alignItems: "center",
+    },
+    style: {
+      margin: "15px",
     },
   })
 );
@@ -60,7 +62,7 @@ function GeneralAccordin() {
         title="Timezone"
         des="Taxes are calculated from top to bottom if compounded"
       />
-      <center style={{ margin: "15px" }}>
+      <center className={classes.style}>
         <CustomButton name="Save" activ />
       </center>
     </div>

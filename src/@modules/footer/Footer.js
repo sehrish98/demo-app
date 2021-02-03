@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) =>
       display:"flex",
       placeItems:"center",
       justifyContent:"center",
-    //   marginTop:"100px"
     },
   })
 );
@@ -21,7 +20,7 @@ function Footer({ title, value }) {
   const classes = useStyles();
   return (
     <div elevation={5} className={classes.paper}>
-        <Typography variant="p" style={{  }}>
+        <Typography variant="p">
         Powered By CloudWaitress
         </Typography>
     </div>

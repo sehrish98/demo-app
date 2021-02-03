@@ -54,6 +54,24 @@ const useStyles = makeStyles((theme) =>
         background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
       },
     },
+    cancelIcon: {
+      cursor: "pointer",
+      borderRadius: "20px",
+      color: "white",
+      backgroundColor: "black",
+      padding: "5px",
+      position: "absolute",
+      top: "-10",
+      right: "-10",
+    },
+    subdetail: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "15px",
+      borderBottom: "1px solid lightgray",
+      padding: "10px 20px 10px 20px",
+    },
   })
 );
 function SearchModal({ open }) {
@@ -65,29 +83,11 @@ function SearchModal({ open }) {
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <CloseIcon
-      fontSize="Large"
+        fontSize="Large"
         onClick={handleClose}
-        style={{
-          cursor: "pointer",
-          borderRadius: "20px",
-          color: "white",
-          backgroundColor: "black",
-          padding: "5px",
-          position: "absolute",
-          top: "-10",
-          right: "-10",
-        }}
+        className={classes.cancelIcon}
       />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "15px",
-          borderBottom: "1px solid lightgray",
-          padding: "10px 20px 10px 20px",
-        }}
-      >
+      <div className={classes.subdetail}>
         <Typography
           variant="h6"
           style={{ cursor: "move" }}

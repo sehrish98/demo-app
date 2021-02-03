@@ -33,7 +33,7 @@ const MenuCategoryFail = (dispatch, errorMessage) => {
   });
 };
 
-export function MenuCategoryCreate(obj) {
+export function MenuCategoryCreate(obj , history) {
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYCREATE_START,
@@ -41,7 +41,7 @@ export function MenuCategoryCreate(obj) {
     axios
       .post("/menuCategory", obj)
       .then((res) => {
-        MenuCategoryCreateSuccess(dispatch, res.data);
+        MenuCategoryCreateSuccess(dispatch, res.data,history);
       })
       .catch((error) => {
         MenuCategoryCreateFail(dispatch, error.message);
@@ -54,6 +54,7 @@ const MenuCategoryCreateSuccess = (dispatch, data, history) => {
     type: MenuCategoryActionTypes.MENUCATEGORYCREATE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const MenuCategoryCreateFail = (dispatch, errorMessage) => {
@@ -65,7 +66,7 @@ const MenuCategoryCreateFail = (dispatch, errorMessage) => {
   });
 };
 
-export function MenuCategoryEdit(obj) {
+export function MenuCategoryEdit(obj , history) {
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYEDIT_START,
@@ -73,7 +74,7 @@ export function MenuCategoryEdit(obj) {
     axios
       .put("/menuCategory", obj)
       .then((res) => {
-        MenuCategoryEditSuccess(dispatch, res.data);
+        MenuCategoryEditSuccess(dispatch, res.data , history);
       })
       .catch((error) => {
         MenuCategoryEditFail(dispatch, error.message);
@@ -86,6 +87,7 @@ const MenuCategoryEditSuccess = (dispatch, data, history) => {
     type: MenuCategoryActionTypes.MENUCATEGORYEDIT_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const MenuCategoryEditFail = (dispatch, errorMessage) => {
@@ -97,15 +99,15 @@ const MenuCategoryEditFail = (dispatch, errorMessage) => {
   });
 };
 
-export function MenuCategoryDelete(obj) {
+export function MenuCategoryDelete(obj , history) {
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYDELETE_START,
     });
     axios
-      .delete("/menuCategory", obj)
+      .delete("/menuCategory", {data:obj})
       .then((res) => {
-        MenuCategoryDeleteSuccess(dispatch, res.data);
+        MenuCategoryDeleteSuccess(dispatch, res.data , history);
       })
       .catch((error) => {
         MenuCategoryDeleteFail(dispatch, error.message);
@@ -118,11 +120,46 @@ const MenuCategoryDeleteSuccess = (dispatch, data, history) => {
     type: MenuCategoryActionTypes.MENUCATEGORYDELETE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const MenuCategoryDeleteFail = (dispatch, errorMessage) => {
   dispatch({
     type: MenuCategoryActionTypes.MENUCATEGORYDELETE_FAIL,
+    payload: {
+      errorMessage,
+    },
+  });
+};
+
+export function MenuCategoryDrag(obj , history) {
+  console.log("hi i mdrag menu category:",obj)
+  return (dispatch) => {
+    dispatch({
+      type: MenuCategoryActionTypes.MENUCATEGORYDRAG_START,
+    });
+    axios
+      .put("/menuCategory/drag", { data: obj })
+      .then((res) => {
+        MenuCategoryDragSuccess(dispatch, res.data , history);
+      })
+      .catch((error) => {
+        MenuCategoryDragFail(dispatch, error.message);
+      });
+  };
+}
+
+const MenuCategoryDragSuccess = (dispatch, data, history) => {
+  dispatch({
+    type: MenuCategoryActionTypes.MENUCATEGORYDRAG_SUCCESS,
+    payload: data,
+  });
+  history.push("/menu");
+};
+
+const MenuCategoryDragFail = (dispatch, errorMessage) => {
+  dispatch({
+    type: MenuCategoryActionTypes.MENUCATEGORYDRAG_FAIL,
     payload: {
       errorMessage,
     },

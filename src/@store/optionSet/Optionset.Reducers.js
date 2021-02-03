@@ -71,6 +71,22 @@ const optionset__Reducer = function (state = initial_state, action) {
         };
       }
 
+      case OptionSetypes.OPTIONSETDRAG_START: {
+        return {
+          ...state,
+        };
+      }
+      case OptionSetypes.OPTIONSETDRAG_SUCCESS: {
+        return {
+          ...state,
+        };
+      }
+      case OptionSetypes.OPTIONSETDRAG_FAIL: {
+        return {
+          state: action.payload,
+        };
+      }
+
     default: {
       return state;
     }

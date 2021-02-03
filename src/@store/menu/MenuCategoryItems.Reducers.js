@@ -67,14 +67,26 @@ const menu_caregory_items_Reducer = function (state = initial_state, action) {
         };
       }
       case MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDELETE_SUCCESS: {
-        const { username, password } = action.payload;
         return {
           ...state,
-          username: username,
-          password: password,
         };
       }
       case MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDELETE_FAIL: {
+        return {
+          state: action.payload,
+        };
+      }
+      case MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDRAG_START: {
+        return {
+          ...state,
+        };
+      }
+      case MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDRAG_SUCCESS: {
+        return {
+          ...state,
+        };
+      }
+      case MenuCategoryItemsActionTypes.MENUCATEGORYITEMSDRAG_FAIL: {
         return {
           state: action.payload,
         };

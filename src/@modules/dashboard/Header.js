@@ -2,6 +2,7 @@ import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { Language, Lock, Person } from "@material-ui/icons";
 
+import CustomDropDown from "../../@components/CustomDropDown";
 const useStyles = makeStyles((theme) =>
   createStyles({
     paper: {
@@ -14,30 +15,32 @@ const useStyles = makeStyles((theme) =>
       maxWidth: "1240px",
       padding: "10px",
     },
+    header__right: {
+      marginRight: "10px",
+      display: "flex",
+      alignItems: "center",
+    },
+    header__left:{
+      display:"flex",
+    }
   })
 );
 function Header() {
   const classes = useStyles();
   return (
     <div elevation={5} className={classes.paper}>
-      <div>
+      <div className={classes.header__left}>
         <Language />
-        {/* English */}
-        <select style={{border:"0" , backgroundColor:"#ececec", marginLeft:"5px"}}>
-            <option>English</option>
-            <option>Japniese</option>
-            <option>English</option>
-        </select>
-        {/* <ArrowDropDown /> */}
+        <CustomDropDown title="" options={["English", "Japnies"]} />
       </div>
-      <div style={{display:"flex",}}>
-          <div style={{marginRight:"10px", display:"flex", alignItems:"center"}} >
+      <div style={{ display: "flex" }}>
+        <div className={classes.header__right}>
           <Person />
-        Guest
-          </div>
-        <div style={{marginRight:"10px", display:"flex", alignItems:"center"}}>
-        <Lock fontSize="small" />
-        SignUp/Login
+          Guest
+        </div>
+        <div className={classes.header__right}>
+          <Lock fontSize="small" />
+          SignUp/Login
         </div>
       </div>
     </div>

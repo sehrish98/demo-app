@@ -17,7 +17,7 @@ export function GetOptionSet() {
   };
 }
 
-const GetOptionSetSuccess = (dispatch, data, history) => {
+const GetOptionSetSuccess = (dispatch, data) => {
   dispatch({
     type: OptionSetypes.GETOPTIONSET_SUCCESS,
     payload: data,
@@ -33,7 +33,7 @@ const GetOptionSetFail = (dispatch, errorMessage) => {
   });
 };
 
-export function CreateOptionSet(obj) {
+export function CreateOptionSet(obj , history) {
   return (dispatch) => {
     dispatch({
       type: OptionSetypes.OPTIONSETCREATE_START,
@@ -41,7 +41,7 @@ export function CreateOptionSet(obj) {
     axios
       .post("/optionSet", obj)
       .then((res) => {
-        CreateOptionSetSuccess(dispatch, res.data);
+        CreateOptionSetSuccess(dispatch, res.data , history);
       })
       .catch((error) => {
         CreateOptionSetFail(dispatch, error.message);
@@ -54,6 +54,7 @@ const CreateOptionSetSuccess = (dispatch, data, history) => {
     type: OptionSetypes.OPTIONSETCREATE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const CreateOptionSetFail = (dispatch, errorMessage) => {
@@ -65,7 +66,7 @@ const CreateOptionSetFail = (dispatch, errorMessage) => {
   });
 };
 
-export function EditOptionSet(obj) {
+export function EditOptionSet(obj , history) {
   return (dispatch) => {
     dispatch({
       type: OptionSetypes.OPTIONSETEDIT_START,
@@ -73,7 +74,7 @@ export function EditOptionSet(obj) {
     axios
       .put("/optionSet", obj)
       .then((res) => {
-        EditOptionSetSuccess(dispatch, res.data);
+        EditOptionSetSuccess(dispatch, res.data, history);
       })
       .catch((error) => {
         EditOptionSetFail(dispatch, error.message);
@@ -86,6 +87,7 @@ const EditOptionSetSuccess = (dispatch, data, history) => {
     type: OptionSetypes.OPTIONSETEDIT_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const EditOptionSetFail = (dispatch, errorMessage) => {
@@ -97,7 +99,7 @@ const EditOptionSetFail = (dispatch, errorMessage) => {
   });
 };
 
-export function DeleteOptionSet(obj) {
+export function DeleteOptionSet(obj , history) {
   return (dispatch) => {
     dispatch({
       type: OptionSetypes.OPTIONSETDELETE_START,
@@ -105,7 +107,7 @@ export function DeleteOptionSet(obj) {
     axios
       .delete("/optionSet", { data: obj })
       .then((res) => {
-        DeleteOptionSetSuccess(dispatch, res.data);
+        DeleteOptionSetSuccess(dispatch, res.data , history);
       })
       .catch((error) => {
         DeleteOptionSetFail(dispatch, error.message);
@@ -118,11 +120,46 @@ const DeleteOptionSetSuccess = (dispatch, data, history) => {
     type: OptionSetypes.OPTIONSETDELETE_SUCCESS,
     payload: data,
   });
+  history.push("/menu");
 };
 
 const DeleteOptionSetFail = (dispatch, errorMessage) => {
   dispatch({
     type: OptionSetypes.OPTIONSETDELETE_FAIL,
+    payload: {
+      errorMessage,
+    },
+  });
+};
+
+
+export function OptionSetDrag(obj , history) {
+  return (dispatch) => {
+    dispatch({
+      type: OptionSetypes.OPTIONSETDRAG_START,
+    });
+    axios
+      .put("/optionSet/drag", { data: obj })
+      .then((res) => {
+        OptionSetDragSuccess(dispatch, res.data , history);
+      })
+      .catch((error) => {
+        OptionSetDragFail(dispatch, error.message);
+      });
+  };
+}
+
+const OptionSetDragSuccess = (dispatch, data, history) => {
+  dispatch({
+    type: OptionSetypes.OPTIONSETDRAG_SUCCESS,
+    payload: data,
+  });
+  history.push("/menu");
+};
+
+const OptionSetDragFail = (dispatch, errorMessage) => {
+  dispatch({
+    type: OptionSetypes.OPTIONSETDRAG_FAIL,
     payload: {
       errorMessage,
     },

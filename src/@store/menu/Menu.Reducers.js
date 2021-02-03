@@ -67,11 +67,8 @@ const menu__Reducer = function (state = initial_state, action) {
         };
       }
       case MenuItemsActionTypes.MENUITEMSDELETE_SUCCESS: {
-        const { username, password } = action.payload;
         return {
           ...state,
-          username: username,
-          password: password,
         };
       }
       case MenuItemsActionTypes.MENUITEMSDELETE_FAIL: {
@@ -79,6 +76,23 @@ const menu__Reducer = function (state = initial_state, action) {
           state: action.payload,
         };
       }
+
+      case MenuItemsActionTypes.MENUITEMSDRAG_START: {
+        return {
+          ...state,
+        };
+      }
+      case MenuItemsActionTypes.MENUITEMSDRAG_SUCCESS: {
+        return {
+          ...state,
+        };
+      }
+      case MenuItemsActionTypes.MENUITEMSDRAG_FAIL: {
+        return {
+          state: action.payload,
+        };
+      }
+
 
     default: {
       return state;

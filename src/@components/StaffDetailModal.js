@@ -53,6 +53,30 @@ const useStyles = makeStyles((theme) =>
         background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
       },
     },
+    cancelIcon: {
+      cursor: "pointer",
+      borderRadius: "20px",
+      color: "white",
+      backgroundColor: "black",
+      padding: "5px",
+      position: "absolute",
+      top: "-10",
+      right: "-10",
+    },
+    detail: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      PaddingBottom: "15px",
+      marginTop: "10px",
+      borderBottom: "1px solid lightgray",
+    },
+    subdetail: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
   })
 );
 function StaffDetailModal({ open }) {
@@ -63,29 +87,11 @@ function StaffDetailModal({ open }) {
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          PaddingBottom: "15px",
-          marginTop: "10px",
-          borderBottom: "1px solid lightgray",
-        }}
-      >
+      <div className={classes.detail}>
         <Avatar alt="Puneet" style={{ marginBottom: "5px" }}>
           P
         </Avatar>
-        <Close
-          onClick={handleClose}
-          style={{
-            cursor: "pointer",
-            borderRadius: "20px",
-            color: "white",
-            backgroundColor: "black",
-            padding: "5px",
-          }}
-        />
+        <Close onClick={handleClose} className={classes.cancelIcon} />
       </div>
       <TitleValue title="Type" value="Email" />
       <TitleValue title="Name" value="Puneet" />
@@ -107,14 +113,7 @@ function StaffDetailModal({ open }) {
           <Typography>Accordion 2</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          <div className={classes.subdetail}>
             <TitleValue title="Sessions" value="2" />
             <TitleValue title="Total Orders" value="25" />
             <TitleValue title="Total Sales" value="2" />

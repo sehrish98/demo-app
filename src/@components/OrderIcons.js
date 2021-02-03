@@ -1,7 +1,6 @@
 import React from "react";
 import { Tooltip } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -26,39 +25,14 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-const OrderIcon = ({ icon, tiptext, open,name,state, i }) => {
-  // const history = useHistory();
+const OrderIcon = ({ icon, tiptext, i,handlechange }) => {
   const classes = useStyles();
-  const handleclick = () => {
-    if(name=="compress")
-    {
-      if(state>=60)
-      {
-        open(state-20)
-      }
-    }
-    else if(name=="expand")
-    {
-      if(state<90)
-      {
-        open(state+20)
-      }
-    }
-    else if(name=="un_confirm")
-    {
-      open(!state)
-    }
-    else
-    {
-      open(true);
-    }
-  };
   return (
     <div>
       <Tooltip title={tiptext} placement="top" className={classes.icon} arrow>
         <p
           className={`${i === "0" && classes.active}`}
-          onClick={handleclick}
+          onClick={handlechange}
           style={{ fontSize: "1rem" }}
         >
           {icon}

@@ -22,18 +22,19 @@ import {
       },
     })
   );
-function BtnCustom({title , open}) {
-    const handleClose = () => {
-      if(title=="Log in")
-      {
-      }
-      else{
-        open(false);
-      }
-      };
+function BtnCustom({title ,type, open}) {
+    // const handleClose = (e) => {
+    //   e.preventDefault()
+    //   // if(title=="Log in")
+    //   // {
+    //   // }
+    //   if{
+    //     open(false);
+    //   }
+    //   };
     const classes = useStyles();
     return (
-        <Button className={classes.btn} onClick={handleClose} >
+        <Button type={type} className={classes.btn}  >
         {title}
       </Button>
     )

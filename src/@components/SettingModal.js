@@ -47,6 +47,29 @@ const useStyles = makeStyles((theme) =>
         background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
       },
     },
+    detail: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "15px",
+      marginTop: "10px",
+    },
+    cancelIcon: {
+      cursor: "pointer",
+      borderRadius: "20px",
+      color: "white",
+      backgroundColor: "black",
+      padding: "5px",
+      position: "absolute",
+      top: "-10",
+      right: "-10",
+    },
+    subdetail: {
+      margin: "10px 0px",
+      borderTop: "1px solid lightgray",
+      borderBottom: "1px solid lightgray",
+      padding: "10px 0px",
+    }
   })
 );
 function SettingModal({ open }) {
@@ -57,14 +80,7 @@ function SettingModal({ open }) {
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "15px",
-          marginTop: "10px",
-        }}
+      <div className={classes.detail}
       >
         <Typography
           variant="h5"
@@ -73,25 +89,11 @@ function SettingModal({ open }) {
         >
           Quick Service Settings
         </Typography>
-        <CloseIcon
+        <CloseIcon className={classes.cancelIcon}
           onClick={handleClose}
-          style={{
-            cursor: "pointer",
-            borderRadius: "20px",
-            color: "white",
-            backgroundColor: "black",
-            padding: "5px",
-          }}
         />
       </div>
-      <div
-        style={{
-          margin: "10px 0px",
-          borderTop: "1px solid lightgray",
-          borderBottom: "1px solid lightgray",
-          padding: "10px 0px",
-        }}
-      >
+      <div className={classes.subdetail}>
         <Button style={{ backgroundColor: "lightgray" }}>Pick up</Button>
         <Button variant="p">Delivery</Button>
         <Button variant="p">Dine in</Button>
@@ -208,10 +210,9 @@ function SettingModal({ open }) {
         title="Increase Wait Time By Y Minutes"
         des="The amount of time to add onto the customers wait time if the order count above is exceeded"
       />
-      <BtnCustom title="Save" />
-      {/* <Button className={classes.btn} onClick={handleClose}>
+      <Button className={classes.btn} onClick={handleClose}>
         Save
-      </Button> */}
+      </Button>
     </div>
   );
   return (

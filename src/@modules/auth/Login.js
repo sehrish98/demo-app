@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -6,11 +6,12 @@ import {
   TextField,
   Typography,
   CardActions,
+  FormControl,
 } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { useDispatch } from "react-redux";
-import {useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 import { userLogin } from "../../@store/auth/Auth.Actions";
 import BtnCustom from "../../@components/BtnCustom";
@@ -80,20 +81,27 @@ const useStyles = makeStyles({
   cardAction: {
     justifyContent: "center",
   },
+  go__link: {
+    textDecoration: "none",
+    color: "rgb(238, 82, 82)",
+    marginLeft: "5px",
+  },
 });
 export default function Login({ data, details }) {
-  // const history=useHistory()
+  const history=useHistory()
   const classes = useStyles();
-  const dispatch=useDispatch()
-  const [username , setUsername]=useState("")
-  const [password , setPassword]=useState("")
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const handleLoginClick = (e) => {
-    const obj={
-        email:username,
-        password:password,
-    }
-    dispatch(userLogin(obj ))
+    e.preventDefault()
+    const obj = {
+      email: username,
+      password: password,
+    };
+    dispatch(userLogin(obj , history));
   };
+
   return (
     <div className={classes.login}>
       <img
@@ -107,49 +115,45 @@ export default function Login({ data, details }) {
             <Typography variant="h4" className={classes.typo}>
               Login
             </Typography>
-            <form name="loginForm" noValidate className={classes.form}>
-              <MuiThemeProvider theme={theme}>
+            <MuiThemeProvider theme={theme}>
+              <form name="loginForm" noValidate className={classes.form}>
                 <TextField
                   style={{ marginBottom: "20px" }}
-                  label="User Name"
+                  label="Email"
                   autoFocus={false}
                   type="email"
-                  name="name"
-                  required
+                  name="email"
+                  required={true}
                   fullWidth
-                    onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
-
                 <TextField
                   autoFocus={false}
                   className="mb-16"
                   label="Password"
                   type="password"
                   name="password"
-                  required
+                  required={true}
                   fullWidth
-                    onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                <CardActions className={classes.cardAction} onClick={handleLoginClick}>
-                  <BtnCustom title="Log in" />
+                <CardActions
+                  className={classes.cardAction}
+                  onClick={handleLoginClick}
+                >
+                  <BtnCustom title="Log in" type="submit"/>
                 </CardActions>
-              </MuiThemeProvider>
-            </form>
+              </form>
+            </MuiThemeProvider>
             <small className={classes.small}>
               Dont have an account?
-              <a
-                to={"/login"}
-                style={{ textDecoration: "none", color: "rgb(238, 82, 82)" , marginLeft:"5px" }}
-              >
+              <a to={"/login"} className={classes.go__link}>
                 Sign up
               </a>
             </small>
             <small className={classes.small}>
               Forgot your password?
-              <a
-                to={"/login"}
-                style={{ textDecoration: "none", color: "rgb(238, 82, 82)", marginLeft:"5px" }}
-              >
+              <a to={"/login"} className={classes.go__link}>
                 Reset Password
               </a>
             </small>

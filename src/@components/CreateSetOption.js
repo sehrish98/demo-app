@@ -3,6 +3,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Button, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
@@ -46,12 +47,37 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       marginTop: "30px",
       "&:hover": {
-        background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
+        background: "rgb(238, 82, 82)",
       },
+    },
+    detail: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "15px",
+      marginTop: "10px",
+    },
+    cancelIcon: {
+      cursor: "pointer",
+      borderRadius: "20px",
+      color: "white",
+      backgroundColor: "black",
+      padding: "5px",
+      position: "absolute",
+      top: "-15px",
+      right: "-15px",
+      fontSize: "xx-large",
+    },
+    allbtn: {
+      margin: "10px 0px",
+      borderTop: "1px solid lightgray",
+      borderBottom: "1px solid lightgray",
+      padding: "10px 0px",
     },
   })
 );
 function CreateSetOption({ open }) {
+  const history = useHistory();
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
   let dta = {
@@ -71,61 +97,33 @@ function CreateSetOption({ open }) {
     open(false);
   };
   const handleClick = () => {
-    const {name , displayName ,description}=form
-    dispatch(CreateOptionSet(form));
+    const {name}=form
+    if(name!=""){
+    dispatch(CreateOptionSet(form , history));
+    }
   };
   const handlefieldchange = (e) => {
     e.persist();
     handleChange(e);
-    // setInput(e.target.value);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "15px",
-          marginTop: "10px",
-        }}
-      >
-        <Typography
-          variant="h5"
-          style={{ cursor: "move" }}
-          id="draggable-dialog-title"
-        >
-          Quick Service Settings
-        </Typography>
-        <CloseIcon
-          onClick={handleClose}
-          style={{
-            cursor: "pointer",
-            borderRadius: "20px",
-            color: "white",
-            backgroundColor: "black",
-            padding: "5px",
-          }}
-        />
+      <div className={classes.detail}>
+        <Typography variant="h5">Create Option Set</Typography>
+        <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
       </div>
-      <div
-        style={{
-          margin: "10px 0px",
-          borderTop: "1px solid lightgray",
-          borderBottom: "1px solid lightgray",
-          padding: "10px 0px",
-        }}
-      >
+      <div className={classes.allbtn}>
         <Button
           style={{ backgroundColor: "lightgray" }}
           onClick={() => setInitial("general")}
         >
-          General i m option set
+          General
         </Button>
         <Button variant="p" onClick={() => setInitial("credential")}>
           Condition
         </Button>
       </div>
+      <form>
       {initial === "general" && (
         <>
           <OrderTime
@@ -133,6 +131,7 @@ function CreateSetOption({ open }) {
             inputname="name"
             des="A unique name for your menu"
             handlechange={handlefieldchange}
+            req={true}
           />
           <OrderTime
             button
@@ -173,9 +172,10 @@ function CreateSetOption({ open }) {
           />
         </>
       )}
-      <Button className={classes.btn} onClick={handleClick}>
+      <Button className={classes.btn} onClick={handleClick} type="submit">
         Save
       </Button>
+      </form>
     </div>
   );
   return (

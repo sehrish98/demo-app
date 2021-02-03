@@ -3,6 +3,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Button, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { MenuCategoryCreate } from "../@store/menu/MenuCategory.Actions";
 import OrderTime from "./OrderTime";
@@ -47,8 +48,32 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       marginTop: "30px",
       "&:hover": {
-        background: "linear-gradient(45deg,red,rgb(61, 54, 54),)",
+        background: "rgb(238, 82, 82)",
       },
+    },
+    detail: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "15px",
+      marginTop: "10px",
+    },
+    cancelIcon: {
+      cursor: "pointer",
+      borderRadius: "20px",
+      color: "white",
+      backgroundColor: "black",
+      padding: "5px",
+      position: "absolute",
+      top: "-15px",
+      right: "-15px",
+      fontSize: "xx-large",
+    },
+    allbtn: {
+      margin: "10px 0px",
+      borderTop: "1px solid lightgray",
+      borderBottom: "1px solid lightgray",
+      padding: "10px 0px",
     },
   })
 );
@@ -65,6 +90,7 @@ function CreateCategory({ open, id }) {
       setForm(dta);
     }
   }, [form]);
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleClose = () => {
@@ -72,13 +98,15 @@ function CreateCategory({ open, id }) {
   };
   const handleClick = () => {
     const { name, displayName, description } = form;
-    const obj = {
-      menuId: id,
-      name: name,
-      displayName: displayName,
-      description: description,
-    };
-    dispatch(MenuCategoryCreate(obj));
+    if (name != "") {
+      const obj = {
+        menuId: id,
+        name: name,
+        displayName: displayName,
+        description: description,
+      };
+      dispatch(MenuCategoryCreate(obj, history));
+    }
   };
   const handlefieldchange = (e) => {
     e.persist();
@@ -87,70 +115,42 @@ function CreateCategory({ open, id }) {
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "15px",
-          marginTop: "10px",
-        }}
-      >
-        <Typography
-          variant="h5"
-          style={{ cursor: "move" }}
-          id="draggable-dialog-title"
-        >
-          Quick Service Settings
-        </Typography>
-        <CloseIcon
-          onClick={handleClose}
-          style={{
-            cursor: "pointer",
-            borderRadius: "20px",
-            color: "white",
-            backgroundColor: "black",
-            padding: "5px",
-          }}
-        />
+      <div className={classes.detail}>
+        <Typography variant="h5">Create Category</Typography>
+        <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
       </div>
-      <div
-        style={{
-          margin: "10px 0px",
-          borderTop: "1px solid lightgray",
-          borderBottom: "1px solid lightgray",
-          padding: "10px 0px",
-        }}
-      ></div>
+      <div className={classes.allbtn}></div>
+      <form>
+        <>
+          <OrderTime
+            title="Name"
+            inputname="name"
+            des="A unique name for your menu"
+            handlechange={handlefieldchange}
+            req={true}
+          />
+          <OrderTime
+            button
+            btnname="optional"
+            inputname="displayName"
+            title="Display Name"
+            des="Will override the unique name in your store"
+            handlechange={handlefieldchange}
+          />
+          <OrderTime
+            button
+            btnname="optional"
+            inputname="description"
+            title="Description"
+            des="The number of outstanding orders before an increase in wait time is applied"
+            handlechange={handlefieldchange}
+          />
+        </>
 
-      <>
-        <OrderTime
-          title="Name"
-          inputname="name"
-          des="A unique name for your menu"
-          handlechange={handlefieldchange}
-        />
-        <OrderTime
-          button
-          btnname="optional"
-          inputname="displayName"
-          title="Display Name"
-          des="Will override the unique name in your store"
-          handlechange={handlefieldchange}
-        />
-        <OrderTime
-          button
-          btnname="optional"
-          inputname="description"
-          title="Description"
-          des="The number of outstanding orders before an increase in wait time is applied"
-          handlechange={handlefieldchange}
-        />
-      </>
-
-      <Button className={classes.btn} onClick={handleClick}>
-        Save
-      </Button>
+        <Button className={classes.btn} onClick={handleClick} type="submit">
+          Save
+        </Button>
+      </form>
     </div>
   );
   return (

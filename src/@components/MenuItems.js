@@ -8,12 +8,19 @@ import {
   Delete,
   FileCopy,
 } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useHistory } from "react-router-dom";
 
 import OutlineButton from "./OutlineButton";
 import SubMenuItems from "./SubMenuItems";
 import DeleteForm from "./DeleteForm";
 import CreateCategory from "./CreateCategory";
 import EditCategory from "./EditCategory";
+import {
+  MenuCategoryDrag,
+  MenuCategoryDelete,
+} from "../@store/menu/MenuCategory.Actions";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -33,9 +40,19 @@ const useStyles = makeStyles((theme) =>
       width: "100%",
       margin: "10px 10px 10px 10px",
     },
+    tooltiptext: {
+      margin: "5px",
+      cursor: "pointer",
+      color: "gray",
+      fontSize: "medium",
+    },
+    subdetail: {
+      display: "flex",
+      alignItems: "center",
+    },
   })
 );
-function MenuItems({ items,dishes, id }) {
+function MenuItems({ items, dishes, id }) {
   const [show, setShow] = useState(false);
   const [opendelete, setopenDelete] = useState(false);
   const [editcategory, setEditCategory] = useState(false);
@@ -44,9 +61,37 @@ function MenuItems({ items,dishes, id }) {
   const [opencreate, setOpencreate] = useState(false);
   const [currentIndex, setcurrentIndex] = useState();
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const handleclick = (index) => {
     setShow(!show);
     setcurrentIndex(index);
+  };
+
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+    let sortOrder = {
+      from: source.index + 1,
+      to: destination.index + 1,
+      id: draggableId,
+    };
+    // setArrays(sortOrder);
+    dispatch(MenuCategoryDrag(sortOrder));
+  };
+  const handledelete = (e) => {
+    if (e == "Menu_Category") {
+      const obj = { menuCategoryId: iid };
+      dispatch(MenuCategoryDelete(obj, history));
+    }
   };
   return (
     <div className={classes.paper}>
@@ -54,7 +99,7 @@ function MenuItems({ items,dishes, id }) {
         <>
           <div>
             <div className={classes.detail}>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div className={classes.subdetail}>
                 {show && index == currentIndex ? (
                   <ExpandMore onClick={() => handleclick(index)} />
                 ) : (
@@ -65,42 +110,29 @@ function MenuItems({ items,dishes, id }) {
               <div>
                 <Tooltip title="Edit" placement="Top">
                   <Edit
-                    fontSize="small"
-                    onClick={() =>(setEditCategory(true),setid(m))}
-                    style={{
-                      margin: "5px",
-                      cursor: "pointer",
-                      color: "gray",
-                    }}
+                    className={classes.tooltiptext}
+                    onClick={() => (setEditCategory(true), setid(m))}
                   />
                 </Tooltip>
                 <Tooltip title="Delete" placement="Top">
                   <Delete
-                    fontSize="small"
+                    className={classes.tooltiptext}
                     onClick={() => (setopenDelete(true), setid(m._id))}
-                    style={{
-                      margin: "5px",
-                      cursor: "pointer",
-                      color: "gray",
-                    }}
                   />
                 </Tooltip>
                 <Tooltip title="Copy" placement="Top">
-                  <FileCopy
-                    // onClick={() => setOpencreate(true)}
-                    fontSize="small"
-                    style={{
-                      margin: "5px",
-                      cursor: "pointer",
-                      color: "gray",
-                    }}
-                  />
+                  <FileCopy className={classes.tooltiptext} />
                 </Tooltip>
               </div>
             </div>
           </div>
           {show && index == currentIndex && (
-            <SubMenuItems items={m.subItems} dishes={dishes} menucat={m._id} id={id} />
+            <SubMenuItems
+              items={m.subItems}
+              dishes={dishes}
+              menucat={m._id}
+              id={id}
+            />
           )}
         </>
       ))}
@@ -112,11 +144,15 @@ function MenuItems({ items,dishes, id }) {
       />
       {opencreate && <CreateCategory open={setOpencreate} id={id} />}
       {opendelete && (
-        <DeleteForm open={setopenDelete} title="Menu Category" id={iid} />
+        <DeleteForm
+          open={setopenDelete}
+          title="Menu Category"
+          handledelete={() => {
+            handledelete("Menu_Category");
+          }}
+        />
       )}
-      {
-       editcategory&& <EditCategory  open={setEditCategory} data={iid}/>
-      }
+      {editcategory && <EditCategory open={setEditCategory} data={iid} />}
     </div>
   );
 }

@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "space-between",
       padding: "8px",
       alignItems: "center",
+      borderBottom: "1px dashed lightgray",
     },
     paper: {
       alignSelf: "center",
@@ -23,10 +24,7 @@ function TitleValue({ title, value }) {
   const classes = useStyles();
   return (
     <div elevation={5} className={classes.paper}>
-      <div
-        style={{ borderBottom: "1px dashed lightgray" }}
-        className={classes.detail}
-      >
+      <div className={classes.detail}>
         <Typography variant="p">{title}</Typography>
         <Typography variant="p">{value}</Typography>
       </div>

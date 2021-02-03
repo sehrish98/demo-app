@@ -1,6 +1,11 @@
 import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { Typography,Accordion,AccordionSummary ,AccordionDetails} from "@material-ui/core";
+import {
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) =>
@@ -9,6 +14,12 @@ const useStyles = makeStyles((theme) =>
       width: "100%",
       marginTop: "20px",
       marginBottom: "60px",
+    },
+    detail: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
     },
   })
 );
@@ -31,16 +42,7 @@ function CustomAccordin({ title, open, color }) {
           <Typography>{title}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {open}
-          </div>
+          <div className={classes.detail}>{open}</div>
         </AccordionDetails>
       </Accordion>
     </div>

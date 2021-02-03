@@ -67,14 +67,27 @@ const menu_caregory_Reducer = function (state = initial_state, action) {
         };
       }
       case MenuCategoryActionTypes.MENUCATEGORYDELETE_SUCCESS: {
-        const { username, password } = action.payload;
         return {
           ...state,
-          username: username,
-          password: password,
         };
       }
       case MenuCategoryActionTypes.MENUCATEGORYDELETE_FAIL: {
+        return {
+          state: action.payload,
+        };
+      }
+
+      case MenuCategoryActionTypes.MENUCATEGORYDRAG_START: {
+        return {
+          ...state,
+        };
+      }
+      case MenuCategoryActionTypes.MENUCATEGORYDRAG_SUCCESS: {
+        return {
+          ...state,
+        };
+      }
+      case MenuCategoryActionTypes.MENUCATEGORYDRAG_FAIL: {
         return {
           state: action.payload,
         };
