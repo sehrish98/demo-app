@@ -1,7 +1,7 @@
 import { instance as axios } from "../../@api/axios";
 import { DishActionTypes } from "../redux/actionTypes";
 
-export function GetDishes(obj) {
+export function GetDishes() {
   return (dispatch) => {
     dispatch({
       type: DishActionTypes.GETDISH_START,
@@ -142,7 +142,7 @@ export function DisheTagDrag(obj , history) {
     axios
       .put("/dishTag/drag", { data: obj })
       .then((res) => {
-        DisheTagDragSuccess(dispatch, res.data);
+        DisheTagDragSuccess(dispatch, res.data , history);
       })
       .catch((error) => {
         DisheTagDragFail(dispatch, error.message);
@@ -155,7 +155,8 @@ const DisheTagDragSuccess = (dispatch, data, history) => {
     type: DishActionTypes.DISHDRAG_SUCCESS,
     payload: data,
   });
-  history.push("/menu");
+  dispatch(GetDishes());
+  // history.push("/menu");
 };
 
 const DisheTagDragFail = (dispatch, errorMessage) => {

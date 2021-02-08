@@ -154,7 +154,7 @@ const OptionSetDragSuccess = (dispatch, data, history) => {
     type: OptionSetypes.OPTIONSETDRAG_SUCCESS,
     payload: data,
   });
-  history.push("/menu");
+  dispatch(GetOptionSet());
 };
 
 const OptionSetDragFail = (dispatch, errorMessage) => {

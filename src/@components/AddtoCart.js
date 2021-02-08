@@ -159,7 +159,13 @@ function AddtoCart({ name, des, type, image, price, open }) {
       {/* <img style={{ height: "280px" }} src={image} /> */}
       <div style={{ padding: "10px 20px" }}>
         <div className={classes.detail}>
-          <Typography variant="h6" className={classes.typoCart}>
+          <Typography
+            variant="h6"
+            style={{
+              fontWeight: "800",
+              fontSize: "20px",
+            }}
+          >
             Cart
           </Typography>
         </div>
@@ -186,7 +192,14 @@ function AddtoCart({ name, des, type, image, price, open }) {
             >
               Qty
             </Typography>
-            <Typography variant="p" className={classes.items}>
+            <Typography
+              variant="p"
+              style={{
+                fontWeight: "600",
+                flexGrow: "1",
+                marginLeft: "10px",
+              }}
+            >
               Items
             </Typography>
             <Typography
@@ -200,9 +213,24 @@ function AddtoCart({ name, des, type, image, price, open }) {
           </div>
 
           {cart_items.map((c) => (
-            <div className={classes.quantity}>
+            <div
+              style={{
+                display: "flex",
+                padding: "3px 20px",
+                borderBottom: "1px dashed lightgray",
+                alignItems: "center",
+              }}
+            >
               <Typography variant="p">{c.qty}</Typography>
-              <div className={classes.name}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  lineHeight: "1.8",
+                  flexGrow: "1",
+                  marginLeft: "20px",
+                }}
+              >
                 <Typography variant="p">{c.name}</Typography>
                 <div style={{ display: "flex", color: "rgb(238, 82, 82)" }}>
                   <Typography style={{ cursor: "pointer" }}>Edit</Typography>
@@ -238,7 +266,17 @@ function AddtoCart({ name, des, type, image, price, open }) {
             </Typography>
           </div>
 
-          <div className={classes.ordertip}>Order Tip</div>
+          <div
+            style={{
+              backgroundColor: "rgb(250, 250, 250)",
+              padding: "10px 20px",
+              display: "flex",
+              alignItems: "center",
+              borderBottom: "1px solid rgb(204, 204, 204)",
+            }}
+          >
+            Order Tip
+          </div>
 
           <div
             style={{

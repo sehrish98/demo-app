@@ -21,7 +21,7 @@ function CustomInput({ type, placeholder, handlechange, name ,value , req}) {
         onChange={handlechange}
         name={name}
         value={value}
-        required={req}
+        required={false}
       />
     </div>
   );

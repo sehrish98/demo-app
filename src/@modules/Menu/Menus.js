@@ -36,6 +36,7 @@ import {
   DisheTagDelete,
 } from "../../@store/dish/Dish.Actions";
 import { MenuItemsDrag, MenuItemsDelete } from "../../@store/menu/Menu.Actions";
+import { act } from "@testing-library/react";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -96,7 +97,7 @@ function Menus({ title, value }) {
   const clientid = localStorage.getItem("clientId");
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("efece1")
+    console.log("efece1");
     dispatch(GetMenuItems());
     dispatch(GetDishes());
     dispatch(GetOptionSet());
@@ -110,20 +111,27 @@ function Menus({ title, value }) {
   const [editoptionset, setEditoptionset] = useState();
   const [optionsetcreate, setOptionsetcreate] = useState(false);
   const [optionsetdelete, setoptionsetDelete] = useState(false);
-
   const [editDishtag, setEditDishtag] = useState();
   const [Dishtagcreate, setDishtagcreate] = useState(false);
   const [Dishtagdelete, setDishtagDelete] = useState(false);
 
-  const [arrays, setArrays] = useState(menuList);
+  const [arrays, setArrays] = useState();
   const [arrange, setArrange] = useState(false);
   const [currentIndex, setcurrentIndex] = useState();
   const [show, setShow] = useState(false);
   const [dstop, setDstop] = useState(true);
   const [iid, setid] = useState();
   useEffect(() => {
-    setArrays(menuList);
-  }, [menuList]);
+    if (active === "menuList") {
+      setArrays(menuList);
+    }
+    if (active === "dishList") {
+      setArrays(dishList);
+    }
+    if (active === "optionsetList") {
+      setArrays(optionsetList);
+    }
+  }, [menuList, dishList, optionsetList]);
 
   const reorder = (arrays, source, destination) => {
     const newArray = Array.from(arrays);
@@ -132,44 +140,34 @@ function Menus({ title, value }) {
 
     return newArray;
   };
+
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     if (!destination) {
       return;
-    }
-    if (
+    } else if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
       return;
-    }
-    let sortOrder = {
-      from: source.index + 1,
-      to: destination.index + 1,
-      id: draggableId,
-    };
-    // debugger
-    // const newArray = Array.from(arrays);
-    // const [removed] = newArray.splice(source.index, 1);
-    // newArray.splice(destination.index, 0, removed);
+    } else {
+      let sortOrder = {
+        from: source.index + 1,
+        to: destination.index + 1,
+        id: draggableId,
+      };
 
-    // setArrays(results);
-    if (arrays == menuList) {
-      dispatch(MenuItemsDrag(sortOrder));
+      if (active === "menuList") {
+        dispatch(MenuItemsDrag(sortOrder));
+      } else if (active === "optionsetList") {
+        const resultt = dispatch(OptionSetDrag(sortOrder));
+      } else if (active === "dishList") {
+        const resultt = dispatch(DisheTagDrag(sortOrder));
+      } else {
+        console.log("Dsds");
+      }
     }
-    // else if (arrays == dishList) {
-    //   console.log("hi i menu category", arrays);
-    //   // setArrays(newArray);
-    //   dispatch(DisheTagDrag(sortOrder));
-    // } else if (arrays == optionsetList) {
-    //   console.log("hi i option set", arrays);
-    //   // setArrays(newArray);
-    //   dispatch(OptionSetDrag(sortOrder));
-    // } else {
-    //   console.log("hi i am going else", arrays);
-    // }
   };
-console.log("cascsascas");
   const handleclick = (index) => {
     setShow(!show);
     setcurrentIndex(index);
@@ -249,12 +247,10 @@ console.log("cascsascas");
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppableId">
             {(provided) => (
-              <div
-                ref={provided.innerRef}
-                style={{}}
-              >
+              <div ref={provided.innerRef} style={{}}>
                 {arrays
                   ?.sort((a, b) => {
+                    console.log("fhfjhgjgu   ")
                     return a.position - b.position;
                   })
                   .map((c, index) => (
@@ -264,11 +260,11 @@ console.log("cascsascas");
                       key={c._id}
                       isDragDisabled={dstop}
                     >
-                      {(provided, snapshot) => (
+                      {(provided) => (
                         <div
-                          ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
+                          ref={provided.innerRef}
                         >
                           <div
                             style={{

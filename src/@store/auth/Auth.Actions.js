@@ -59,7 +59,6 @@ export function userLogin(obj , history) {
 
 
   export function userloggedOut(history) {
-    const token=localStorage.getItem("accessToken")
     return (dispatch) => {
       dispatch({
         type: UserActionTypes.LOGOUT_USER_START,
@@ -67,7 +66,7 @@ export function userLogin(obj , history) {
       axios
         .post("/auth/logout")
         .then((res) => {
-          userLoggedOutSuccess(history);
+          userLoggedOutSuccess(dispatch,history);
           localStorage.removeItem("accessToken");
         })
         .catch((error) => {
