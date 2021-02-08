@@ -1,9 +1,10 @@
 import { CartActionTypes } from "../redux/actionTypes";
+import { toast } from "react-toastify";
 
 export function AddtoCartstart(obj , history) {
-  console.log("hi i m triggered",obj)
     return (dispatch) => {
       AddtocartSuccess(dispatch, obj , history);
+      toast.success("Successfully added to cart");
       dispatch({
         type: CartActionTypes.ADDTOCART_START,
       });
