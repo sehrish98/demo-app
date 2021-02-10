@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Button, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-
 import { MenuItemsCreate } from "../@store/menu/Menu.Actions";
 import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
-
+import { v4 as uuidv4 } from 'uuid';
+import TimeSlot from './timeSlot'
+import uuid from 'react-uuid'
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -17,6 +18,9 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    maxHeight: "90vh",
+    margin: "0 auto",
+    overflow: "auto"
   };
 }
 const useStyles = makeStyles((theme) =>
@@ -56,7 +60,7 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       marginBottom: "15px",
       marginTop: "10px",
-      position:"relative"
+      position: "relative"
     },
     cancelIcon: {
       cursor: "pointer",
@@ -64,10 +68,16 @@ const useStyles = makeStyles((theme) =>
       color: "white",
       backgroundColor: "black",
       padding: "5px",
-      position: "absolute",
-      top: "-45px",
-      right: "-45px",
+      position: "relative",
       fontSize: "xx-large",
+      zIndex: 1,
+    },
+    cancelDiv: {
+      display: "flex",
+      top: "8px",
+      right: "10px",
+      position: "fixed",
+      zIndex: "22"
     },
     allbtn: {
       margin: "10px 0px",
@@ -91,6 +101,8 @@ function CreateMenu({ open }) {
     }
   }, [form]);
   const [initial, setInitial] = useState("general");
+  const [timeslot, addTimeSlot] = useState(false)
+  let [items, setItems] = useState([])
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -98,8 +110,8 @@ function CreateMenu({ open }) {
     open(false);
   };
   const handleClick = () => {
-    const {name , displayName , description}=form
-    if(name!=""){
+    const { name, displayName, description } = form
+    if (name != "") {
       dispatch(MenuItemsCreate(form, history));
     }
   };
@@ -108,11 +120,53 @@ function CreateMenu({ open }) {
     handleChange(e);
     // setInput(e.target.value);
   };
+  function addSlot(e) {
+    e.preventDefault()
+    addTimeSlot(true)
+    setItems([...items, {
+      id: uuidv4(),
+      openTime: "09:00",
+      closeTime: "11:00",
+      setInput: true,
+      days: 1,
+    }])
+   
+  }
+  function deleteSlot(id) {
+    setItems(previd => {
+      return previd.filter((item, index) => {
+        return item.id != id;
+      })
+    })
+  }
+
+  function copyItem(obj,id) {
+    
+    items.map((data)=>{
+    
+      if(data.id===id){
+        Object.assign(data, obj)
+      }
+    })
+    setItems((items)=>{
+    return ([...items,{
+    id: uuidv4(),
+    openTime: obj.openTime,
+    closeTime: obj.closeTime,
+    days: obj.days,
+    setInput: obj.setInput
+   }])})
+
+  }
+  const optionsOrder=["Now","Later"]
+  const optionsServices=["pickup","dine in","delivery"]
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
         <Typography variant="h5">Create Menu</Typography>
-        <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
+        <div className={classes.cancelDiv}>
+          <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
+        </div>
       </div>
       <div className={classes.allbtn}>
         <Button
@@ -126,58 +180,113 @@ function CreateMenu({ open }) {
         </Button>
       </div>
       <form>
-      {initial === "general" && (
-        <>
-          <OrderTime
-            title="Name"
-            inputname="name"
-            des="A unique name for your menu"
-            handlechange={handlefieldchange}
-            req={true}
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            inputname="displayName"
-            title="Display Name"
-            des="Will override the unique name in your store"
-            handlechange={handlefieldchange}
-            req={false}
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            inputname="description"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
-            handlechange={handlefieldchange}
-            req={false}
-          />
-        </>
-      )}
-      {initial == "credential" && (
-        <>
-          <OrderTime
-            title="Name"
-            des="A unique name for your menu"
-            inputname="name"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Display Name"
-            des="Will override the unique name in your store"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
-          />
-        </>
-      )}
-      <Button className={classes.btn} onClick={handleClick} type="submit">
-        Create Menu
+        {initial === "general" && (
+          <>
+            <OrderTime
+              title="Name"
+              inputname="name"
+              des="A unique name for your menu"
+              handlechange={handlefieldchange}
+              req={true}
+            />
+            <OrderTime
+              button
+              btnname="optional"
+              inputname="displayName"
+              title="Display Name"
+              des="Will override the unique name in your store"
+              handlechange={handlefieldchange}
+              req={false}
+            />
+            <OrderTime
+              button
+              btnname="optional"
+              inputname="description"
+              title="Description"
+              des="The number of outstanding orders before an increase in wait time is applied"
+              handlechange={handlefieldchange}
+              req={false}
+            />
+          </>
+        )}
+        {initial == "credential" && (
+          <>
+            <OrderTime
+              checked
+              title="Hide Unavailable Menu"
+              des="Enabling this will hide this menu in your store if it's unavailable. Otherwise, this menu will still be displayed with a warning message that it is not available."
+              inputname="name"
+            />
+            <OrderTime
+              button
+              //btn={true}
+              dropdown
+              btnname="optional"
+              title="Order Times"
+              des="Select which order times this menu will be available for. Leave empty for this menu to apply at all times"
+              options={optionsOrder}
+            />
+
+            <OrderTime
+              button
+              btnname="optional"
+              dropdown
+              title="Services"
+              des="Select which services this menu will be available for. Leave empty for this menu to apply for services"
+              options={optionsServices}
+            />
+
+            <OrderTime
+              btn
+              values="Add Time Slot"
+              btnname="optional"
+              title="Applicable Hours"
+              des="Set which hours this menu will be available for. If no hours entered, the menu is applicable at all times. Enter time in 24H format, e.g. 21:00 for 9:00pm. Ensure time slots do not overlap or close before they open"
+              onClick={addSlot}
+            />
+
+            <>{items.map((item) => {
+              return item.id && <TimeSlot key={item.id} id={item.id} Open={item.openTime} Close={item.closeTime} checked={item.setInput} Days={item.days} onAdd={addSlot} Copy={copyItem} onDelete={deleteSlot} />
+            })}</>
+            <OrderTime
+              button
+              btnname="optional"
+              title="Enable Age Restricted Access"
+              checked
+              des="Enabling this will only allow logged in customers with their age verified to order from this menu. Age verification must be enabled for this feature to work"
+            />
+
+            <OrderTime
+              button
+              btnname="optional"
+              title="Enable Pre-orders Only"
+              checked
+              des="Enabling this will disable immediate orders for this menu and require that people pre-order according to the conditions below"
+            />
+
+
+
+            <OrderTime
+              type="number"
+              button
+              btnname="optional"
+              inputname="displayName"
+              title="Pre-order Days In Advance"
+              des="Ensures customers must pre-order items from this menu a certain amount of days in advance"
+            />
+            <OrderTime
+              button
+              type="time"
+              btnname="optional"
+              inputname="displayName"
+              title="Pre-order Cutoff Time (12H Format)"
+              des="Use in conjunction with the above option to ensure customers must place orders before a certain time on the last pre-order day. For example, if you set the cut off to 8:00pm and you require orders 2 day's in advance. For a customer to order for Friday, the latest they can put in their order is at 8:00pm on Wednesday"
+            />
+
+          </>
+        )}
+        <Button className={classes.btn} onClick={handleClick} type="submit">
+          Create Menu
       </Button>
       </form>
     </div>
@@ -189,9 +298,9 @@ function CreateMenu({ open }) {
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-        style={{ overflowY: "auto" }}
+        style={{ overflow: "scroll", marginTop: "auto" }}
       >
-        {body}
+       {body}
       </Modal>
     </div>
   );

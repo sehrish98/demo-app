@@ -250,7 +250,7 @@ function Menus({ title, value }) {
               <div ref={provided.innerRef} style={{}}>
                 {arrays
                   ?.sort((a, b) => {
-                    console.log("fhfjhgjgu   ")
+                    
                     return a.position - b.position;
                   })
                   .map((c, index) => (

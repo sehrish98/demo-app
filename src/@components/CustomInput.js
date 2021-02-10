@@ -22,6 +22,7 @@ function CustomInput({ type, placeholder, handlechange, name ,value , req}) {
         name={name}
         value={value}
         required={false}
+        autoComplete="off"
       />
     </div>
   );

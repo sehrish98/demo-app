@@ -64,6 +64,7 @@ function CustomButton({
   qty,
   open,
   deleteMenu,
+  onClick
 }) {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -98,7 +99,7 @@ function CustomButton({
     <div>
       <button
         className={`${activ ? classes.active : classes.btn}`}
-        onClick={handlechange}
+        onClick={onClick}
       >
         {name}
       </button>
