@@ -94,7 +94,6 @@ function Staff() {
           .map((staff , index) => {
             const sta=staff.session
             var last =sta.slice(-1)[0]
-            console.log("hi i am last one:" , staff.verified)
             return {
               ...staff,
               id:index,

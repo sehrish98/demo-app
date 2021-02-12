@@ -3,7 +3,6 @@ import { checkoutactiontypes} from "../redux/actionTypes";
 import { toast } from "react-toastify";
 
   export function CheckoutOrder(obj) {
-    console.log("hi i m jsnjsj:",obj._id)
     return (dispatch) => {
       dispatch({
         type: checkoutactiontypes.CHECKOUT_START,
@@ -15,7 +14,6 @@ import { toast } from "react-toastify";
             toast.success("Your Order has been Successfully Placed");
         })
         .catch((error) => {
-            console.log("hi i m checkout res:" , error.message)
             CheckoutOrderFail(dispatch, error.message);
             toast.error("Cannot Placed your Order");
         });

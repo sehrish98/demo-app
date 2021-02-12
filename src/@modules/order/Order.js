@@ -171,6 +171,7 @@ function Order({ title, value }) {
       icon: <Settings style={{ fontSize: "1rem" }} />,
       setstate: setOpenModal,
       state: openModal,
+      title:"settings"
     },
     {
       name: "Refresh",
@@ -182,7 +183,6 @@ function Order({ title, value }) {
     },
   ];
   const handlechange = (e) => {
-    console.log("hi i m hndle chnge",e)
     if (e == "compress") {
       if (compress >= 60) {
         setCompress(compress - 20);
@@ -193,8 +193,9 @@ function Order({ title, value }) {
       }
     } else if (e == "un_confirm") {
       setUn_confirm(!un_confirm);
-    } else {
+    } else if (e == "settings") {
       setOpenModal(!openModal);
+    } else {
     }
   };
   return (

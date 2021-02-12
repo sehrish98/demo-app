@@ -136,7 +136,8 @@ function Checkout({ open }) {
       payByCard: status,
       Notes: notes,
       Items:cart_items,
-      type:0
+      type:0,
+
     };
     if(name!=""&&email!=""&&phoneno!="")
     {
@@ -144,7 +145,6 @@ function Checkout({ open }) {
       setOpenConfirm(true)
     }
     else{
-      console.log("hi i m else")
     }
   };
   const handleLogin = () => {

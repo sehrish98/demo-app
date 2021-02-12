@@ -97,7 +97,6 @@ function Menus({ title, value }) {
   const clientid = localStorage.getItem("clientId");
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("efece1");
     dispatch(GetMenuItems());
     dispatch(GetDishes());
     dispatch(GetOptionSet());

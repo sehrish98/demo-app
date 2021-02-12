@@ -143,10 +143,7 @@ function AddtoCart({ name, des, type, image, price, open }) {
     dispatch(RemoveQuantyCart(obj));
   };
   const handleCheckout = () => {
-    console.log(opencheck);
     setOpenCheck(true);
-    console.log("jhbvhvvhvhv", opencheck);
-    // open(false);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>

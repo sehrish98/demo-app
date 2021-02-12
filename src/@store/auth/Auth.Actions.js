@@ -34,7 +34,6 @@ export function userLogin(obj , history) {
           else{
             toast.error("Invalid Email or Password.");
           }
-          console.log(error.message);
           userLoginFail(dispatch, error.message);
         });
     };

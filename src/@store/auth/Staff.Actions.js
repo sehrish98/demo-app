@@ -3,7 +3,6 @@ import { StaffActionTypes } from "../redux/actionTypes";
 import { toast } from "react-toastify";
 
 export function GetStaff() {
-    console.log("hi i am staff")
     return (dispatch) => {
       dispatch({
         type: StaffActionTypes.GET_STAFF_START,
@@ -12,7 +11,6 @@ export function GetStaff() {
         .get("/auth/staff")
         .then((res) => {
             GetStaffSuccess(dispatch, res.data);
-            console.log("hi i , res.data:" , res)
         })
         .catch((error) => {
             GetStaffFail(dispatch, error.message);
@@ -38,7 +36,6 @@ export function GetStaff() {
 
 
   export function createStaff(obj , history) {
-    console.log("hi i am create stafff:" , obj)
     return (dispatch) => {
       dispatch({
         type: StaffActionTypes.CREATE_STAFF_START,
@@ -104,7 +101,6 @@ export function staffLogin(obj , history) {
           else{
             toast.error("Invalid Email or Password.");
           }
-          console.log(error.message);
           staffLoginFail(dispatch, error.message);
         });
     };
