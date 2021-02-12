@@ -325,7 +325,6 @@ function Menus({ title, value }) {
                                 </Tooltip>
                                 <Tooltip title="Copy" placement="top">
                                   <FileCopy
-                                    onClick={() => setOpencreate(true)}
                                     fontSize="small"
                                     className={classes.icon__style}
                                   />

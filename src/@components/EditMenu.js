@@ -12,11 +12,13 @@ import useForm from "./hooks/useForm";
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    maxHeight: "90vh",
+    margin: "0 auto",
+    overflow: "auto",
   };
 }
 const useStyles = makeStyles((theme) =>
@@ -64,8 +66,8 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "black",
       padding: "5px",
       position: "absolute",
-      top: "-15px",
-      right: "-15px",
+      top: "20px",
+      right: "30px",
       fontSize: "xx-large",
     },
     allbtn: {
@@ -104,8 +106,8 @@ function EditMenu({ open, data }) {
       displayName: form.displayName,
       description: form.description,
     };
-    if(form.name!=""){
-    dispatch(MenuItemsEdit(data , history));
+    if (form.name != "") {
+      dispatch(MenuItemsEdit(data, history));
     }
   };
   const handlefieldchange = (e) => {
@@ -136,60 +138,60 @@ function EditMenu({ open, data }) {
         </Button>
       </div>
       <form>
-      {initial === "general" && (
-        <>
-          <OrderTime
-            title="Name"
-            inputname="name"
-            des="A unique name for your menu"
-            value={form && form.name}
-            handlechange={handlefieldchange}
-            req={true}
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            inputname="displayName"
-            title="Display Name"
-            des="Will override the unique name in your store"
-            handlechange={handlefieldchange}
-            value={form && form.displayName}
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            inputname="description"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
-            handlechange={handlefieldchange}
-            value={form && form.description}
-          />
-        </>
-      )}
-      {initial == "credential" && (
-        <>
-          <OrderTime
-            title="Name"
-            des="A unique name for your menu"
-            inputname="name"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Display Name"
-            des="Will override the unique name in your store"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
-          />
-        </>
-      )}
-      <Button className={classes.btn} onClick={handleClick } type="submit">
-        Save
-      </Button>
+        {initial === "general" && (
+          <>
+            <OrderTime
+              title="Name"
+              inputname="name"
+              des="A unique name for your menu"
+              value={form && form.name}
+              handlechange={handlefieldchange}
+              req={true}
+            />
+            <OrderTime
+              button
+              btnname="optional"
+              inputname="displayName"
+              title="Display Name"
+              des="Will override the unique name in your store"
+              handlechange={handlefieldchange}
+              value={form && form.displayName}
+            />
+            <OrderTime
+              button
+              btnname="optional"
+              inputname="description"
+              title="Description"
+              des="The number of outstanding orders before an increase in wait time is applied"
+              handlechange={handlefieldchange}
+              value={form && form.description}
+            />
+          </>
+        )}
+        {initial == "credential" && (
+          <>
+            <OrderTime
+              title="Name"
+              des="A unique name for your menu"
+              inputname="name"
+            />
+            <OrderTime
+              button
+              btnname="optional"
+              title="Display Name"
+              des="Will override the unique name in your store"
+            />
+            <OrderTime
+              button
+              btnname="optional"
+              title="Description"
+              des="The number of outstanding orders before an increase in wait time is applied"
+            />
+          </>
+        )}
+        <Button className={classes.btn} onClick={handleClick} type="submit">
+          Save
+        </Button>
       </form>
     </div>
   );

@@ -68,12 +68,15 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function BookTable({ open, title, id, handledelete }) {
+function BookTable({ open, title, id,  }) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
   const handleClose = () => {
     open(false);
   };
+  const handleConfirm=()=>{
+
+  }
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
@@ -91,10 +94,9 @@ function BookTable({ open, title, id, handledelete }) {
             // className={classes.cstmbtn}
             title={title}
             id={id}
-            handlechange={handledelete}
+            handlechange={handleConfirm}
             type="submit"
           />
-          {/* <CustomButton name="Cancel" className={classes.cstmbtn} /> */}
         </div>
       </form>
     </div>

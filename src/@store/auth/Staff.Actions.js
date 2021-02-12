@@ -57,7 +57,7 @@ export function GetStaff() {
       type: StaffActionTypes.CREATE_STAFF_SUCCESS,
       payload: data,
     });
-    history.push("/customer");
+    history.push("/staff");
   };
   
   const CreateStaffFail = (dispatch, errorMessage) => {
@@ -178,7 +178,7 @@ export function staffLogin(obj , history) {
     dispatch({
       type: StaffActionTypes.STAFF_CHANGE_SUCCESS,
     });
-    history.push("/customer")
+    history.push("/staff")
   };
   
   const staffchangeFail = (dispatch, errorMessage) => {
@@ -212,7 +212,7 @@ export function staffLogin(obj , history) {
       type: StaffActionTypes.DELETE_STAFF_SUCCESS,
       payload: data,
     });
-    history.push("/customer")
+    history.push("/staff")
   };
   
   const deleteStaffFail = (dispatch, errorMessage) => {
