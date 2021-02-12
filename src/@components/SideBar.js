@@ -29,6 +29,7 @@ const list = [
   {
     name: "booking",
     icon: <DateRange />,
+    route:""
   },
   {
     name: "Menu",
@@ -43,14 +44,17 @@ const list = [
   {
     name: "Settings",
     icon: <Settings />,
+    route:"/settings"
   },
   {
     name: "View Source",
     icon: <Input />,
+    route:""
   },
   {
     name: "Documentation",
     icon: <Description />,
+    route:""
   },
 ];
 
