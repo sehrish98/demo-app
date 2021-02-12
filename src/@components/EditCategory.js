@@ -13,11 +13,13 @@ import { keys } from "@material-ui/core/styles/createBreakpoints";
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    maxHeight: "90vh",
+    margin: "0 auto",
+    overflow: "auto",
   };
 }
 const useStyles = makeStyles((theme) =>
@@ -65,8 +67,8 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "black",
       padding: "5px",
       position: "absolute",
-      top: "-15px",
-      right: "-15px",
+      top: "20px",
+      right: "30px",
       fontSize: "xx-large",
     },
     allbtn: {
@@ -99,8 +101,8 @@ function EditCategory({ open, data }) {
       displayName: form.displayName,
       description: form.description,
     };
-    if(form.name!=""){
-    dispatch(MenuCategoryEdit(data , history));
+    if (form.name != "") {
+      dispatch(MenuCategoryEdit(data, history));
     }
   };
   const handlefieldchange = (e) => {

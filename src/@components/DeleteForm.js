@@ -89,7 +89,7 @@ function DeleteForm({ open, title, id, handledelete }) {
           id={id}
           handlechange={handledelete}
         />
-        <CustomButton name="Cancel" className={classes.cstmbtn} />
+        <CustomButton name="Cancel" className={classes.cstmbtn} handlechange={handleClose}/>
       </div>
     </div>
   );

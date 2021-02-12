@@ -1,14 +1,5 @@
 import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
-import { AddtoCartstart } from "../@store/Cart/Cart.Actions";
-import { useHistory } from "react-router-dom";
-
-import { MenuItemsDelete } from "../@store/menu/Menu.Actions";
-import { MenuCategoryDelete } from "../@store/menu/MenuCategory.Actions";
-import { MenuCategoryItemsDelete } from "../@store/menu/MenuCategoryItems.Actions";
-import { DeleteOptionSet } from "../@store/optionSet/Optionset.Actions";
-import { DisheTagDelete } from "../@store/dish/Dish.Actions";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -55,44 +46,8 @@ function CustomButton({
   name,
   handlechange,
   activ,
-  state,
-  array,
-  id,
-  title,
-  type,
-  price,
-  qty,
-  open,
-  deleteMenu,
+  type
 }) {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const handleClick = () => {
-    if (open && name == "Add to Card") {
-    } else if (title == "Menu" && id) {
-      const obj = { menuId: id };
-      dispatch(MenuItemsDelete(obj , history));
-    } else if (title == "Menu Category" && id) {
-      const obj = { menuCategoryId: id };
-      dispatch(MenuCategoryDelete(obj, history));
-    } else if (title == "Dish Tags" && id) {
-      const obj = { _id: id };
-      dispatch(DisheTagDelete(obj, history));
-    } else if (title == "Option Set" && id) {
-      const obj = { _id: id };
-      dispatch(DeleteOptionSet(obj, history));
-    } else if (title == "Dishes" && id) {
-      const obj = { menuCategoryItemId: id };
-      dispatch(MenuCategoryItemsDelete(obj, history));
-    } else if (name == "Menus" && state) {
-      state(array);
-    } else if (name == "Option Set" && state) {
-      state(array);
-    } else if (name == "Dish Tags" && state) {
-      state(array);
-    } else {
-    }
-  };
   const classes = useStyles();
   return (
     <div>
