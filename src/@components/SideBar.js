@@ -36,9 +36,9 @@ const list = [
     route: "/menu",
   },
   {
-    name: "Customers",
+    name: "Staff",
     icon: <Person />,
-    route: "/customer",
+    route: "/staff",
   },
   {
     name: "Settings",

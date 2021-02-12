@@ -6,9 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Home from "./@modules/Home/Home";
 import Order from "./@modules/order/Order";
 import Menus from "./@modules/Menu/Menus";
-import Staff from "./@modules/staff/Staff";
 import Login from "./@modules/auth/Login";
-import Customer from "./@modules/customer/Customer";
+import Staff from "./@modules/staff/Staff";
 import CustomRouter from "./@layouts/CustomRouter";
 import Dashboard from "./@modules/dashboard/Dashboard";
 import Footer from "./@modules/footer/Footer";
@@ -27,7 +26,6 @@ function App() {
           <DashBoardRoute exact path="/dash-board" component={Dashboard} />
           <CustomRouter exact path="/order" component={Order} />
           <CustomRouter exact path="/menu" component={Menus} />
-          <CustomRouter exact path="/customer" component={Customer} />
           <CustomRouter exact path="/staff" component={Staff} />
           <CustomRouter exact path="/settings" component={Settings} />
           <CustomRouter exact path="/" component={Home} />
