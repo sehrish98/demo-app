@@ -97,6 +97,7 @@ function CustomButton({
   return (
     <div>
       <button
+      type={type}
         className={`${activ ? classes.active : classes.btn}`}
         onClick={handlechange}
       >

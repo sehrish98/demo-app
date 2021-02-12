@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import {Tabs,Tab} from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -25,8 +24,8 @@ export default function CustomTabs({ item1, item2, item3, item4, item5 }) {
         indicatorColor="secondary"
         textColor="secondary"
         aria-label="icon label tabs example"
-        variant="scrollable"
-        scrollButtons="off"
+        // variant="scrollable"
+        // scrollButtons="off"
         className={classes.root}
       >
         <Tab label={item1} onClick={()=>setTab(0)}/>

@@ -9,8 +9,12 @@ import {
   AccordionSummary,
 } from "@material-ui/core";
 import { ExpandMore, Close } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import TitleValue from "./TitleValue";
+import CustomDropDown from "./CustomDropDown";
+import { deleteStaff , staffchange } from "../@store/auth/Staff.Actions";
 
 function getModalStyle() {
   const top = 50;
@@ -27,11 +31,11 @@ const useStyles = makeStyles((theme) =>
     paper: {
       position: "absolute",
       width: "100%",
-      maxWidth: "550px",
+      maxWidth: "450px",
       borderRadius: "3px",
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
+      // padding: theme.spacing(2, 4, 3),
       outline: "none",
       display: "flex",
       flexDirection: "column",
@@ -60,16 +64,16 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "black",
       padding: "5px",
       position: "absolute",
-      top: "-10",
-      right: "-10",
+      top: "-15px",
+      right: "-15px",
+      fontSize: "xx-large",
     },
     detail: {
       display: "flex",
-      justifyContent: "space-between",
+      justifyContent: "center",
       alignItems: "center",
       PaddingBottom: "15px",
       marginTop: "10px",
-      borderBottom: "1px solid lightgray",
     },
     subdetail: {
       width: "100%",
@@ -79,26 +83,73 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function StaffDetailModal({ open }) {
+function StaffDetailModal({ open, staff }) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const handleClose = () => {
     open(false);
   };
+  const handleDropDown = (e) => {
+    if (e == "Delete") {
+      const data = { _id: staff._id };
+      dispatch(deleteStaff(data, history));
+    }
+    else if(e=="Password")
+    {
+      var password = prompt('Please password you want to change and passowrd should be 6 character log:')
+      const data = { _id: staff._id , password:password , email:staff.email };
+      dispatch(staffchange(data, history));
+    }
+    else if(e=="Email")
+    {
+      var email = prompt('Please Enter a email address:')
+      const data = { _id: staff._id , email:email  };
+      dispatch(staffchange(data, history));
+    }
+  };
   const body = (
     <div style={modalStyle} className={classes.paper}>
+      <Close onClick={handleClose} className={classes.cancelIcon} />
       <div className={classes.detail}>
-        <Avatar alt="Puneet" style={{ marginBottom: "5px" }}>
+        <Avatar
+          alt="Puneet"
+          style={{ marginBottom: "5px", marginRight: "5px" }}
+        >
           P
         </Avatar>
-        <Close onClick={handleClose} className={classes.cancelIcon} />
+        Sehrish
       </div>
-      <TitleValue title="Type" value="Email" />
-      <TitleValue title="Name" value="Puneet" />
+      <select
+        style={{
+          padding: "10px 15px",
+          outline: "0px",
+          marginTop: "15px",
+          borderColor: "rgb(214, 214, 214)",
+        }}
+        id="myAction"
+        onChange={(e) => handleDropDown(e.target.value)}
+      >
+        <option>Actions</option>
+        {staff.verified != false ? (
+          <>
+            <option value="Password">Edit Password</option>
+            <option value="Email">Edit Email Address</option>
+            <option value="Delete">Delete Customer</option>
+          </>
+        ) : (
+          <>
+            <option value="Delete">Delete Customer</option>
+          </>
+        )}
+      </select>
+      <TitleValue title="Type" value={staff.type} />
+      <TitleValue title="Name" value={staff.firstName} />
       <TitleValue title="Phone No" value="959280599" />
-      <TitleValue title="Email" value="puneet13@gmail.com" />
-      <TitleValue title="E-Mail Verified" value="yes" />
-      <TitleValue title="Created" value="25/11/2020, 1:43 pm" />
+      <TitleValue title="Email" value={staff.email} />
+      <TitleValue title="E-Mail Verified" value={staff.verified} />
+      <TitleValue title="Created" value={staff.createdAt} />
       <TitleValue title="Last Seen" value="25/11/2020, 1:43 pm" />
       <TitleValue title="Last Order" value="25/11/2020, 1:43 pm" />
       <TitleValue title="Last Ip" value="25/11/2020, 1:43 pm" />
