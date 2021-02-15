@@ -3,8 +3,10 @@ import { Typography, Switch } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
-import CloseIcon from '@material-ui/icons/Close';
-import styled from 'styled-components';
+import CloseIcon from "@material-ui/icons/Close";
+import styled from "styled-components";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
 const useStyles = makeStyles((theme) =>
   createStyles({
     paper: {
@@ -32,18 +34,28 @@ const useStyles = makeStyles((theme) =>
       width: "100%",
     },
     typo: {
-      fontWeight: "600"
-    }
+      fontWeight: "600",
+    },
+    btnSyling: {
+      // "&:hover": {
+      //   background: "#E5E7E9",
+      // },
+      backgroundColor:"rgb(238, 82, 82)",
+      "&:focus": {
+        background: "rgb(224, 224, 224)",
+      },
+    },
+    
   })
 );
 
-const Label = styled('label')`
+const Label = styled("label")`
   padding: 0 0 4px;
   line-height: 1.5;
   display: block;
 `;
 
-const InputWrapper = styled('div')`
+const InputWrapper = styled("div")`
   width: 300px;
   border: 1px solid #d9d9d9;
   background-color: #fff;
@@ -112,7 +124,7 @@ const Tag = styled(({ label, onDelete, ...props }) => (
   }
 `;
 
-const Listbox = styled('ul')`
+const Listbox = styled("ul")`
   width: 300px;
   margin: 2px 0 0;
   padding: 0;
@@ -138,7 +150,7 @@ const Listbox = styled('ul')`
     }
   }
 
-  & li[aria-selected='true'] {
+  & li[aria-selected="true"] {
     background-color: #fafafa;
     font-weight: 600;
 
@@ -147,7 +159,7 @@ const Listbox = styled('ul')`
     }
   }
 
-  & li[data-focus='true'] {
+  & li[data-focus="true"] {
     background-color: #e6f7ff;
     cursor: pointer;
 
@@ -157,9 +169,9 @@ const Listbox = styled('ul')`
   }
 `;
 const top100Films = [
-  { title: 'Now', year: 1994 },
-  { title: 'Later', year: 1972 },
-  ]
+  { title: "Now", year: 1994 },
+  { title: "Later", year: 1972 },
+];
 function OrderTime({
   title,
   btnname,
@@ -170,16 +182,23 @@ function OrderTime({
   dropdown,
   btn,
   handlechange,
-  inputname,  
+  inputname,
   type,
   req,
   onClick,
-  options
+  options,
+  btngroup,
+  addbtn,
+  changeState,
+  placeholder,
+  comboButton,
+  standardButton,
+  nam1,
+  nam2,
 }) {
-  console.log(options)
   const [name, setName] = useState("");
   const classes = useStyles();
-  
+
   return (
     <div elevation={3} className={classes.paper}>
       <div className={classes.detail}>
@@ -192,25 +211,41 @@ function OrderTime({
         {checked ? (
           <Switch />
         ) : btn ? (
-          <CustomButton name={values} activ onClick={onClick}/>
+          <CustomButton name={values} activ onClick={onClick} />
         ) : dropdown ? (
-      
-        <select style={{width:"100%",borderRadius:"2px",height:"38px"}}>
-                {options.map((item,i)=>{
-                 return   <option value={i}>{item}</option>
-               })}
-                
-                
+          <select
+            style={{ width: "100%", borderRadius: "2px", height: "38px" }}
+          >
+            {options.map((item, i) => {
+              return <option value={i}>{item}</option>;
+            })}
           </select>
+        ) : btngroup ? (
+          <div>
+            <ButtonGroup
+              variant="contained"
+              aria-label="contained primary button group"
+            >
+              <Button className={classes.btnSyling} onClick={standardButton}>
+                {nam1}
+              </Button>
+              <Button className={classes.btnSyling} onClick={comboButton}>
+                {nam2}
+              </Button>
+            </ButtonGroup>
+          </div>
         ) : (
-                <CustomInput
-                  type={type}
-                  values={values}
-                  handlechange={handlechange}
-                  name={inputname}
-                  req
-                />
-              )}
+          <CustomInput
+            type={type}
+            values={values}
+            handlechange={handlechange}
+            name={inputname}
+            req
+            addbtn={addbtn ? true : false}
+            changeState={changeState}
+            placeholder={placeholder}
+          />
+        )}
       </div>
       <div>
         <Typography variant="p" className={classes.des}>
