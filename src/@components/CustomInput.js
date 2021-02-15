@@ -18,10 +18,11 @@ function CustomInput({ type, placeholder, handlechange, name ,value , req}) {
         type={type}
         placeholder={placeholder}
         className={classes.input}
-        onChange={handlechange}
+        onChange={(e)=>{handlechange(e)}}
         name={name}
         value={value}
         required={false}
+        autoComplete="off"
       />
     </div>
   );
