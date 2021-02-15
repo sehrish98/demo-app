@@ -7,9 +7,8 @@ import { useHistory } from "react-router-dom";
 import { MenuItemsCreate } from "../@store/menu/Menu.Actions";
 import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
-import { v4 as uuidv4 } from 'uuid';
-import TimeSlot from './timeSlot'
-import uuid from 'react-uuid'
+import { v4 as uuidv4 } from "uuid";
+import TimeSlot from "./timeSlot";
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -20,7 +19,7 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
     maxHeight: "90vh",
     margin: "0 auto",
-    overflow: "auto"
+    overflow: "auto",
   };
 }
 const useStyles = makeStyles((theme) =>
@@ -60,7 +59,7 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       marginBottom: "15px",
       marginTop: "10px",
-      position: "relative"
+      position: "relative",
     },
     cancelIcon: {
       cursor: "pointer",
@@ -77,13 +76,19 @@ const useStyles = makeStyles((theme) =>
       top: "8px",
       right: "10px",
       position: "fixed",
-      zIndex: "22"
+      zIndex: "22",
     },
     allbtn: {
       margin: "10px 0px",
       borderTop: "1px solid lightgray",
       borderBottom: "1px solid lightgray",
       padding: "10px 0px",
+    },
+    button: {
+      outline: "none",
+      "&:focus": {
+        outline: "none",
+      },
     },
   })
 );
@@ -101,16 +106,17 @@ function CreateMenu({ open }) {
     }
   }, [form]);
   const [initial, setInitial] = useState("general");
-  const [timeslot, addTimeSlot] = useState(false)
-  let [items, setItems] = useState([])
+  const [timeslot, addTimeSlot] = useState(false);
+  let [items, setItems] = useState([]);
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleClose = () => {
     open(false);
   };
+  useEffect(() => {}, [initial]);
   const handleClick = () => {
-    const { name, displayName, description } = form
+    const { name, displayName, description } = form;
     if (name != "") {
       dispatch(MenuItemsCreate(form, history));
     }
@@ -118,48 +124,50 @@ function CreateMenu({ open }) {
   const handlefieldchange = (e) => {
     e.persist();
     handleChange(e);
-    // setInput(e.target.value);
   };
   function addSlot(e) {
-    e.preventDefault()
-    addTimeSlot(true)
-    setItems([...items, {
-      id: uuidv4(),
-      openTime: "09:00",
-      closeTime: "11:00",
-      setInput: true,
-      days: 1,
-    }])
-   
+    e.preventDefault();
+    addTimeSlot(true);
+    setItems([
+      ...items,
+      {
+        id: uuidv4(),
+        openTime: "09:00",
+        closeTime: "11:00",
+        setInput: true,
+        days: 1,
+      },
+    ]);
   }
   function deleteSlot(id) {
-    setItems(previd => {
+    setItems((previd) => {
       return previd.filter((item, index) => {
         return item.id != id;
-      })
-    })
+      });
+    });
   }
 
-  function copyItem(obj,id) {
-    
-    items.map((data)=>{
-    
-      if(data.id===id){
-        Object.assign(data, obj)
+  function copyItem(obj, id) {
+    items.map((data) => {
+      if (data.id === id) {
+        Object.assign(data, obj);
       }
-    })
-    setItems((items)=>{
-    return ([...items,{
-    id: uuidv4(),
-    openTime: obj.openTime,
-    closeTime: obj.closeTime,
-    days: obj.days,
-    setInput: obj.setInput
-   }])})
-
+    });
+    setItems((items) => {
+      return [
+        ...items,
+        {
+          id: uuidv4(),
+          openTime: obj.openTime,
+          closeTime: obj.closeTime,
+          days: obj.days,
+          setInput: obj.setInput,
+        },
+      ];
+    });
   }
-  const optionsOrder=["Now","Later"]
-  const optionsServices=["pickup","dine in","delivery"]
+  const optionsOrder = ["Now", "Later"];
+  const optionsServices = ["pickup", "dine in", "delivery"];
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
@@ -170,12 +178,22 @@ function CreateMenu({ open }) {
       </div>
       <div className={classes.allbtn}>
         <Button
-          style={{ backgroundColor: "lightgray" }}
+          style={{
+            backgroundColor: initial === "general" ? "lightgray" : "white",
+          }}
+          className={classes.button}
           onClick={() => setInitial("general")}
         >
           General
         </Button>
-        <Button variant="p" onClick={() => setInitial("credential")}>
+        <Button
+          style={{
+            backgroundColor: initial === "credential" ? "lightgray" : "white",
+          }}
+          className={classes.button}
+          variant="p"
+          onClick={() => setInitial("credential")}
+        >
           Condition
         </Button>
       </div>
@@ -245,9 +263,25 @@ function CreateMenu({ open }) {
               onClick={addSlot}
             />
 
-            <>{items.map((item) => {
-              return item.id && <TimeSlot key={item.id} id={item.id} Open={item.openTime} Close={item.closeTime} checked={item.setInput} Days={item.days} onAdd={addSlot} Copy={copyItem} onDelete={deleteSlot} />
-            })}</>
+            <>
+              {items.map((item) => {
+                return (
+                  item.id && (
+                    <TimeSlot
+                      key={item.id}
+                      id={item.id}
+                      Open={item.openTime}
+                      Close={item.closeTime}
+                      checked={item.setInput}
+                      Days={item.days}
+                      onAdd={addSlot}
+                      Copy={copyItem}
+                      onDelete={deleteSlot}
+                    />
+                  )
+                );
+              })}
+            </>
             <OrderTime
               button
               btnname="optional"
@@ -263,8 +297,6 @@ function CreateMenu({ open }) {
               checked
               des="Enabling this will disable immediate orders for this menu and require that people pre-order according to the conditions below"
             />
-
-
 
             <OrderTime
               type="number"
@@ -282,12 +314,11 @@ function CreateMenu({ open }) {
               title="Pre-order Cutoff Time (12H Format)"
               des="Use in conjunction with the above option to ensure customers must place orders before a certain time on the last pre-order day. For example, if you set the cut off to 8:00pm and you require orders 2 day's in advance. For a customer to order for Friday, the latest they can put in their order is at 8:00pm on Wednesday"
             />
-
           </>
         )}
         <Button className={classes.btn} onClick={handleClick} type="submit">
           Create Menu
-      </Button>
+        </Button>
       </form>
     </div>
   );
@@ -300,7 +331,7 @@ function CreateMenu({ open }) {
         aria-describedby="simple-modal-description"
         style={{ overflow: "scroll", marginTop: "auto" }}
       >
-       {body}
+        {body}
       </Modal>
     </div>
   );
