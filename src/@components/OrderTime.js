@@ -7,6 +7,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
+import CustomButton2 from "./CustomButton2";
 const useStyles = makeStyles((theme) =>
   createStyles({
     paper: {
@@ -37,15 +38,11 @@ const useStyles = makeStyles((theme) =>
       fontWeight: "600",
     },
     btnSyling: {
-      // "&:hover": {
-      //   background: "#E5E7E9",
-      // },
-      backgroundColor:"rgb(238, 82, 82)",
+   
       "&:focus": {
-        background: "rgb(224, 224, 224)",
+        outline:"none"
       },
     },
-    
   })
 );
 
@@ -188,6 +185,7 @@ function OrderTime({
   onClick,
   options,
   btngroup,
+  btn2,
   addbtn,
   changeState,
   placeholder,
@@ -195,6 +193,7 @@ function OrderTime({
   standardButton,
   nam1,
   nam2,
+  comboState,
 }) {
   const [name, setName] = useState("");
   const classes = useStyles();
@@ -211,7 +210,9 @@ function OrderTime({
         {checked ? (
           <Switch />
         ) : btn ? (
-          <CustomButton name={values} activ onClick={onClick} />
+          <CustomButton name={values} activ onClick={handlechange} />
+        ) : btn2 ? (
+          <CustomButton2 name={values} activ onClick={onClick} />
         ) : dropdown ? (
           <select
             style={{ width: "100%", borderRadius: "2px", height: "38px" }}
@@ -226,10 +227,22 @@ function OrderTime({
               variant="contained"
               aria-label="contained primary button group"
             >
-              <Button className={classes.btnSyling} onClick={standardButton}>
+              <Button
+                style={{
+                  backgroundColor: !comboState ? "rgb(238, 82, 82)" : "white",
+                }}
+                onClick={standardButton}
+                className={classes.btnSyling}
+              >
                 {nam1}
               </Button>
-              <Button className={classes.btnSyling} onClick={comboButton}>
+              <Button
+                style={{
+                  backgroundColor: comboState ? "rgb(238, 82, 82)" : "white",
+                }}
+                onClick={comboButton}
+                className={classes.btnSyling}
+              >
                 {nam2}
               </Button>
             </ButtonGroup>

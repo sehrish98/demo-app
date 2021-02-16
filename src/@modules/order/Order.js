@@ -182,7 +182,7 @@ function Order({ title, value }) {
     },
   ];
   const handlechange = (e) => {
-    console.log("hi i m hndle chnge",e)
+
     if (e == "compress") {
       if (compress >= 60) {
         setCompress(compress - 20);

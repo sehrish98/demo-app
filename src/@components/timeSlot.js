@@ -139,7 +139,7 @@ export default function TimeSlot(props) {
     }
 
     const copyDiv=()=> {
-        console.log("props id",props.id);
+
         const obj = {
             openTime: time,
             closeTime: close,

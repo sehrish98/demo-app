@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
+      "&:focus":{
+        outline:"none"
+      }
     },
     detail: {
       display: "flex",
@@ -75,7 +78,15 @@ const useStyles = makeStyles((theme) =>
       borderTop: "1px solid lightgray",
       borderBottom: "1px solid lightgray",
       padding: "10px 0px",
+      "&:focus":{
+        outline:"none"
+      }
     },
+    btnStyle:{
+      "&:focus":{
+        outline:"none"
+      }
+    }
   })
 );
 function CreateCategory({ open, id }) {
@@ -169,10 +180,11 @@ function CreateCategory({ open, id }) {
         <Button
           style={{ backgroundColor: "lightgray" }}
           onClick={() => setInitial("general")}
+          className={classes.btnStyle}
         >
           General
         </Button>
-        <Button variant="p" onClick={() => setInitial("credential")}>
+        <Button variant="p" onClick={() => setInitial("credential")}  className={classes.btnStyle}>
           Condition
         </Button>
       </div>
@@ -225,7 +237,7 @@ function CreateCategory({ open, id }) {
                 options={["Pick up", "Delivery", "Dine in"]}
               />
               <OrderTime
-                btn
+                btn2
                 values="Add Time Slot"
                 btnname="optional"
                 title="Applicable Hours"

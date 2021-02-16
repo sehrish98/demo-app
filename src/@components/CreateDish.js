@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
+      "&:focus":{
+        outline:"none"
+      }
     },
     detail: {
       display: "flex",
@@ -98,6 +101,11 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       marginLeft: "1rem",
     },
+    btnOutline:{
+      "&:focus":{
+        outline:"none",
+      }
+    }
   })
 );
 
@@ -143,13 +151,13 @@ function CreateDish({ open, menuId, menucat }) {
     handleChange(e);
   };
   const changeState = (e) => {
-   
     setImageState(!imageState);
   };
   const [timeslot, addTimeSlot] = useState(false);
   let [items, setItems] = useState([]);
   let count = 1;
-  function addSlot(e) {
+  const addSlot=(e) => {
+
     e.preventDefault();
     addTimeSlot(true);
     setItems([
@@ -163,7 +171,7 @@ function CreateDish({ open, menuId, menucat }) {
       },
     ]);
   }
-  function deleteSlot(id) {
+  const deleteSlot =(id) => {
     setItems((previd) => {
       return previd.filter((item, index) => {
         return item.id != id;
@@ -171,7 +179,7 @@ function CreateDish({ open, menuId, menucat }) {
     });
   }
 
-  function copyItem(obj, id) {
+  const copyItem=(obj, id)=> {
     items.map((data) => {
       if (data.id === id) {
         Object.assign(data, obj);
@@ -192,12 +200,17 @@ function CreateDish({ open, menuId, menucat }) {
   }
   const [initial, setInitial] = useState("general");
   const [comboState, setComboState] = useState(false);
+  const [btnState,setbtnState]=useState(false)
+  const changebtnState=()=>{
+    
+     setbtnState(!btnState)
+  }
   const comboButton = () => {
     setComboState(true);
   };
-  const standardButton=()=>{
-    setComboState(false)
-  }
+  const standardButton = () => {
+    setComboState(false);
+  };
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
@@ -206,15 +219,32 @@ function CreateDish({ open, menuId, menucat }) {
       </div>
       <div className={classes.allbtn}>
         <Button
-          style={{ backgroundColor: "lightgray" }}
+          style={{
+            backgroundColor: initial === "general" ? "lightgrey" : "white",
+          }}
+          className={classes.btnOutline}
           onClick={() => setInitial("general")}
         >
           General
         </Button>
-        <Button variant="p" onClick={() => setInitial("credential")}>
+        <Button
+          variant="p"
+          style={{
+            backgroundColor: initial === "credential" ? "lightgrey" : "white",
+          }}
+          className={classes.btnOutline}
+          onClick={() => setInitial("credential")}
+        >
           Image & Tags
         </Button>
-        <Button variant="p" onClick={() => setInitial("options")}>
+        <Button
+          variant="p"
+          style={{
+            backgroundColor: initial === "options" ? "lightgrey" : "white",
+          }}
+          className={classes.btnOutline}
+          onClick={() => setInitial("options")}
+        >
           Options & Igrediants
         </Button>
       </div>
@@ -233,6 +263,7 @@ function CreateDish({ open, menuId, menucat }) {
                 nam1="Standard"
                 nam2="Combo"
                 standardButton={standardButton}
+                comboState={comboState}
               />
               <OrderTime
                 title="Name"
@@ -260,8 +291,9 @@ function CreateDish({ open, menuId, menucat }) {
                     btngroup
                     nam1="Standard"
                     nam2="Difference"
-
-                  />
+                    comboButton={changebtnState}
+                    comboState={btnState}
+                   />
                 </>
               )}
               <OrderTime
@@ -378,7 +410,7 @@ function CreateDish({ open, menuId, menucat }) {
                 placeholder="Select from the dropdown or type to search"
               />
               <OrderTime
-                btn
+                btn2
                 values="Add Ingredient"
                 btnname="optional"
                 title="Add Ingredient"

@@ -133,7 +133,7 @@ const MenuItemsDeleteFail = (dispatch, errorMessage) => {
 };
 
 export function MenuItemsDrag(obj) {
-  console.log("hi i mdrag menu:", obj);
+
   return (dispatch) => {
     dispatch({
       type: MenuItemsActionTypes.MENUITEMSDRAG_START,
@@ -151,7 +151,7 @@ export function MenuItemsDrag(obj) {
 }
 
 const MenuItemsDragSuccess = (dispatch, data) => {
-  console.log("hi ia m pass menu")
+
   dispatch(GetMenuItems());
 
   dispatch({
@@ -162,7 +162,7 @@ const MenuItemsDragSuccess = (dispatch, data) => {
 };
 
 const MenuItemsDragFail = (dispatch, errorMessage) => {
-  console.log("hi ia m fail menu")
+
   dispatch({
     type: MenuItemsActionTypes.MENUITEMSDRAG_FAIL,
     payload: {

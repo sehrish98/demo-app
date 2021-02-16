@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) =>
         background: "white",
         color: "black",
       },
+      "&:focus":{
+        outline:"none"
+      }
     },
     paper: {
       width: "100%",

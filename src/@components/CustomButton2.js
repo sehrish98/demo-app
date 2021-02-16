@@ -48,9 +48,9 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function CustomButton({
+function CustomButton2({
   name,
-  handlechange,
+  onClick,
   activ,
   type,
 }) {
@@ -60,7 +60,7 @@ function CustomButton({
       <button
       type={type}
         className={`${activ ? classes.active : classes.btn}`}
-        onClick={handlechange}
+        onClick={onClick}
       >
         {name}
       </button>
@@ -68,4 +68,4 @@ function CustomButton({
   );
 }
 
-export default CustomButton;
+export default CustomButton2;
