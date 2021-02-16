@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) =>
       border: "1px solid gray",
       color: "gray",
       borderRadius: "3px",
+      "&:focus":{
+        outline:"none"
+      }
     },
     des: {
       fontSize: "14px",
@@ -194,6 +197,7 @@ function OrderTime({
   nam1,
   nam2,
   comboState,
+  minimum
 }) {
   const [name, setName] = useState("");
   const classes = useStyles();
@@ -204,7 +208,7 @@ function OrderTime({
         <Typography variant="p" className={classes.typo}>
           {title}
         </Typography>
-        {button && <button className={classes.btn}>{btnname}</button>}
+        {button && <button className={classes.btn} onClick={(e)=>{e.preventDefault()}}>{btnname}</button>}
       </div>
       <div style={{ margin: "8px 0px" }}>
         {checked ? (
@@ -257,6 +261,7 @@ function OrderTime({
             addbtn={addbtn ? true : false}
             changeState={changeState}
             placeholder={placeholder}
+            minimum={minimum}
           />
         )}
       </div>

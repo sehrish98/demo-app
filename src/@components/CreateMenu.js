@@ -128,7 +128,7 @@ function CreateMenu({ open }) {
     e.persist();
     handleChange(e);
   };
-  function addSlot(e) {
+  const  addSlot=(e)=> {
     e.preventDefault();
     addTimeSlot(true);
     setItems([
@@ -142,7 +142,7 @@ function CreateMenu({ open }) {
       },
     ]);
   }
-  function deleteSlot(id) {
+  const deleteSlot=(id) =>{
     setItems((previd) => {
       return previd.filter((item, index) => {
         return item.id != id;
@@ -150,7 +150,7 @@ function CreateMenu({ open }) {
     });
   }
 
-  function copyItem(obj, id) {
+  const copyItem=(obj, id) =>{
     items.map((data) => {
       if (data.id === id) {
         Object.assign(data, obj);

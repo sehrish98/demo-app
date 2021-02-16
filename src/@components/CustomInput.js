@@ -24,9 +24,11 @@ function CustomInput({
   value,
   req,
   addbtn,
-  changeState
+  changeState,
+  minimum
 }) {
   const classes = useStyles();
+
   return (
     <div>
       <input
@@ -38,6 +40,7 @@ function CustomInput({
         value={value}
         required={false}
         autoComplete="off"
+        min={minimum}
       />
       {addbtn && (
         <>

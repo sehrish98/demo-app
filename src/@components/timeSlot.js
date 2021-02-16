@@ -117,15 +117,15 @@ export default function TimeSlot(props) {
             })
         }
     }
-    function feildChangeopen(e) {
+    const feildChangeopen=(e)=> {
         setTime(e.target.value)
 
     }
-    function feildChangeclose(e) {
+    const feildChangeclose=(e)=> {
         setCloseTime(e.target.value)
 
     }
-    function handleChange() {
+    const handleChange=()=> {
         if (input == true) {
             setInput(false)
         }
@@ -134,7 +134,7 @@ export default function TimeSlot(props) {
         }
 
     }
-    function handleClick() {
+    const handleClick=()=> {
          props.onDelete(props.id)
     }
 
