@@ -233,7 +233,7 @@ function OrderTime({
             >
               <Button
                 style={{
-                  backgroundColor: !comboState ? "rgb(238, 82, 82)" : "white",
+                  backgroundColor: !comboState ? "rgb(238, 84, 84)" : "white",
                 }}
                 onClick={standardButton}
                 className={classes.btnSyling}
@@ -242,7 +242,7 @@ function OrderTime({
               </Button>
               <Button
                 style={{
-                  backgroundColor: comboState ? "rgb(238, 82, 82)" : "white",
+                  backgroundColor: comboState ? "rgb(238, 84, 84)" : "white",
                 }}
                 onClick={comboButton}
                 className={classes.btnSyling}

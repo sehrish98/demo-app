@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) =>
       },
     },
     label1: {
-      backgroundColor: "rgb(238, 82, 82)",
+      backgroundColor: "rgb(238, 84, 84)",
       color: "white",
       padding: "0.5rem",
       fontFamily: "sans-serif",
