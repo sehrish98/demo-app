@@ -11,6 +11,7 @@ import { CreateOptionSet } from "src/@store/optionSet/Optionset.Actions";
 import { v4 as uuidv4 } from "uuid";
 import OptionSetPrice from "./OptionSetPrice";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import CreateDishTag from "./DropDown";
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -414,7 +415,7 @@ function CreateSetOption({ open }) {
               handlechange={handlefieldchange}
               minimum={1}
             />
-             <OrderTime
+            <OrderTime
               button
               btnname="optional"
               inputname="description"
@@ -424,7 +425,7 @@ function CreateSetOption({ open }) {
               handlechange={handlefieldchange}
               minimum={1}
             />
-             <OrderTime
+            <OrderTime
               button
               btnname="optional"
               inputname="description"
@@ -436,7 +437,12 @@ function CreateSetOption({ open }) {
             />
           </>
         )}
-        
+        {initial == "dishes" && (
+          <>
+            <CreateDishTag />
+          </>
+        )}
+
         <Button className={classes.btn} onClick={handleClick} type="submit">
           Save
         </Button>
