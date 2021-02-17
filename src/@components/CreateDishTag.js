@@ -124,7 +124,7 @@ function CreateDishTag({ open }) {
   const [btnState, setBtnState] = useState("");
 
   const changeBtnState = (btn) => {
-    console.log("ASDasda", btn);
+
     setBtnState(btn);
   };
   const [dishData, setDishData] = useState("example");
@@ -142,7 +142,7 @@ function CreateDishTag({ open }) {
   const [classnames, setClassName] = useState("");
   const handleIcon = (e) => {
     let str = e.target.className;
-    console.log("vbefore", str);
+
     let res = str.replace(/fa-2x/gi, "fa-1x");
     console.log(res);
     setClassName(res);
@@ -164,7 +164,7 @@ function CreateDishTag({ open }) {
   });
 
   const spanColorChange = (e) => {
-    console.log("selected elemnt name is:", e.target.name);
+
     if (e.target.name === "backgroundDiv") {
       setBackgroundColor({
         ...backgroundColorset,
@@ -214,6 +214,11 @@ function CreateDishTag({ open }) {
     setInputCheck(!inputCheck);
   };
   const checkedInput1 = () => {
+    if (menuState) {
+
+      setMenu(false);
+      setInputState(false);
+    }
     if (inputState) {
       setInputState(false);
       setInputCheck1(false);
@@ -223,6 +228,11 @@ function CreateDishTag({ open }) {
     setInputCheck1(!inputCheck1);
   };
   const checkedInput2 = () => {
+    if (menuState) {
+
+      setMenu(false);
+      setInputState(false);
+    }
     if (inputState) {
       setInputState(false);
       setInputCheck1(true);
@@ -232,6 +242,11 @@ function CreateDishTag({ open }) {
     setInputCheck2(!inputCheck2);
   };
   const checkedInput3 = () => {
+    if (menuState) {
+
+      setMenu(false);
+      setInputState(false);
+    }
     if (inputState) {
       setInputState(false);
       setInputCheck1(true);
@@ -241,6 +256,11 @@ function CreateDishTag({ open }) {
     setInputCheck3(!inputCheck3);
   };
   const onClickInputState = () => {
+    if (menuState) {
+
+      setMenu(false);
+      setInputState(false);
+    }
     setInputCheck1(!inputCheck1);
     setInputCheck2(!inputCheck2);
     setInputCheck3(!inputCheck3);
@@ -252,39 +272,61 @@ function CreateDishTag({ open }) {
     setInputPizza(!inputPizza);
   };
   const inputComboSet = () => {
-    setInputCombo(!inputCombo);
-    setInputPizza(!inputPizza);
+    if (menuState) {
+       setMenu(false);
+      setInputCombo(false);
+    } else {
+      setInputCombo(!inputCombo);
+    }
   };
   const [menuState, setMenu] = useState(false);
   useEffect(() => {
-    if (inputCheck1 && inputCheck2 && inputCheck3 && inputPizza) {
+    if (inputCheck1 && inputCheck2 && inputCheck3 && inputCombo) {
       setMenu(true);
       setInputCombo(true);
     }
-  
-   if (!inputCheck1 || !inputCheck2 || !inputCheck3) {
+
+    if (!inputCheck1 || !inputCheck2 || !inputCheck3) {
       setInputState(false);
     }
-    if (!inputPizza || !inputCombo) {
-      setInputCombo(false);
-      setInputPizza(false);
-    }
-   console.log("hit");
+    // if (!inputPizza || !inputCombo) {
+    //   setInputCombo(false);
+    //   setInputPizza(false);
+    // }
   }, [inputCheck1, inputCheck2, inputCheck3, inputPizza, inputCombo]);
 
   const setMenuState = () => {
-    if (inputCombo && inputState) {
-      setMenu(true);
-      setInputCombo(false);
-      setInputState(false);
-    } else {
-      setMenu(!menuState);
-      setInputPizza(!inputPizza);
-      setInputCheck1(!inputCheck1);
-      setInputCheck2(!inputCheck2);
-      setInputCheck3(!inputCheck3);
+    // if (inputCombo && inputState) {
+    //   setMenu(true);
+    //   setInputCombo(false);
+    //   setInputState(false);
+    // } 
+    // else {
+    //   setMenu(!menuState);
+    //   setInputPizza(!inputPizza);
+    //   setInputCheck1(!inputCheck1);
+    //   setInputCheck2(!inputCheck2);
+    //   setInputCheck3(!inputCheck3);
+    // }
+    if(menuState){
+    
+      setMenu(false)
+      setInputCheck1(false)
+      setInputCheck2(false)
+      setInputCheck3(false)
+      setInputState(false)
+      setInputCombo(false)
+    }
+    if(!menuState){
+      setMenu(true)
+      setInputCheck1(true)
+      setInputCheck2(true)
+      setInputCheck3(true)
+      setInputState(true)
+      setInputCombo(true)
     }
   };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
