@@ -9,6 +9,8 @@ import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
 import { v4 as uuidv4 } from "uuid";
 import TimeSlot from "./timeSlot";
+
+import TimeSlot1 from "./timeSlot1";
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -137,6 +139,16 @@ function CreateMenu({ open }) {
     e.persist();
     handleChange(e);
   };
+
+  const handletimechange = (e, id) => {
+    var index = items.findIndex((x) => x.id === id);
+
+    let g = items[index];
+    g[e.target.name] = e.target.value;
+    if (index === -1) {
+      console.log("no match");
+    } else setItems([...items.slice(0, index), g, ...items.slice(index + 1)]);
+  };
   const addSlot = (e) => {
     e.preventDefault();
     addTimeSlot(true);
@@ -146,7 +158,7 @@ function CreateMenu({ open }) {
         id: uuidv4(),
         openTime: "09:00",
         closeTime: "11:00",
-        setInput: false,
+        setInput: true,
         days: 1,
       },
     ]);
@@ -158,20 +170,9 @@ function CreateMenu({ open }) {
       });
     });
   };
-  const handletimechange = (e, id) => {
-    var index = items.findIndex((x) => x.id === id);
 
-    console.log(e.target.type, e.target.checked, e.target.name);
-    let g = items[index];
-    if (e.target.type === "checkbox") {
-      g[e.target.name] = e.target.checked;
-    } else {
-      g[e.target.name] = e.target.value;
-    }
-    if (index === -1) {
-    } else setItems([...items.slice(0, index), g, ...items.slice(index + 1)]);
-  };
   const copyItem = (obj, id) => {
+    console.log("safgfdgh",obj)
     items.map((data) => {
       if (data.id === id) {
         Object.assign(data, obj);
@@ -293,12 +294,13 @@ function CreateMenu({ open }) {
             />
 
             <>
-              {items.map((item) => {
+              {items.map((item, index) => {
                 return (
                   item.id && (
-                    <TimeSlot
+                    <TimeSlot1
                       inputname="applicableHours"
                       key={item.id}
+                      index={index}
                       id={item.id}
                       Open={item.openTime}
                       Close={item.closeTime}

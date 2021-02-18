@@ -197,7 +197,8 @@ function OrderTime({
   nam1,
   nam2,
   comboState,
-  minimum
+  minimum,
+  onClickServices
 }) {
   const [name, setName] = useState("");
   const classes = useStyles();
@@ -212,7 +213,7 @@ function OrderTime({
       </div>
       <div style={{ margin: "8px 0px" }}>
         {checked ? (
-          <Switch />
+          <Switch name={inputname} onChange={handlechange}/>
         ) : btn ? (
           <CustomButton name={values} activ onClick={handlechange} />
         ) : btn2 ? (
@@ -220,7 +221,10 @@ function OrderTime({
         ) : dropdown ? (
           <select
             style={{ width: "100%", borderRadius: "2px", height: "38px" }}
-          >
+           onChange={handlechange}
+           name={inputname}
+           onClick={onClickServices}
+         >
             {options.map((item, i) => {
               return <option value={i}>{item}</option>;
             })}

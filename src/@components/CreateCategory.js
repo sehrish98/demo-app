@@ -52,9 +52,9 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
-      "&:focus":{
-        outline:"none"
-      }
+      "&:focus": {
+        outline: "none",
+      },
     },
     detail: {
       display: "flex",
@@ -78,24 +78,28 @@ const useStyles = makeStyles((theme) =>
       borderTop: "1px solid lightgray",
       borderBottom: "1px solid lightgray",
       padding: "10px 0px",
-      "&:focus":{
-        outline:"none"
-      }
+      "&:focus": {
+        outline: "none",
+      },
     },
-    btnStyle:{
-      "&:focus":{
-        outline:"none"
-      }
-    }
+    btnStyle: {
+      "&:focus": {
+        outline: "none",
+      },
+    },
   })
 );
 function CreateCategory({ open, id }) {
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
   let dta = {
+
     name: "",
     displayName: "",
     description: "",
+    taxes: 0,
+    applicableHours: [],
+    hideUnavalaibleMenu: false,
   };
   useEffect(() => {
     if (!form) {
@@ -108,15 +112,18 @@ function CreateCategory({ open, id }) {
   const handleClose = () => {
     open(false);
   };
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     const { name, displayName, description } = form;
+    form.applicableHours = items;
+    let obj=form;
+    obj={
+      ...form,
+      menuId:id
+    }
+
     if (name != "") {
-      const obj = {
-        menuId: id,
-        name: name,
-        displayName: displayName,
-        description: description,
-      };
+       console.log("I am menu ctegroy",obj)  
       dispatch(MenuCategoryCreate(obj, history));
     }
   };
@@ -137,11 +144,26 @@ function CreateCategory({ open, id }) {
         id: uuidv4(),
         openTime: "09:00",
         closeTime: "11:00",
-        setInput: true,
+        setInput: false,
         days: 1,
       },
     ]);
   }
+  const handletimechange = (e, id) => {
+    var index = items.findIndex((x) => x.id === id);
+
+    console.log(e.target.type, e.target.checked, e.target.name);
+    let g = items[index];
+    if (e.target.type === "checkbox") {
+      console.log("dssdsd", e.target.checked, e.target.name, g);
+      g[e.target.name] = e.target.checked;
+    } else {
+      console.log("elseeess", e.target.name, g);
+      g[e.target.name] = e.target.value;
+    }
+    if (index === -1) {
+    } else setItems([...items.slice(0, index), g, ...items.slice(index + 1)]);
+  };
 
   function deleteSlot(id) {
     setItems((previd) => {
@@ -178,13 +200,22 @@ function CreateCategory({ open, id }) {
       </div>
       <div className={classes.allbtn}>
         <Button
-          style={{ backgroundColor: "lightgray" }}
+          style={{
+            backgroundColor: initial == "general" ? "lightgray" : "white",
+          }}
           onClick={() => setInitial("general")}
           className={classes.btnStyle}
         >
           General
         </Button>
-        <Button variant="p" onClick={() => setInitial("credential")}  className={classes.btnStyle}>
+        <Button
+          style={{
+            backgroundColor: initial == "credential" ? "lightgray" : "white",
+          }}
+          variant="p"
+          onClick={() => setInitial("credential")}
+          className={classes.btnStyle}
+        >
           Condition
         </Button>
       </div>
@@ -224,17 +255,19 @@ function CreateCategory({ open, id }) {
                 checked
                 title="Hide Unavailable Menu"
                 des="Enabling this will hide this menu in your store if it's unavailable. Otherwise, this menu will still be displayed with a warning message that it is not available."
-                inputname="name"
+                handlechange={handlefieldchange}
+                inputname="hideUnavalaibleMenu"
               />
+
               <OrderTime
                 button
                 dropdown
                 btnname="optional"
-                inputname="displayName"
-                title="Taxes"
-                des="Select the taxes which should be applied to the dish"
+                title="Services"
+                des="Select which services this category will be available for. Leave empty to apply for all services. Please double-check with the parent menu's Services setting in Conditions tab because it has a higher priority when any conflict happened."
                 handlechange={handlefieldchange}
-                options={["Pick up", "Delivery", "Dine in"]}
+                options={["Dine in"]}
+                inputname="taxes"
               />
               <OrderTime
                 btn2
@@ -243,6 +276,7 @@ function CreateCategory({ open, id }) {
                 title="Applicable Hours"
                 des="Set which hours this menu will be available for. If no hours entered, the menu is applicable at all times. Enter time in 24H format, e.g. 21:00 for 9:00pm. Ensure time slots do not overlap or close before they open"
                 onClick={addSlot}
+                handlechange={handlefieldchange}
               />
 
               <>
@@ -259,6 +293,8 @@ function CreateCategory({ open, id }) {
                         onAdd={addSlot}
                         Copy={copyItem}
                         onDelete={deleteSlot}
+                        handlechange={handletimechange}
+                        inputname="applicableHours"
                       />
                     )
                   );

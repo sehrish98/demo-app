@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 function MenuItems({ items, dishes, id }) {
+  console.log("qdsfadsfg",items,dishes)
   const [show, setShow] = useState(false);
   const [opendelete, setopenDelete] = useState(false);
   const [editcategory, setEditCategory] = useState(false);

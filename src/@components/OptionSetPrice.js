@@ -147,54 +147,35 @@ const useStyles = makeStyles({
 export default function OptionSetPrice(props) {
   const classes = useStyles();
   const [input, setInput] = useState(true);
-  let [time, setTime] = useState("09:00");
-  let [close, setCloseTime] = useState("11:00");
-  let [day, setDay] = useState(1);
-  const [pressed, setPressed] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const ref = useRef();
-
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [inStock, setInstock] = useState("");
+  function feildChangename(e) {
+    setName(e.target.value);
+  }
+  function feildChangePrice(e) {
+    setPrice(e.target.value);
+  }
+  function feildChangeStock(e) {
+    setInstock(e.target.value);
+  }
   useEffect(() => {
     if (ref.current) {
       ref.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
     }
   }, [position]);
 
-  // Update the current position if mouse is down
-  const onMouseMove = (event) => {
-    if (pressed) {
-      setPosition({
-        x: position.x + event.movementX,
-        y: position.y + event.movementY,
-      });
-    }
-  };
-  function feildChangeopen(e) {
-    setTime(e.target.value);
-  }
-  function feildChangeclose(e) {
-    setCloseTime(e.target.value);
-  }
   function handleChange() {
     setInput(!input);
   }
   function handleClick() {
     props.onDelete(props.id);
   }
-
-  const copyDiv = () => {
-    const obj = {
-      openTime: time,
-      closeTime: close,
-      setInput: input,
-      days: day,
-    };
-    props.Copy(obj, props.id);
-  };
-
   return (
     <>
-      {(props.stateNum === 1 ) && (
+      {props.stateNum === 1 && (
         <div
           id={props.id}
           style={{
@@ -202,6 +183,7 @@ export default function OptionSetPrice(props) {
             marginTop: props.count === 1 ? "19px" : "0",
           }}
           ref={ref}
+          name={props.inputname}
         >
           <div
             className={classes.divSize}
@@ -215,29 +197,36 @@ export default function OptionSetPrice(props) {
           >
             {props.values ? null : <i class="fas fa-arrow-down"></i>}
           </div>
-
           <input
             type="text"
+            name="name"
             className={classes.divDay}
-            value={time}
-            onChange={feildChangeopen}
-            value={props.count}
+            onChange={(e) => {
+              props.handlechange(e, props.id);
+            }}
+            // value={props.count}
             placeholder="name"
-            value={props.values ? props.values[0] : null}
+            value={props.values ? props.values[0] : props.Name}
           />
           <input
             type={props.values ? "text" : "number"}
+            name="price"
             className={classes.divDay}
-            onChange={feildChangeclose}
             placeholder="$"
-            value={props.values ? props.values[1] : null}
+            value={props.values ? props.values[1] : props.Price}
+            onChange={(e) => {
+              props.handlechange(e, props.id);
+            }}
           />
           <input
             type={props.values ? "text" : "number"}
+            name="inStock"
             className={classes.divDay}
-            disabled={input || props.values ? "" : "disabled"}
-            onChange={feildChangeclose}
-            value={props.values ? props.values[2] : null}
+            disabled={!props.NoStock || props.values ? "" : "disabled"}
+            value={props.values ? props.values[2] : props.InStock}
+            onChange={(e) => {
+              props.handlechange(e, props.id);
+            }}
           />
           <div
             className={classes.divDay1}
@@ -247,10 +236,13 @@ export default function OptionSetPrice(props) {
               ""
             ) : (
               <input
+                name="noStock"
                 type="checkbox"
                 className={classes.inputCheck}
-                onClick={handleChange}
-                value={props.values ? props.values[3] : null}
+                onChange={(e) => {
+                  props.handlechange(e, props.id);
+                }}
+                value={props.values ? props.values[3] : props.NoStock}
               />
             )}
           </div>
@@ -292,48 +284,38 @@ export default function OptionSetPrice(props) {
           <input
             type="text"
             className={classes.divDay}
-            value={time}
-            onChange={feildChangeopen}
             value={props.count}
             placeholder="name"
             value={props.values ? props.values[0] : null}
             style={{ width: "99px " }}
           />
           <input
-            type={props.values?"text":"number"}
+            type={props.values ? "text" : "number"}
             className={classes.divDay}
-            value={time}
-            onChange={feildChangeopen}
             value={props.count}
             placeholder="$"
             value={props.values ? props.values[1] : null}
             style={{ width: "99px" }}
           />
           <input
-            type={props.values?"text":"number"}
+            type={props.values ? "text" : "number"}
             className={classes.divDay}
-            value={time}
-            onChange={feildChangeopen}
             value={props.count}
             placeholder="$"
             value={props.values ? props.values[2] : null}
             style={{ width: "99px" }}
           />
           <input
-            type={props.values?"text":"number"}
+            type={props.values ? "text" : "number"}
             className={classes.divDay}
-            value={time}
-            onChange={feildChangeopen}
             value={props.count}
             placeholder="$"
             value={props.values ? props.values[3] : null}
             style={{ width: "99px" }}
           />
           <input
-            type={props.values?"text":"number"}
+            type={props.values ? "text" : "number"}
             className={classes.divDay}
-            value={time}
-            onChange={feildChangeopen}
             value={props.count}
             placeholder="$"
             value={props.values ? props.values[4] : null}
@@ -341,10 +323,10 @@ export default function OptionSetPrice(props) {
           />
 
           {props.values ? (
-             <div
-             className={classes.divDay1}
-             style={{ position: "relative", top: props.values ? "-63px" : "" }}
-           ></div>
+            <div
+              className={classes.divDay1}
+              style={{ position: "relative", top: props.values ? "-63px" : "" }}
+            ></div>
           ) : (
             <div
               className={classes.divDay1}

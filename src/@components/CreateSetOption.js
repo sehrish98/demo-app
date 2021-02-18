@@ -121,8 +121,17 @@ function CreateSetOption({ open }) {
   let dta = {
     name: "",
     displayName: "",
-    description: "",
+    showInMenu: false,
+    IPNFQP: false,
+    options: [],
+    required: false,
+    selectMultiple: false,
+    enableOptionQuantity: false,
+    minOptionsRequired: "",
+    maxOptionsRequired: "",
+    freeQuantity: "",
   };
+
   useEffect(() => {
     if (!form) {
       setForm(dta);
@@ -137,15 +146,33 @@ function CreateSetOption({ open }) {
     open(false);
   };
   let count = 1;
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    open(false);
     const { name } = form;
+    form.options = items;
+    console.log("form is here", form.options);
     if (name != "") {
       dispatch(CreateOptionSet(form, history));
     }
   };
   const handlefieldchange = (e) => {
+    console.log("asfnggounodubnclijasifbmv");
     e.persist();
     handleChange(e);
+  };
+  const handletimechange = (e, id) => {
+    var index = items.findIndex((x) => x.id === id);
+
+    console.log("sfg",e.target.type, e.target.checked, e.target.name);
+    let g = items[index];
+    if (e.target.type === "checkbox") {
+      g[e.target.name] = e.target.checked;
+    } else {
+      g[e.target.name] = e.target.value;
+    }
+    if (index === -1) {
+    } else setItems([...items.slice(0, index), g, ...items.slice(index + 1)]);
   };
   const addSlot = (e) => {
     e.preventDefault();
@@ -154,10 +181,10 @@ function CreateSetOption({ open }) {
       ...items,
       {
         id: uuidv4(),
-        openTime: "09:00",
-        closeTime: "11:00",
-        setInput: true,
-        days: 1,
+        name: "",
+        price: "",
+        inStock: "",
+        noStock: false,
       },
     ]);
   };
@@ -169,25 +196,7 @@ function CreateSetOption({ open }) {
     });
   };
 
-  const copyItem = (obj, id) => {
-    items.map((data) => {
-      if (data.id === id) {
-        Object.assign(data, obj);
-      }
-    });
-    setItems((items) => {
-      return [
-        ...items,
-        {
-          id: uuidv4(),
-          openTime: obj.openTime,
-          closeTime: obj.closeTime,
-          days: obj.days,
-          setInput: obj.setInput,
-        },
-      ];
-    });
-  };
+
   const [selectValue, setSelectValue] = useState(1);
   const [stateNum, setStateNum] = useState(1);
   const onChangeSelct = (e) => {
@@ -265,15 +274,16 @@ function CreateSetOption({ open }) {
               button
               checked
               btnname="optional"
-              inputname="description"
+              inputname="showInMenu"
               title="Show In Menu"
               des="If enabled, the option set will display itself your on your menu list. If disabled, it will only show in the dish popup"
               handlechange={handlefieldchange}
             />
+
             <OrderTime
               button
               checked
-              btnname="optional"
+              btnname="IPNFQP"
               inputname="description"
               title="Inc. Price in Free Quantity Promos"
               des="By default, option set prices are not counted towards promos such as buy 1 get 1 free. For example, if the base dish price is $10 but the customer added an option costing $5 extra, total $15, if they buy 2 units, the second will be discounted for the base cost of $10. If this setting is enabled, the discount would be valid for up to $15"
@@ -283,14 +293,8 @@ function CreateSetOption({ open }) {
         )}
         {initial == "credential" && (
           <>
-            {/* <OrderTime
-              btn2
-              values="Add Options"
-              btnname="optional"
-              title="Applicable Hours"
-              des="Define a list of options for this option set"
-              onClick={addSlot}
-            /> */}
+          
+
             <Button variant="outlined" color="secondary" onClick={addSlot}>
               Add Options
             </Button>
@@ -364,16 +368,18 @@ function CreateSetOption({ open }) {
                     <OptionSetPrice
                       key={item.id}
                       id={item.id}
-                      Open={item.openTime}
-                      Close={item.closeTime}
-                      checked={item.setInput}
-                      Days={item.days}
+                      // checked={item.setInput}
+                      Name={item.name}
+                      InStock={item.inStock}
+                      Price={item.price}
+                      NoStock={item.noStock}
                       onAdd={addSlot}
-                      Copy={copyItem}
                       onDelete={deleteSlot}
                       count={count++}
                       stateNum={stateNum}
                       selectValue={selectValue}
+                      inputname="options"
+                      handlechange={handletimechange}
                     />
                   )
                 );
@@ -386,21 +392,21 @@ function CreateSetOption({ open }) {
           <>
             <OrderTime
               checked
-              inputname="description"
+              inputname="required"
               title="Required"
               des="If enabled, a customer must make a choice from this option set"
               handlechange={handlefieldchange}
             />
             <OrderTime
               checked
-              inputname="description"
+              inputname="selectMultiple"
               title="Select Multiple"
               des="If enabled, a customer can select multiple options"
               handlechange={handlefieldchange}
             />
             <OrderTime
               checked
-              inputname="description"
+              inputname="enableOptionQuantity"
               title="Enable Option Quantity"
               des="If enabled, customers can select the quantity of a particular option"
               handlechange={handlefieldchange}
@@ -408,7 +414,7 @@ function CreateSetOption({ open }) {
             <OrderTime
               button
               btnname="optional"
-              inputname="description"
+              inputname="minOptionsRequired"
               title="Min Options Required"
               des="The minimum number of options that must be selected. Minimum is 1"
               type="number"
@@ -418,7 +424,7 @@ function CreateSetOption({ open }) {
             <OrderTime
               button
               btnname="optional"
-              inputname="description"
+              inputname="maxOptionsRequired"
               title="Max Options Allowed"
               des="The maximum number of options that can be selected. Leave empty for no limit"
               type="number"
@@ -428,7 +434,7 @@ function CreateSetOption({ open }) {
             <OrderTime
               button
               btnname="optional"
-              inputname="description"
+              inputname="freeQuantity"
               title="Free Quantity"
               des="The number of options that can be selected for free. NOTE: If enabled, ensure all your options are the same price otherwise the free options will be credited top to bottom"
               type="number"

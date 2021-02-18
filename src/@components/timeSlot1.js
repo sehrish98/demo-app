@@ -137,10 +137,10 @@ export default function TimeSlot1(props) {
 
   const copyDiv = () => {
     const obj = {
-      openTime: props.Open,
-      closeTime: props.Close,
-      setInput: props.checked,
-      days: props.Days,
+      openTime: time,
+      closeTime: close,
+      setInput: input,
+      days: day,
     };
     props.Copy(obj, props.id);
   };
@@ -185,7 +185,7 @@ export default function TimeSlot1(props) {
         name="openTime"
         className={classes.divDay}
         value={props.Open}
-        disabled={props.checked ? "disabled" : ""}
+        disabled={input ? "" : "disabled"}
         // onChange={feildChangeopen}
         onChange={(e) => {
           props.handlechange(e, props.id);
@@ -197,7 +197,7 @@ export default function TimeSlot1(props) {
         name="closeTime"
         className={classes.divDay}
         value={props.Close}
-        disabled={props.checked ? "disabled" : ""}
+        disabled={input ? "" : "disabled"}
         // onChange={feildChangeclose}
         onChange={(e) => {
           props.handlechange(e, props.id);
@@ -209,9 +209,8 @@ export default function TimeSlot1(props) {
           name="setInput"
           //   onChange={handleChange}
           onChange={(e) => {
-            props.handlechange(e, props.id);
+            props.handlechange(e, props.index);
           }}
-       
           checked={props.checked}
         />
       </div>
