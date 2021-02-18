@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
+      "&:focus":{
+        outline:"none"
+      }
     },
     detail: {
       display: "flex",
