@@ -14,7 +14,6 @@ import TimeSlot from "./timeSlot";
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
   return {
     top: `${top}%`,
     left: `${left}%`,
@@ -71,7 +70,9 @@ const useStyles = makeStyles((theme) =>
       color: "white",
       backgroundColor: "black",
       padding: "5px",
-      position: "relative",
+      position: "absolute",
+      top: "20px",
+      right: "30px",
       fontSize: "xx-large",
       zIndex: 1,
     },

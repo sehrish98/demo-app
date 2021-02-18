@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Typography } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import CustomTabs from "../../@components/CustomTabs";
 import SearchModal from "../../@components/SearchModal";
 import AddtoCart from "../../@components/AddtoCart";
+import BookTable from "../../@components/BookTable";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -44,7 +45,8 @@ function NavBar() {
   const classes = useStyles();
   const [opensearch, setSearch] = useState(false);
   const [cart, setAddtocart] = useState(false);
-  const cart_items = useSelector(({ cartreducer}) => cartreducer.cart);
+  const [bookTable, setbookTable] = useState(false);
+  const cart_items = useSelector(({ cartreducer }) => cartreducer.cart);
   return (
     <div elevation={5} className={classes.paper}>
       <div className={classes.detail} style={{ paddingBottom: "10px" }}>
@@ -68,9 +70,9 @@ function NavBar() {
               borderTopLeftRadius: "3px",
               borderBottomLeftRadius: "3px",
             }}
-            onClick={()=>setAddtocart(true)}
+            onClick={() => setAddtocart(true)}
           >
-            Items
+            Items {cart_items.length}
           </Typography>
           <Typography
             variant="p"
@@ -80,8 +82,9 @@ function NavBar() {
               borderBottomRightRadius: "3px",
               borderLeft: "1px solid #df676a",
             }}
+            onClick={() => setbookTable(true)}
           >
-            Cart {cart_items.length}
+            Cart
           </Typography>
         </div>
       </div>
@@ -98,6 +101,7 @@ function NavBar() {
       </div>
       {opensearch && <SearchModal open={setSearch} />}
       {cart && <AddtoCart open={setAddtocart} />}
+      {bookTable && <BookTable open={setbookTable} />}
     </div>
   );
 }

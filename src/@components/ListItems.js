@@ -35,7 +35,7 @@ const ListItems = ({ icon, tiptext, i, route }) => {
   return (
     <div>
       <Tooltip title={tiptext} placement="right" className={classes.icon}>
-        <p className={`${i == "0" && classes.active}`} onClick={handleclick}>
+        <p className={window.location.pathname === route ?classes.active :""} onClick={handleclick}>
           {icon}
         </p>
       </Tooltip>

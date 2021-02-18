@@ -5,7 +5,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { DishEdit } from "../@store/dish/Dish.Actions";
+import { createStaff } from "../@store/auth/Staff.Actions";
 import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
 
@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) =>
     paper: {
       position: "absolute",
       width: "100%",
-      maxWidth: "720px",
+      maxWidth: "500px",
       borderRadius: "3px",
       backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
+      boxShadow: theme.shadows[3],
+       padding: "5px 20px",
       outline: "none",
       display: "flex",
       flexDirection: "column",
@@ -51,9 +51,6 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
-      "&:focus":{
-        outline:"none"
-      }
     },
     detail: {
       display: "flex",
@@ -61,6 +58,7 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       marginBottom: "15px",
       marginTop: "10px",
+      position:"relative"
     },
     cancelIcon: {
       cursor: "pointer",
@@ -81,30 +79,32 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function EditDishTag({ open, data }) {
-  const history = useHistory();
+const CreateStaff=({ open })=> {
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
+  let dta = {
+    email: "",
+    password: "",
+    firstName: "",
+    lastName:"",
+  };
   useEffect(() => {
-    if (data && !form) {
-      setForm(data);
+    if (!form) {
+      setForm(dta);
     }
-  }, [form, setForm]);
+  }, [form]);
   const [initial, setInitial] = useState("general");
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleClose = () => {
     open(false);
   };
-  const handleClick = () => {
-    const data = {
-      dishTagId: form._id,
-      name: form.name,
-      displayName: form.displayName,
-      description: form.description,
-    };
-    if (form.name != "") {
-      dispatch(DishEdit(data, history));
+  const handleClick = (e) => {
+    e.preventDefault()
+    const {name ,lastName,firstName , password}=form
+    if(name!=""&&firstName!=""&&lastName!=""&&password!=""){
+      dispatch(createStaff(form, history));
     }
   };
   const handlefieldchange = (e) => {
@@ -112,83 +112,49 @@ function EditDishTag({ open, data }) {
     handleChange(e);
     // setInput(e.target.value);
   };
-
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
-        <Typography
-          variant="h5"
-          style={{ cursor: "move" }}
-          id="draggable-dialog-title"
-        >
-          Edit Dish Tag
-        </Typography>
+        <Typography variant="h5">Create Customer</Typography>
         <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
       </div>
-      <div className={classes.allbtn}>
-        <Button
-          style={{ backgroundColor: "lightgray" }}
-          onClick={() => setInitial("general")}
-        >
-          General
-        </Button>
-        <Button variant="p" onClick={() => setInitial("credential")}>
-          Condition
-        </Button>
-      </div>
+     <form>
       {initial === "general" && (
         <>
           <OrderTime
-            title="Name"
-            inputname="name"
-            des="A unique name for your menu"
+            title="Email"
+            inputname="email"
+            des="The e-mail address your customer will login with"
             handlechange={handlefieldchange}
-            value={form && form.name}
+            req={true}
           />
           <OrderTime
-            button
-            btnname="optional"
-            inputname="displayName"
-            title="Display Name"
-            des="Will override the unique name in your store"
+            inputname="password"
+            title="Password"
+            des="The password your customer will login with. Minimum 5 characters"
             handlechange={handlefieldchange}
-            value={form && form.displayName}
+            req={false}
           />
           <OrderTime
-            button
-            btnname="optional"
-            inputname="description"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
+            inputname="firstName"
+            title="First Name"
+            des="Confirm the password that your customer will login with"
             handlechange={handlefieldchange}
-            value={form && form.description}
+            req={false}
+          />
+            <OrderTime
+            inputname="lastName"
+            title="Last Name"
+            des="Confirm the password that your customer will login with"
+            handlechange={handlefieldchange}
+            req={false}
           />
         </>
       )}
-      {initial == "credential" && (
-        <>
-          <OrderTime
-            title="Name"
-            des="A unique name for your menu"
-            inputname="name"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Display Name"
-            des="Will override the unique name in your store"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
-          />
-        </>
-      )}
-      <Button className={classes.btn} onClick={handleClick}>
-        Save
+      <Button className={classes.btn} onClick={handleClick} type="submit">
+        Create Menu
       </Button>
+      </form>
     </div>
   );
   return (
@@ -206,4 +172,4 @@ function EditDishTag({ open, data }) {
   );
 }
 
-export default EditDishTag;
+export default CreateStaff;

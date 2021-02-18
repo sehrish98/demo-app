@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Typography, ButtonGroup, Button } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
@@ -10,6 +10,7 @@ import {
   RemoveCart,
   RemoveQuantyCart,
 } from "../@store/Cart/Cart.Actions";
+import Checkout from "./Checkout";
 
 function getModalStyle() {
   const top = 50;
@@ -126,6 +127,7 @@ function AddtoCart({ name, des, type, image, price, open }) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [opencheck, setOpenCheck] = useState(false);
   const cart_items = useSelector(({ cartreducer }) => cartreducer.cart);
   const handleClose = () => {
     open(false);
@@ -133,12 +135,15 @@ function AddtoCart({ name, des, type, image, price, open }) {
   const handleremoveCart = (e) => {
     const obj = {
       id: e.id,
-      name: e.name,
+      title: e.name,
       type: e.type,
       price: e.price,
-      qty: "1",
+      quantity: "1",
     };
     dispatch(RemoveQuantyCart(obj));
+  };
+  const handleCheckout = () => {
+    setOpenCheck(true);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -249,7 +254,9 @@ function AddtoCart({ name, des, type, image, price, open }) {
 
           <div className={classes.detail} style={{ padding: "8px 20px" }}>
             <Typography variant="p">Cart</Typography>
-            <Typography variant="p">PKR 11.50</Typography>
+            <Typography variant="p">
+              PKR {cart_items.reduce((sum, i) => (sum += i.qty * i.price), 0)}
+            </Typography>
           </div>
           <div className={classes.detail} style={{ padding: "8px 20px" }}>
             <Typography
@@ -262,7 +269,7 @@ function AddtoCart({ name, des, type, image, price, open }) {
               variant="h6"
               style={{ fontWeight: "800", fontSize: "18px" }}
             >
-              PKR 11.50
+             {cart_items.reduce((sum, i) => (sum += i.qty * i.price), 0)}
             </Typography>
           </div>
 
@@ -347,10 +354,12 @@ function AddtoCart({ name, des, type, image, price, open }) {
               name="Proceed to Checkout"
               style={{ marginLeft: "10px" }}
               activ
+              handlechange={handleCheckout}
             />
           </div>
         </>
       )}
+      {opencheck && <Checkout open={setOpenCheck} />}
     </div>
   );
   return (

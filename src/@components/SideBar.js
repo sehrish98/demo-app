@@ -29,6 +29,7 @@ const list = [
   {
     name: "booking",
     icon: <DateRange />,
+    route:""
   },
   {
     name: "Menu",
@@ -36,21 +37,24 @@ const list = [
     route: "/menu",
   },
   {
-    name: "Customers",
+    name: "Staff",
     icon: <Person />,
-    route: "/customer",
+    route: "/staff",
   },
   {
     name: "Settings",
     icon: <Settings />,
+    route:"/settings"
   },
   {
     name: "View Source",
     icon: <Input />,
+    route:""
   },
   {
     name: "Documentation",
     icon: <Description />,
+    route:""
   },
 ];
 

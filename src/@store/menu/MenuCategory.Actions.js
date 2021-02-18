@@ -135,7 +135,6 @@ const MenuCategoryDeleteFail = (dispatch, errorMessage) => {
 };
 
 export function MenuCategoryDrag(obj , history) {
-
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYDRAG_START,

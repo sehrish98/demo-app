@@ -25,8 +25,8 @@ function TitleValue({ title, value }) {
   return (
     <div elevation={5} className={classes.paper}>
       <div className={classes.detail}>
-        <Typography variant="p">{title}</Typography>
-        <Typography variant="p">{value}</Typography>
+        <Typography variant="p" style={{fontSize:"14px"}}>{title}</Typography>
+        <Typography variant="p" style={{fontSize:"14px"}}>{value}</Typography>
       </div>
     </div>
   );

@@ -16,7 +16,6 @@ import CreateDishTag from "./DropDown";
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
   return {
     top: `${top}%`,
     left: `${left}%`,
@@ -73,7 +72,9 @@ const useStyles = makeStyles((theme) =>
       color: "white",
       backgroundColor: "black",
       padding: "5px",
-      position: "relative",
+      position: "absolute",
+      top: "20px",
+      right: "30px",
       fontSize: "xx-large",
       zIndex: 1,
     },
@@ -266,8 +267,9 @@ function EditSetOption({ open, data }) {
             <OrderTime
               title="Name"
               inputname="name"
-              des="A unique name for your option set"
+              des="A unique name for your menu"
               handlechange={handlefieldchange}
+              value={form && form.name}
               req={true}
             />
             <OrderTime

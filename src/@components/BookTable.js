@@ -3,9 +3,11 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Modal, Typography } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { RestaurantMenu } from "@material-ui/icons";
 
 import { MenuItemsCreate } from "../@store/menu/Menu.Actions";
 import CustomButton from "./CustomButton";
+import CustomInput from "./CustomInput";
 
 function getModalStyle() {
   const top = 50;
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) =>
     paper: {
       position: "absolute",
       width: "420px",
-      height: "140px",
+      height: "180px",
       borderRadius: "3px",
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
@@ -59,38 +61,44 @@ const useStyles = makeStyles((theme) =>
     allbtn: {
       display: "flex",
       flexFlow: "row-reverse",
-      marginTop: "20px",
+      //   marginTop: "20px",
     },
-    cstmbtn:{
-      margin:"10px"
-    }
+    cstmbtn: {
+      margin: "10px",
+    },
   })
 );
-function DeleteForm({ open, title, id, handledelete }) {
+function BookTable({ open, title, id,  }) {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
   const handleClose = () => {
     open(false);
   };
+  const handleConfirm=(e)=>{
+      e.preventDefault()
+  }
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
         <Typography variant="p" style={{ fontWeight: "500" }}>
-          {`Delete ${title}`}
+          Choose a table
         </Typography>
-        <Typography variant="p">New Menu</Typography>
+        <RestaurantMenu fontSize="large" />
       </div>
-      <div className={classes.allbtn}>
-        <CustomButton
-          name="Delete"
-          activ
-          className={classes.cstmbtn}
-          title={title}
-          id={id}
-          handlechange={handledelete}
-        />
-        <CustomButton name="Cancel" className={classes.cstmbtn} handlechange={handleClose}/>
-      </div>
+      <form>
+        <CustomInput type="number" placeholder="enter the table" required />
+        <div className={classes.allbtn}>
+          <CustomButton
+            name="Confirm"
+            activ
+            // className={classes.cstmbtn}
+            title={title}
+            id={id}
+            handlechange={handleConfirm}
+            type="submit"
+          />
+        </div>
+      </form>
     </div>
   );
   return (
@@ -105,4 +113,4 @@ function DeleteForm({ open, title, id, handledelete }) {
   );
 }
 
-export default DeleteForm;
+export default BookTable;

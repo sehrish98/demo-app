@@ -15,7 +15,6 @@ import TimeSlot from "./timeSlot";
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
   return {
     top: `${top}%`,
     left: `${left}%`,
@@ -73,8 +72,8 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "black",
       padding: "5px",
       position: "absolute",
-      top: "-15px",
-      right: "-15px",
+      top: "20px",
+      right: "30px",
       fontSize: "xx-large",
       position: "relative",
       zIndex: 1,
@@ -243,6 +242,7 @@ function EditMenu({ open, data }) {
               title="Name"
               inputname="name"
               des="A unique name for your menu"
+              value={form && form.name}
               handlechange={handlefieldchange}
               req={true}
             />
@@ -254,6 +254,7 @@ function EditMenu({ open, data }) {
               des="Will override the unique name in your store"
               handlechange={handlefieldchange}
               req={false}
+              value={form && form.displayName}
             />
             <OrderTime
               button
@@ -263,6 +264,7 @@ function EditMenu({ open, data }) {
               des="The number of outstanding orders before an increase in wait time is applied"
               handlechange={handlefieldchange}
               req={false}
+              value={form && form.description}
             />
           </>
         )}
@@ -365,11 +367,26 @@ function EditMenu({ open, data }) {
               title="Pre-order Cutoff Time (12H Format)"
               des="Use in conjunction with the above option to ensure customers must place orders before a certain time on the last pre-order day. For example, if you set the cut off to 8:00pm and you require orders 2 day's in advance. For a customer to order for Friday, the latest they can put in their order is at 8:00pm on Wednesday"
               handlechange={handlefieldchange}
+              title="Name"
+              des="A unique name for your menu"
+              inputname="name"
+            />
+            <OrderTime
+              button
+              btnname="optional"
+              title="Display Name"
+              des="Will override the unique name in your store"
+            />
+            <OrderTime
+              button
+              btnname="optional"
+              title="Description"
+              des="The number of outstanding orders before an increase in wait time is applied"
             />
           </>
         )}
         <Button className={classes.btn} onClick={handleClick} type="submit">
-          Create Menu
+          Save
         </Button>
       </form>
     </div>

@@ -61,8 +61,9 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "black",
       padding: "5px",
       position: "absolute",
-      top: "-10",
-      right: "-10",
+      top: "-15px",
+      right: "-15px",
+      fontSize: "xx-large",
     },
     subdetail: {
       display: "flex",
