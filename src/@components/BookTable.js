@@ -74,8 +74,8 @@ function BookTable({ open, title, id,  }) {
   const handleClose = () => {
     open(false);
   };
-  const handleConfirm=()=>{
-
+  const handleConfirm=(e)=>{
+      e.preventDefault()
   }
   const body = (
     <div style={modalStyle} className={classes.paper}>
