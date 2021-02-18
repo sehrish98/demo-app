@@ -61,9 +61,9 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
-      "&:focus":{
-        outline:"none"
-      }
+      "&:focus": {
+        outline: "none",
+      },
     },
     detail: {
       display: "flex",
@@ -101,11 +101,11 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       marginLeft: "1rem",
     },
-    btnOutline:{
-      "&:focus":{
-        outline:"none",
-      }
-    }
+    btnOutline: {
+      "&:focus": {
+        outline: "none",
+      },
+    },
   })
 );
 
@@ -120,6 +120,12 @@ function CreateDish({ open, menuId, menucat }) {
     displayname: "",
     printName: "",
     description: "",
+    taxes: "",
+    // tags: [],
+    // optionSets: [],
+    image: "",
+    primaryOptionSet: 0,
+    ingredients: [],
   };
   useEffect(() => {
     if (!form) {
@@ -131,17 +137,17 @@ function CreateDish({ open, menuId, menucat }) {
   const handleClose = () => {
     open(false);
   };
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    open(false);
     const { name, displayName, printName, price, description } = form;
+    form.ingredients = items;
+    console.log("asdgasfg", form);
     if (name != "" && price != "") {
       const obj = {
         menuId: menuId,
         menuCategoryId: menucat,
-        name: name,
-        price: price,
-        displayname: displayName,
-        printName: printName,
-        description: description,
+        ...form,
       };
       dispatch(MenuCategoryItemsCreate(obj, history));
     }
@@ -156,60 +162,44 @@ function CreateDish({ open, menuId, menucat }) {
   const [timeslot, addTimeSlot] = useState(false);
   let [items, setItems] = useState([]);
   let count = 1;
-  const addSlot=(e) => {
-
+  const addSlot = (e) => {
     e.preventDefault();
     addTimeSlot(true);
     setItems([
       ...items,
       {
         id: uuidv4(),
-        openTime: "09:00",
-        closeTime: "11:00",
-        setInput: true,
-        days: 1,
+        name: "",
       },
     ]);
-  }
-  const deleteSlot =(id) => {
+  };
+  const deleteSlot = (id) => {
     setItems((previd) => {
       return previd.filter((item, index) => {
         return item.id != id;
       });
     });
-  }
+  };
 
-  const copyItem=(obj, id)=> {
-    items.map((data) => {
-      if (data.id === id) {
-        Object.assign(data, obj);
-      }
-    });
-    setItems((items) => {
-      return [
-        ...items,
-        {
-          id: uuidv4(),
-          openTime: obj.openTime,
-          closeTime: obj.closeTime,
-          days: obj.days,
-          setInput: obj.setInput,
-        },
-      ];
-    });
-  }
   const [initial, setInitial] = useState("general");
   const [comboState, setComboState] = useState(false);
-  const [btnState,setbtnState]=useState(false)
-  const changebtnState=()=>{
-    
-     setbtnState(!btnState)
-  }
+  const [btnState, setbtnState] = useState(false);
+  const changebtnState = () => {
+    setbtnState(!btnState);
+  };
   const comboButton = () => {
     setComboState(true);
   };
   const standardButton = () => {
     setComboState(false);
+  };
+  const handletimechange = (e, id) => {
+    var index = items.findIndex((x) => x.id === id);
+    let g = items[index];
+    g[e.target.name] = e.target.value;
+
+    if (index === -1) {
+    } else setItems([...items.slice(0, index), g, ...items.slice(index + 1)]);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -254,7 +244,7 @@ function CreateDish({ open, menuId, menucat }) {
             <>
               <OrderTime
                 title="Dish type"
-                inputname="name"
+                inputname="dishtype"
                 des="A combo dishes allows customers to make several choices between selected standard dishes"
                 handlechange={handlefieldchange}
                 req={true}
@@ -293,18 +283,20 @@ function CreateDish({ open, menuId, menucat }) {
                     nam2="Difference"
                     comboButton={changebtnState}
                     comboState={btnState}
-                   />
+                  />
                 </>
               )}
+
               <OrderTime
                 button
                 title="Display Name"
-                inputname="name"
+                inputname="displayName"
                 des="Will override the unique name in your store"
                 handlechange={handlefieldchange}
                 req={true}
                 btnname="optional"
               />
+
               <OrderTime
                 button
                 title="Print name"
@@ -313,7 +305,6 @@ function CreateDish({ open, menuId, menucat }) {
                 handlechange={handlefieldchange}
                 btnname="optional"
               />
-
               <OrderTime
                 button
                 btnname="optional"
@@ -325,7 +316,7 @@ function CreateDish({ open, menuId, menucat }) {
               <OrderTime
                 button
                 btnname="optional"
-                inputname="displayName"
+                inputname="subtitle"
                 title="Subtitle"
                 des="Will be displayed your dish name in bold font. Keep it short and sweet"
                 handlechange={handlefieldchange}
@@ -334,7 +325,7 @@ function CreateDish({ open, menuId, menucat }) {
                 button
                 dropdown
                 btnname="optional"
-                inputname="displayName"
+                inputname="taxes"
                 title="Taxes"
                 des="Select the taxes which should be applied to the dish"
                 handlechange={handlefieldchange}
@@ -365,7 +356,7 @@ function CreateDish({ open, menuId, menucat }) {
                   <OrderTime
                     button
                     btnname="optional"
-                    inputname="displayName"
+                    inputname="image"
                     title="Image"
                     des="File name can't contain special charaters. Only letters and numbers are allowed."
                     handlechange={handlefieldchange}
@@ -378,7 +369,7 @@ function CreateDish({ open, menuId, menucat }) {
 
               <OrderTime
                 dropdown
-                inputname="displayName"
+                inputname="tags"
                 title="Tags"
                 des="Select tags to be shown with the dish."
                 handlechange={handlefieldchange}
@@ -390,7 +381,7 @@ function CreateDish({ open, menuId, menucat }) {
             <>
               <OrderTime
                 dropdown
-                inputname="displayName"
+                inputname="optionSets"
                 title="Option Sets"
                 des="Select option sets to be applied to the dish. Option sets are ordered according to how they are listed on the option set page, not by the order added here"
                 handlechange={handlefieldchange}
@@ -400,9 +391,10 @@ function CreateDish({ open, menuId, menucat }) {
                 ]}
                 placeholder="Select from the dropdown or type to search"
               />
+
               <OrderTime
                 dropdown
-                inputname="displayName"
+                inputname="primaryOptionSet"
                 title="Primary Option Set"
                 des="Designate a primary option set which is 'required' and has 'multi-select' disabled. This will result in multiple prices showing on your dish card. For example, if you have 2 pizza sizes, regular and large ($5+), the dish will show your base dish price along with the price of the large option"
                 handlechange={handlefieldchange}
@@ -424,15 +416,12 @@ function CreateDish({ open, menuId, menucat }) {
                       <IngrediantSlot
                         key={item.id}
                         id={item.id}
-                        Open={item.openTime}
-                        Close={item.closeTime}
-                        checked={item.setInput}
-                        Days={item.days}
-                        onAdd={addSlot}
-                        Copy={copyItem}
+                        Name={item.name}
                         onDelete={deleteSlot}
                         count={count++}
                         placeholder="Name"
+                        inputname="ingredients"
+                        handlechange={handletimechange}
                       />
                     )
                   );

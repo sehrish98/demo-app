@@ -157,13 +157,11 @@ function CreateSetOption({ open }) {
     }
   };
   const handlefieldchange = (e) => {
-
     e.persist();
     handleChange(e);
   };
   const handletimechange = (e, id) => {
     var index = items.findIndex((x) => x.id === id);
-
 
     let g = items[index];
     if (e.target.type === "checkbox") {
@@ -195,7 +193,6 @@ function CreateSetOption({ open }) {
       });
     });
   };
-
 
   const [selectValue, setSelectValue] = useState(1);
   const [stateNum, setStateNum] = useState(1);
@@ -293,8 +290,6 @@ function CreateSetOption({ open }) {
         )}
         {initial == "credential" && (
           <>
-          
-
             <Button variant="outlined" color="secondary" onClick={addSlot}>
               Add Options
             </Button>

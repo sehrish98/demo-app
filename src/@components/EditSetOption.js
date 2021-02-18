@@ -56,9 +56,9 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
-      "&:focus":{
-        outline:"none"
-      }
+      "&:focus": {
+        outline: "none",
+      },
     },
     detail: {
       display: "flex",
@@ -137,20 +137,43 @@ function EditSetOption({ open, data }) {
   const handleClose = () => {
     open(false);
   };
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault()
+    open(false)
+    form.options=items
     const data = {
       optionSetId: form._id,
       name: form.name,
       displayName: form.displayName,
-      description: form.description,
+      showInMenu: form.showInMenu,
+      IPNFQP: form.IPNFQP,
+      options: form.options,
+      required: form.required,
+      selectMultiple: form.selectMultiple,
+      enableOptionQuantity: form.enableOptionQuantity,
+      minOptionsRequired: form.minOptionsRequired,
+      maxOptionsRequired: form.maxOptionsRequired,
+      freeQuantity: form.freeQuantity,
     };
-    if(form.name!=""){
-    dispatch(EditOptionSet(data , history));
+    if (form.name != "") {
+      dispatch(EditOptionSet(data, history));
     }
   };
   const handlefieldchange = (e) => {
     e.persist();
     handleChange(e);
+  };
+  const handletimechange = (e, id) => {
+    var index = items.findIndex((x) => x.id === id);
+
+    let g = items[index];
+    if (e.target.type === "checkbox") {
+      g[e.target.name] = e.target.checked;
+    } else {
+      g[e.target.name] = e.target.value;
+    }
+    if (index === -1) {
+    } else setItems([...items.slice(0, index), g, ...items.slice(index + 1)]);
   };
   const addSlot = (e) => {
     e.preventDefault();
@@ -174,25 +197,7 @@ function EditSetOption({ open, data }) {
     });
   };
 
-  const copyItem = (obj, id) => {
-    items.map((data) => {
-      if (data.id === id) {
-        Object.assign(data, obj);
-      }
-    });
-    setItems((items) => {
-      return [
-        ...items,
-        {
-          id: uuidv4(),
-          openTime: obj.openTime,
-          closeTime: obj.closeTime,
-          days: obj.days,
-          setInput: obj.setInput,
-        },
-      ];
-    });
-  };
+  
   let count = 1;
   const [selectValue, setSelectValue] = useState(1);
   const [stateNum, setStateNum] = useState(1);
@@ -376,16 +381,17 @@ function EditSetOption({ open, data }) {
                     <OptionSetPrice
                       key={item.id}
                       id={item.id}
-                      Open={item.openTime}
-                      Close={item.closeTime}
-                      checked={item.setInput}
-                      Days={item.days}
+                      Name={item.name}
+                      InStock={item.inStock}
+                      Price={item.price}
+                      NoStock={item.noStock}
                       onAdd={addSlot}
-                      Copy={copyItem}
                       onDelete={deleteSlot}
                       count={count++}
                       stateNum={stateNum}
                       selectValue={selectValue}
+                      inputname="options"
+                      handlechange={handletimechange}
                     />
                   )
                 );
@@ -454,9 +460,9 @@ function EditSetOption({ open, data }) {
             <CreateDishTag />
           </>
         )}
-      <Button className={classes.btn} onClick={handleClick} type="submit">
-        Save
-      </Button>
+        <Button className={classes.btn} onClick={handleClick} type="submit">
+          Save
+        </Button>
       </form>
     </div>
   );

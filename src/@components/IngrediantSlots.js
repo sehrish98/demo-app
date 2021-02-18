@@ -96,19 +96,10 @@ const useStyles = makeStyles({
 
 export default function IngrediantSlot(props) {
   const classes = useStyles();
-  const [input, setInput] = useState(true);
-  let [time, setTime] = useState("09:00");
-  let [close, setCloseTime] = useState("11:00");
-  let [day, setDay] = useState(1);
   const [pressed, setPressed] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const ref = useRef();
-  useEffect(() => {
-    setTime(props.Open);
-    setCloseTime(props.Close);
-    setDay(props.Days);
-    setInput(props.checked);
-  }, [props]);
+
   // Monitor changes to position state and update DOM
   useEffect(() => {
     if (ref.current) {
@@ -125,35 +116,18 @@ export default function IngrediantSlot(props) {
       });
     }
   };
-  function feildChangeopen(e) {
-    setTime(e.target.value);
-  }
-  function feildChangeclose(e) {
-    setCloseTime(e.target.value);
-  }
-  function handleChange() {
-    if (input == true) {
-      setInput(false);
-    } else {
-      setInput(true);
-    }
-  }
+
   function handleClick() {
     props.onDelete(props.id);
   }
 
-  const copyDiv = () => {
-    
-    const obj = {
-      openTime: time,
-      closeTime: close,
-      setInput: input,
-      days: day,
-    };
-    props.Copy(obj, props.id);
-  };
   return (
-    <div id={props.id} style={{ height: "31px" }} ref={ref}>
+    <div
+      id={props.id}
+      style={{ height: "31px" }}
+      name={props.inputname}
+      ref={ref}
+    >
       <div
         className={classes.divSize}
         onMouseMove={onMouseMove}
@@ -162,22 +136,20 @@ export default function IngrediantSlot(props) {
       >
         <DragHandleIcon />
       </div>
-    
+
       <input
         type="number"
         className={classes.divDay}
-        value={time}
-        disabled={input ? "" : "disabled"}
-        onChange={feildChangeopen}
         value={props.count}
-        
       />
       <input
         type="text"
+        name="name"
         className={classes.divDay1}
-        // value={close}
-        // disabled={input ? "" : "disabled"}
-        onChange={feildChangeclose}
+        value={props.Name}
+        onChange={(e) => {
+          props.handlechange(e, props.id);
+        }}
         placeholder={props.placeholder}
       />
       <div className={classes.buttonDelete} onClick={handleClick}>

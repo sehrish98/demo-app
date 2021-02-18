@@ -4,16 +4,15 @@ import Button from "@material-ui/core/Button";
 const useStyles = makeStyles((theme) =>
   createStyles({
     input: {
-      display:"inline-block",
+      display: "inline-block",
       height: "40px",
       width: "100%",
       margin: "10px 1px 10px 1px",
       outline: "0",
     },
-    buttonStyling:{
-      display:"inline-block",
-     
-    }
+    buttonStyling: {
+      display: "inline-block",
+    },
   })
 );
 function CustomInput({
@@ -21,11 +20,11 @@ function CustomInput({
   placeholder,
   handlechange,
   name,
-  value,
+  values,
   req,
   addbtn,
   changeState,
-  minimum
+  minimum,
 }) {
   const classes = useStyles();
 
@@ -37,14 +36,19 @@ function CustomInput({
         className={classes.input}
         onChange={handlechange}
         name={name}
-        value={value}
+        value={values}
         required={false}
         autoComplete="off"
         min={minimum}
       />
       {addbtn && (
         <>
-          <Button variant="outlined" color="secondary" className={classes.buttonStyling} onClick={changeState}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            className={classes.buttonStyling}
+            onClick={changeState}
+          >
             Normal Image
           </Button>
         </>

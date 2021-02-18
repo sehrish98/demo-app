@@ -202,7 +202,7 @@ function OrderTime({
 }) {
   const [name, setName] = useState("");
   const classes = useStyles();
-
+ 
   return (
     <div elevation={3} className={classes.paper}>
       <div className={classes.detail}>
@@ -213,7 +213,7 @@ function OrderTime({
       </div>
       <div style={{ margin: "8px 0px" }}>
         {checked ? (
-          <Switch name={inputname} onChange={handlechange}/>
+          <Switch name={inputname} onChange={handlechange} value={values}/>
         ) : btn ? (
           <CustomButton name={values} activ onClick={handlechange} />
         ) : btn2 ? (
@@ -224,6 +224,7 @@ function OrderTime({
            onChange={handlechange}
            name={inputname}
            onClick={onClickServices}
+           value={values}
          >
             {options.map((item, i) => {
               return <option value={i}>{item}</option>;
@@ -238,6 +239,7 @@ function OrderTime({
               <Button
                 style={{
                   backgroundColor: !comboState ? "rgb(238, 84, 84)" : "white",
+                  color:!comboState ? "white" : "black"
                 }}
                 onClick={standardButton}
                 className={classes.btnSyling}
@@ -247,6 +249,7 @@ function OrderTime({
               <Button
                 style={{
                   backgroundColor: comboState ? "rgb(238, 84, 84)" : "white",
+                  color:comboState ? "white" : "black"
                 }}
                 onClick={comboButton}
                 className={classes.btnSyling}
