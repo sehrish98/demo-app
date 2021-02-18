@@ -123,7 +123,7 @@ function CreateCategory({ open, id }) {
     }
 
     if (name != "") {
-       console.log("I am menu ctegroy",obj)  
+
       dispatch(MenuCategoryCreate(obj, history));
     }
   };
@@ -152,13 +152,13 @@ function CreateCategory({ open, id }) {
   const handletimechange = (e, id) => {
     var index = items.findIndex((x) => x.id === id);
 
-    console.log(e.target.type, e.target.checked, e.target.name);
+
     let g = items[index];
     if (e.target.type === "checkbox") {
-      console.log("dssdsd", e.target.checked, e.target.name, g);
+
       g[e.target.name] = e.target.checked;
     } else {
-      console.log("elseeess", e.target.name, g);
+
       g[e.target.name] = e.target.value;
     }
     if (index === -1) {

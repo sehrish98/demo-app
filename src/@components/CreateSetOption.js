@@ -151,20 +151,20 @@ function CreateSetOption({ open }) {
     open(false);
     const { name } = form;
     form.options = items;
-    console.log("form is here", form.options);
+
     if (name != "") {
       dispatch(CreateOptionSet(form, history));
     }
   };
   const handlefieldchange = (e) => {
-    console.log("asfnggounodubnclijasifbmv");
+
     e.persist();
     handleChange(e);
   };
   const handletimechange = (e, id) => {
     var index = items.findIndex((x) => x.id === id);
 
-    console.log("sfg",e.target.type, e.target.checked, e.target.name);
+
     let g = items[index];
     if (e.target.type === "checkbox") {
       g[e.target.name] = e.target.checked;

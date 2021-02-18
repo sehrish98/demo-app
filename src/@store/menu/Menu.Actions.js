@@ -144,7 +144,7 @@ export function MenuItemsDrag(obj) {
         MenuItemsDragSuccess(dispatch, res.data);
       })
       .catch((error) => {
-        console.log("asdasdas", error);
+
         MenuItemsDragFail(dispatch, error.message);
       });
   };

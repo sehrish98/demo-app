@@ -34,7 +34,7 @@ const MenuCategoryFail = (dispatch, errorMessage) => {
 };
 
 export function MenuCategoryCreate(obj , history) {
-  console.log("i am clicked",obj)
+
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYCREATE_START,

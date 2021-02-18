@@ -161,7 +161,7 @@ function CreateMenu({ open }) {
   const handletimechange = (e, id) => {
     var index = items.findIndex((x) => x.id === id);
 
-    console.log(e.target.type, e.target.checked, e.target.name);
+
     let g = items[index];
     if (e.target.type === "checkbox") {
       g[e.target.name] = e.target.checked;
