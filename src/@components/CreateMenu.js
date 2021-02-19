@@ -128,6 +128,7 @@ function CreateMenu({ open }) {
   useEffect(() => {}, [initial]);
   const handleClick = (e) => {
     e.preventDefault();
+    open(false)
     const { name, displayName, description } = form;
     form.applicableHours = items;
     if (name != "") {

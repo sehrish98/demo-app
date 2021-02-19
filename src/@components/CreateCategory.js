@@ -93,7 +93,6 @@ function CreateCategory({ open, id }) {
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
   let dta = {
-
     name: "",
     displayName: "",
     description: "",
@@ -114,16 +113,16 @@ function CreateCategory({ open, id }) {
   };
   const handleClick = (e) => {
     e.preventDefault();
+    open(false);
     const { name, displayName, description } = form;
     form.applicableHours = items;
-    let obj=form;
-    obj={
+    let obj = form;
+    obj = {
       ...form,
-      menuId:id
-    }
+      menuId: id,
+    };
 
     if (name != "") {
-
       dispatch(MenuCategoryCreate(obj, history));
     }
   };
@@ -152,28 +151,25 @@ function CreateCategory({ open, id }) {
   const handletimechange = (e, id) => {
     var index = items.findIndex((x) => x.id === id);
 
-
     let g = items[index];
     if (e.target.type === "checkbox") {
-
       g[e.target.name] = e.target.checked;
     } else {
-
       g[e.target.name] = e.target.value;
     }
     if (index === -1) {
     } else setItems([...items.slice(0, index), g, ...items.slice(index + 1)]);
   };
 
-  function deleteSlot(id) {
+  const deleteSlot = (id) => {
     setItems((previd) => {
       return previd.filter((item, index) => {
         return item.id != id;
       });
     });
-  }
+  };
 
-  function copyItem(obj, id) {
+  const copyItem = (obj, id) => {
     items.map((data) => {
       if (data.id === id) {
         Object.assign(data, obj);
@@ -191,7 +187,7 @@ function CreateCategory({ open, id }) {
         },
       ];
     });
-  }
+  };
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
