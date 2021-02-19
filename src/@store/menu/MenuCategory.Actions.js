@@ -34,6 +34,7 @@ const MenuCategoryFail = (dispatch, errorMessage) => {
 };
 
 export function MenuCategoryCreate(obj , history) {
+
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYCREATE_START,
@@ -67,6 +68,7 @@ const MenuCategoryCreateFail = (dispatch, errorMessage) => {
 };
 
 export function MenuCategoryEdit(obj , history) {
+
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYEDIT_START,
@@ -133,7 +135,6 @@ const MenuCategoryDeleteFail = (dispatch, errorMessage) => {
 };
 
 export function MenuCategoryDrag(obj , history) {
-  console.log("hi i mdrag menu category:",obj)
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYDRAG_START,

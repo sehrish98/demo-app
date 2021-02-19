@@ -16,7 +16,6 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
   return {
     top: `${top}%`,
     left: `${left}%`,
@@ -56,6 +55,9 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
+      "&:focus":{
+        outline:"none"
+      }
     },
     detail: {
       display: "flex",

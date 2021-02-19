@@ -2,30 +2,22 @@ import React, { useState } from "react";
 import { Typography, Switch } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
-
-
-
 const useStyles = makeStyles((theme) =>
-createStyles({
+  createStyles({
     typo: {
-        fontWeight: "600",
-        }
-    
-})
-)
+      fontWeight: "600",
+    },
+  })
+);
 
+export default function Icons({ onClick }) {
+  const classes = useStyles();
 
-export default function Icons({onClick}) {
-    const classes = useStyles();
-
-    const clicked=(e)=>{
-        console.log("adsv",e.target.className)
-    }
   return (
     <>
       <br />
       <br />
-      
+
       <Typography variant="p" className={classes.typo}>
         Select an Icon
       </Typography>
@@ -37,8 +29,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer",
-         
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -48,7 +39,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -58,7 +49,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -68,7 +59,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -78,7 +69,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -88,7 +79,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -98,7 +89,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -108,7 +99,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -118,7 +109,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -128,7 +119,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -138,7 +129,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -148,7 +139,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -158,7 +149,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -168,7 +159,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 11px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -178,7 +169,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -188,7 +179,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -198,7 +189,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 4px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -208,7 +199,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -218,7 +209,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -228,7 +219,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 19px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -238,7 +229,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 6px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -248,7 +239,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 10px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -258,7 +249,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -268,7 +259,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -278,7 +269,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -288,7 +279,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 10px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -298,7 +289,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 12px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -308,7 +299,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 6px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -318,7 +309,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 4px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -328,7 +319,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px ",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -338,7 +329,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px ",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -348,7 +339,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 12px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -358,7 +349,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px ",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -368,7 +359,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px ",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -378,7 +369,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px ",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -388,7 +379,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 10px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -398,7 +389,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 4px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -408,7 +399,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 16px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -418,7 +409,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 4px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -428,7 +419,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -438,7 +429,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 0",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -448,7 +439,7 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 14px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
@@ -458,12 +449,10 @@ export default function Icons({onClick}) {
           margin: "0",
           border: "1px solid rgb(214, 214, 214)",
           padding: "8px 10px",
-          cursor:"pointer",
-          
+          cursor: "pointer",
         }}
         onClick={onClick}
       ></i>
-    
     </>
   );
 }

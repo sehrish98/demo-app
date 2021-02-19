@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 function useForm(initialState, onSubmit) {
+
   const [form, setForm] = useState(initialState);
   const handleChange = useCallback((event) => {
     event.persist();
@@ -11,6 +12,7 @@ function useForm(initialState, onSubmit) {
           : event.target.value,
     }));
   }, []);
+  console.log("af",form)
   const resetForm = useCallback(() => {
     setForm(initialState);
   }, [initialState]);

@@ -24,6 +24,7 @@ import EditMenu from "../../@components/EditMenu";
 import EditDishTag from "../../@components/EditDishTag";
 import EditSetOption from "../../@components/EditSetOption";
 import MenuItems from "../../@components/MenuItems";
+
 import {
   GetOptionSet,
   OptionSetDrag,
@@ -36,7 +37,6 @@ import {
   DisheTagDelete,
 } from "../../@store/dish/Dish.Actions";
 import { MenuItemsDrag, MenuItemsDelete } from "../../@store/menu/Menu.Actions";
-import { act } from "@testing-library/react";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -97,7 +97,6 @@ function Menus({ title, value }) {
   const clientid = localStorage.getItem("clientId");
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("efece1");
     dispatch(GetMenuItems());
     dispatch(GetDishes());
     dispatch(GetOptionSet());
@@ -250,7 +249,7 @@ function Menus({ title, value }) {
               <div ref={provided.innerRef} style={{}}>
                 {arrays
                   ?.sort((a, b) => {
-                    console.log("fhfjhgjgu   ")
+                    
                     return a.position - b.position;
                   })
                   .map((c, index) => (
@@ -326,7 +325,6 @@ function Menus({ title, value }) {
                                 </Tooltip>
                                 <Tooltip title="Copy" placement="top">
                                   <FileCopy
-                                    onClick={() => setOpencreate(true)}
                                     fontSize="small"
                                     className={classes.icon__style}
                                   />
