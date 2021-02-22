@@ -11,7 +11,7 @@ import { CreateOptionSet } from "src/@store/optionSet/Optionset.Actions";
 import { v4 as uuidv4 } from "uuid";
 import OptionSetPrice from "./OptionSetPrice";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import CreateDishTag from "./DropDown";
+import RemoveDishes from "./DropDown";
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -441,7 +441,7 @@ function CreateSetOption({ open }) {
         )}
         {initial == "dishes" && (
           <>
-            <CreateDishTag />
+            <RemoveDishes />
           </>
         )}
 

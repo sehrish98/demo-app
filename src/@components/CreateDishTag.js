@@ -9,6 +9,7 @@ import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
 import { CreateDishes } from "src/@store/dish/Dish.Actions";
 
+import RemoveDishes from "./DropDown";
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -17,6 +18,9 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    maxHeight: "90vh",
+    margin: "0 auto",
+    overflow: "auto",
   };
 }
 const useStyles = makeStyles((theme) =>
@@ -49,16 +53,16 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
-      "&:focus":{
-        outline:"none"
-      }
+      "&:focus": {
+        outline: "none",
+      },
     },
     detail: {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      marginBottom: "15px",
-      marginTop: "10px",
+      marginBottom: "37px",
+      marginTop: "22px",
     },
     cancelIcon: {
       cursor: "pointer",
@@ -67,8 +71,8 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "black",
       padding: "5px",
       position: "absolute",
-      top: "-15px",
-      right: "-15px",
+      top: "20px",
+      right: "30px",
       fontSize: "xx-large",
     },
     allbtn: {
@@ -77,6 +81,22 @@ const useStyles = makeStyles((theme) =>
       borderBottom: "1px solid lightgray",
       padding: "10px 0px",
     },
+    divTopStyling: {
+      backgroundColor: "coral",
+      padding: "0 7px",
+      borderRadius: "8px",
+      marginTop: "-30px",
+      width: "fit-content",
+      wordBreak: "break-all",
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
+    },
+    button: {
+      "&:focus": {
+        outline: "none",
+      },
+    },
   })
 );
 function CreateDishTag({ open }) {
@@ -84,8 +104,12 @@ function CreateDishTag({ open }) {
   const { form, setForm, handleChange } = useForm(null);
   let dta = {
     name: "",
-    displayName: "",
-    description: "",
+    tagText: "example",
+    iconType: "",
+    iconText: "",
+    icon: "",
+    tagColor: "ff6900",
+    iconColor: "ff6900",
   };
   useEffect(() => {
     if (!form) {
@@ -96,36 +120,136 @@ function CreateDishTag({ open }) {
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [spanText, setSpanText] = useState("");
   const handleClose = () => {
     open(false);
   };
-  const handleClick = () => {
+  const handleClick = (e) => {
     const { name } = form;
     if (name != "") {
       dispatch(CreateDishes(form, history));
     }
   };
+  const [btnState, setBtnState] = useState("");
+
+  const changeBtnState = (btn) => {
+    form.iconType = btn;
+    if (form.iconType == "none") {
+      form.icon = form.iconText = " ";
+    }
+    if (form.iconType == "icon") {
+      form.iconText = " ";
+    }
+    if (form.iconType == "text") {
+      form.icon = " ";
+    }
+    setBtnState(btn);
+  };
+  const [dishData, setDishData] = useState("example");
   const handlefieldchange = (e) => {
     e.persist();
+
     handleChange(e);
-    // setInput(e.target.value);
+  };
+  const handleInput = (e) => {
+    handlefieldchange(e);
+    setDishData(e.target.value);
+  };
+  const handleIconText = (e) => {
+    handlefieldchange(e);
+    setSpanText(e.target.value);
+  };
+  const [classnames, setClassName] = useState("");
+  const handleIcon = (e) => {
+    let str = e.target.className;
+    form.icon = e.target.className;
+    form.iconText = "";
+    let res = str.replace(/fa-2x/gi, "fa-1x");
+
+    setClassName(res);
+  };
+  const [backgroundColorset, setBackgroundColor] = useState({
+    color: "#8ed1fc",
+    backgroundColor: "#ff6900",
+    padding: "0 7px",
+    borderRadius: "8px",
+    marginTop: "-30px",
+    width: "fit-content",
+    wordBreak: "break-all",
+  });
+
+  const [iconStyling, setIconStyling] = useState({
+    color: "#8ed1fc",
+    backgroundColor: "#ff6900",
+    margin: "2px",
+  });
+
+  const spanColorChange = (e) => {
+    if (e.target.name === "backgroundDiv") {
+      setBackgroundColor({
+        ...backgroundColorset,
+        backgroundColor: e.target.value,
+      });
+      form.tagColor = e.target.value;
+    } else if (e.target.name === "divText") {
+      setBackgroundColor({
+        ...backgroundColorset,
+        color: e.target.value,
+      });
+    } else if (e.target.name === "spanBackground") {
+      setIconStyling({
+        ...iconStyling,
+        backgroundColor: e.target.value,
+      });
+      form.iconColor = e.target.value;
+    } else if (e.target.name === "spanText1") {
+      setIconStyling({
+        ...iconStyling,
+        color: e.target.value,
+      });
+    }
   };
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
         <Typography variant="h5">Create Dish Tags</Typography>
+
         <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
+      </div>
+      <div>
+        <div style={backgroundColorset}>
+          {btnState === "icon" ? (
+            <span style={iconStyling}>
+              <i class={classnames}></i>
+            </span>
+          ) : btnState === "text" ? (
+            <span style={iconStyling}>{spanText}</span>
+          ) : (
+            ""
+          )}
+          {dishData}
+        </div>
       </div>
       <div className={classes.allbtn}>
         <Button
-          style={{ backgroundColor: "lightgray" }}
+          style={{
+            backgroundColor: initial === "general" ? "lightgray" : "white",
+          }}
           onClick={() => setInitial("general")}
+          className={classes.button}
         >
           General
         </Button>
-        <Button variant="p" onClick={() => setInitial("credential")}>
-          Condition
+        <Button
+          variant="p"
+          style={{
+            backgroundColor: initial === "credential" ? "lightgray" : "white",
+          }}
+          onClick={() => setInitial("credential")}
+          className={classes.button}
+        >
+          Add/Remove From Dishes
         </Button>
       </div>
       <form>
@@ -134,47 +258,58 @@ function CreateDishTag({ open }) {
             <OrderTime
               title="Name"
               inputname="name"
-              des="A unique name for your menu"
+              des="A unique name for your dish tag"
               handlechange={handlefieldchange}
               req={true}
             />
             <OrderTime
-              button
               btnname="optional"
-              inputname="displayName"
-              title="Display Name"
-              des="Will override the unique name in your store"
-              handlechange={handlefieldchange}
+              inputname="tagText"
+              title="Tag Text"
+              des="The text to be displayed beside the tag icon"
+              handlechange={handleInput}
+              // values={dishData}
             />
             <OrderTime
-              button
               btnname="optional"
-              inputname="description"
-              title="Description"
-              des="The number of outstanding orders before an increase in wait time is applied"
+              inputname="iconType"
+              title="Icon Type"
+              des="The type of icon to be used for the tag"
+              handlechange={handleIconText}
+              btngroup1
+              values={spanText}
+              onClick={handleIcon}
+              onButton={changeBtnState}
+            />
+
+            <OrderTime
+              colors
+              btnname="optional"
+              inputname="tagColor"
+              title="Tag Color"
+              des="This determines the main background and text color of the dish tag"
+              // handlechange={handlefieldchange}
+              spanColorChange={spanColorChange}
+              name1="backgroundDiv"
+              name2="divText"
+            />
+
+            <OrderTime
+              colors
+              btnname="optional"
+              inputname="iconColor"
+              title="Icon Color"
+              des="This determines the background and text/icon color of the icon component of the dish tag"
               handlechange={handlefieldchange}
+              spanColorChange={spanColorChange}
+              name1="spanBackground"
+              name2="spanText1"
             />
           </>
         )}
         {initial == "credential" && (
           <>
-            <OrderTime
-              title="Name"
-              des="A unique name for your menu"
-              inputname="name"
-            />
-            <OrderTime
-              button
-              btnname="optional"
-              title="Display Name"
-              des="Will override the unique name in your store"
-            />
-            <OrderTime
-              button
-              btnname="optional"
-              title="Description"
-              des="The number of outstanding orders before an increase in wait time is applied"
-            />
+            <RemoveDishes />
           </>
         )}
         <Button className={classes.btn} onClick={handleClick} type="submit">

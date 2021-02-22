@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -11,88 +9,7 @@ import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-    maxHeight: "90vh",
-    margin: "0 auto",
-    overflow: "auto",
-  };
-}
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    paper: {
-      position: "absolute",
-      width: "100%",
-      maxWidth: "720px",
-      borderRadius: "3px",
-      backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-      outline: "none",
-      display: "flex",
-      flexDirection: "column",
-      margin: "50px auto 150px auto ",
-      zIndex: "9999",
-    },
-    btn: {
-      width: "100%",
-      backgroundColor: "rgb(238, 82, 82)",
-      border: 0,
-      color: "white",
-      height: 35,
-      margin: "3px",
-      display: "flex",
-      padding: "5px 10px",
-      cursor: "pointer",
-      marginTop: "30px",
-      "&:hover": {
-        background: "rgb(238, 82, 82)",
-      },
-    },
-    detail: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: "37px",
-      marginTop: "22px",
-    },
-    cancelIcon: {
-      cursor: "pointer",
-      borderRadius: "20px",
-      color: "white",
-      backgroundColor: "black",
-      padding: "5px",
-      position: "absolute",
-      top: "20px",
-      right: "30px",
-      fontSize: "xx-large",
-    },
-    allbtn: {
-      margin: "10px 0px",
-      borderTop: "1px solid lightgray",
-      borderBottom: "1px solid lightgray",
-      padding: "10px 0px",
-    },
-    divTopStyling: {
-      backgroundColor: "coral",
-      padding: "0 7px",
-      borderRadius: "8px",
-      marginTop: "-30px",
-      width: "fit-content",
-      wordBreak: "break-all",
-    },
-    nested: {
-      paddingLeft: theme.spacing(4),
-    },
-  })
-);
-function CreateDishTag({ open }) {
+function RemoveDishes({ open }) {
   const { form, setForm, handleChange } = useForm(null);
   let dta = {
     name: "",
@@ -127,7 +44,6 @@ function CreateDishTag({ open }) {
   const handlefieldchange = (e) => {
     e.persist();
     handleChange(e);
-    // setInput(e.target.value);
   };
   const handleInput = (e) => {
     setDishData(e.target.value);
@@ -186,7 +102,6 @@ function CreateDishTag({ open }) {
   };
   const checkedInput1 = () => {
     if (menuState) {
-
       setMenu(false);
       setInputState(false);
     }
@@ -200,7 +115,6 @@ function CreateDishTag({ open }) {
   };
   const checkedInput2 = () => {
     if (menuState) {
-
       setMenu(false);
       setInputState(false);
     }
@@ -214,7 +128,6 @@ function CreateDishTag({ open }) {
   };
   const checkedInput3 = () => {
     if (menuState) {
-
       setMenu(false);
       setInputState(false);
     }
@@ -228,7 +141,6 @@ function CreateDishTag({ open }) {
   };
   const onClickInputState = () => {
     if (menuState) {
-
       setMenu(false);
       setInputState(false);
     }
@@ -238,13 +150,9 @@ function CreateDishTag({ open }) {
     setInputState(!inputState);
   };
 
-  // const setCheckInput4 = () => {
-  //   setInputCombo(!inputCombo);
-  //   setInputPizza(!inputPizza);
-  // };
   const inputComboSet = () => {
     if (menuState) {
-       setMenu(false);
+      setMenu(false);
       setInputCombo(false);
     } else {
       setInputCombo(!inputCombo);
@@ -260,41 +168,24 @@ function CreateDishTag({ open }) {
     if (!inputCheck1 || !inputCheck2 || !inputCheck3) {
       setInputState(false);
     }
-    // if (!inputPizza || !inputCombo) {
-    //   setInputCombo(false);
-    //   setInputPizza(false);
-    // }
   }, [inputCheck1, inputCheck2, inputCheck3, inputPizza, inputCombo]);
 
   const setMenuState = () => {
-    // if (inputCombo && inputState) {
-    //   setMenu(true);
-    //   setInputCombo(false);
-    //   setInputState(false);
-    // } 
-    // else {
-    //   setMenu(!menuState);
-    //   setInputPizza(!inputPizza);
-    //   setInputCheck1(!inputCheck1);
-    //   setInputCheck2(!inputCheck2);
-    //   setInputCheck3(!inputCheck3);
-    // }
-    if(menuState){
-    
-      setMenu(false)
-      setInputCheck1(false)
-      setInputCheck2(false)
-      setInputCheck3(false)
-      setInputState(false)
-      setInputCombo(false)
+    if (menuState) {
+      setMenu(false);
+      setInputCheck1(false);
+      setInputCheck2(false);
+      setInputCheck3(false);
+      setInputState(false);
+      setInputCombo(false);
     }
-    if(!menuState){
-      setMenu(true)
-      setInputCheck1(true)
-      setInputCheck2(true)
-      setInputCheck3(true)
-      setInputState(true)
-      setInputCombo(true)
+    if (!menuState) {
+      setMenu(true);
+      setInputCheck1(true);
+      setInputCheck2(true);
+      setInputCheck3(true);
+      setInputState(true);
+      setInputCombo(true);
     }
   };
 
@@ -409,4 +300,4 @@ function CreateDishTag({ open }) {
   );
 }
 
-export default CreateDishTag;
+export default RemoveDishes;

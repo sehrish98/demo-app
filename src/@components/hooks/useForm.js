@@ -12,7 +12,7 @@ function useForm(initialState, onSubmit) {
           : event.target.value,
     }));
   }, []);
-
+  console.log("af",form)
   const resetForm = useCallback(() => {
     setForm(initialState);
   }, [initialState]);

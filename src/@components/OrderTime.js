@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Switch } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
+import Icons from "./icons";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -10,6 +11,14 @@ import Button from "@material-ui/core/Button";
 import CustomButton2 from "./CustomButton2";
 const useStyles = makeStyles((theme) =>
   createStyles({
+    root: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      "& > *": {
+        margin: theme.spacing(1),
+      },
+    },
     paper: {
       display: "flex",
       flexDirection: "column",
@@ -40,6 +49,10 @@ const useStyles = makeStyles((theme) =>
     typo: {
       fontWeight: "600",
     },
+    iconStyle: {
+      margin: "2px",
+      border: "1px solid rgb(214, 214, 214)",
+      padding: "10px",},
     btnSyling: {
    
       "&:focus": {
@@ -183,11 +196,18 @@ function OrderTime({
   btn,
   handlechange,
   inputname,
+  btngroup,
+  colors,
+  onClick,
+  onButton,
+  spanColorChange,
+  iconColorChange,
+  valueIcon,
+  name1,
+  name2,
   type,
   req,
-  onClick,
   options,
-  btngroup,
   btn2,
   addbtn,
   changeState,
@@ -198,11 +218,18 @@ function OrderTime({
   nam2,
   comboState,
   minimum,
-  onClickServices
+  onClickServices,
+  btngroup1,
 }) {
   const [name, setName] = useState("");
+  const [buttonIcon, setButton] = useState("");
   const classes = useStyles();
- 
+  const [btnColor1, setBtnColor1] = useState(false);
+  const [btnColor2, setBtnColor2] = useState(false);
+  const [btnColor3, setBtnColor3] = useState(false);
+  const [colorValueBackground, setColorValue] = useState("#ff6900");
+  const [colorValueText, setColortext] = useState("#8ed1fc");
+  
   return (
     <div elevation={3} className={classes.paper}>
       <div className={classes.detail}>
@@ -215,7 +242,93 @@ function OrderTime({
         {checked ? (
           <Switch name={inputname} onChange={handlechange} value={values}/>
         ) : btn ? (
-          <CustomButton name={values} activ onClick={handlechange} />
+          <CustomButton name={values} activ />
+        ) : btngroup1 ? (
+          <ButtonGroup
+            variant="contained"
+            color="none"
+            aria-label="contained primary button group"
+            onClick={handlechange}
+            name="btngroup"
+          >
+            <Button
+              name="text"
+              color={btnColor1 ? "secondary" : "none"}
+              onClick={() => {
+                setButton("text");
+                setBtnColor1(true);
+                setBtnColor2(false);
+                setBtnColor3(false);
+                onButton("text");
+               
+              }}
+            
+              className={classes.btnSyling}
+            >
+              Text
+            </Button>
+            <Button
+              name="icon"
+              color={btnColor2 ? "secondary" : "none"}
+              onClick={() => {
+                setButton("icon");
+                setBtnColor1(false);
+                setBtnColor2(true);
+                setBtnColor3(false);
+                onButton("icon");
+              }}
+             
+              className={classes.btnSyling}
+            >
+              Icon
+            </Button>
+            <Button
+              name="none"
+              color={btnColor3 ? "secondary" : "none"}
+              onClick={() => {
+                setButton("none");
+                setBtnColor1(false);
+                setBtnColor2(false);
+                setBtnColor3(true);
+                onButton("none");
+              }}
+             
+              className={classes.btnSyling}
+            >
+              None
+            </Button>
+          </ButtonGroup>
+        ) : colors ? (
+          <>
+            {" "}
+            <Typography variant="p" className={classes.typo}>
+              BackGround
+            </Typography>
+            <input
+            name={name1}
+              type="color"
+              style={{ margin: "10px" }}
+              value={colorValueBackground}
+              onChange={(e) => {
+                setColorValue(e.target.value);
+                spanColorChange(e);
+              }}
+            />
+            <Typography variant="p" className={classes.typo}>
+              Text
+            </Typography>
+            <input
+              type="color"
+              name={name2}
+              style={{ margin: "10px" }}
+              value={colorValueText}
+              onChange={(e) => {
+                setColortext(e.target.value);
+                spanColorChange(e)
+               }}
+            />
+          </>
+          // <CustomButton name={values} activ onClick={handlechange} />
         ) : btn2 ? (
           <CustomButton2 name={values} activ onClick={onClick} />
         ) : dropdown ? (
@@ -246,6 +359,7 @@ function OrderTime({
               >
                 {nam1}
               </Button>
+         
               <Button
                 style={{
                   backgroundColor: comboState ? "rgb(238, 84, 84)" : "white",
@@ -276,6 +390,31 @@ function OrderTime({
         <Typography variant="p" className={classes.des}>
           {des}
         </Typography>
+        {buttonIcon === "text" ? (
+          <>
+            <br />
+            <br />
+            <Typography variant="p" className={classes.typo}>
+              Icon Text
+            </Typography>
+            <CustomInput
+              type="text"
+              value={values}
+              handlechange={handlechange}
+              name='iconText'
+              req
+            />
+            <Typography variant="p" className={classes.des}>
+              The text to be displayed inside the icon on the dish tag
+            </Typography>
+          </>
+        ) : buttonIcon === "icon" ? (
+          <>
+            <Icons name="icons" onClick={onClick} />
+          </>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

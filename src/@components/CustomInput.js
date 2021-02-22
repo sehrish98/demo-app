@@ -34,7 +34,7 @@ function CustomInput({
         type={type}
         placeholder={placeholder}
         className={classes.input}
-        onChange={handlechange}
+        onChange={(e)=>{handlechange(e)}}
         name={name}
         value={values}
         required={false}
