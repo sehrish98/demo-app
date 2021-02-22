@@ -1,10 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {Tabs,Tab} from "@material-ui/core";
+import { Tabs, Tab } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
     justifyItems: "start",
+  },
+  btnSyling: {
+    "&:focus": {
+      outline: "none",
+    },
   },
 });
 
@@ -16,7 +21,7 @@ export default function CustomTabs({ item1, item2, item3, item4, item5 }) {
     // setValue(n);
   };
   return (
-      <>
+    <>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -28,11 +33,19 @@ export default function CustomTabs({ item1, item2, item3, item4, item5 }) {
         // scrollButtons="off"
         className={classes.root}
       >
-        <Tab label={item1} onClick={()=>setTab(0)}/>
-        <Tab label={item2} onClick={()=>setTab(1)}/>
-        <Tab label={item3} onClick={()=>setTab(2)}/>
-        <Tab label={item4} onClick={()=>setTab(2)}/>
-        <Tab label={item5} onClick={()=>setTab(2)}/>
+        <Tab
+          className={classes.btnSyling}
+          label={item1}
+          onClick={() => setTab(0)}
+        />
+        <Tab
+          className={classes.btnSyling}
+          label={item2}
+          onClick={() => setTab(1)}
+        />
+        <Tab label={item3} onClick={() => setTab(2)} />
+        <Tab label={item4} onClick={() => setTab(2)} />
+        <Tab label={item5} onClick={() => setTab(2)} />
       </Tabs>
       {/* {
         tab==0&&<h5></h5>

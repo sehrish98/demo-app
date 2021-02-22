@@ -142,7 +142,6 @@ function CreateDish({ open, menuId, menucat }) {
     open(false);
     const { name, displayName, printName, price, description } = form;
     form.ingredients = items;
-    console.log("asdgasfg", form);
     if (name != "" && price != "") {
       const obj = {
         menuId: menuId,

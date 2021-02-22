@@ -40,10 +40,10 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function OrderReview({ title, content, bg }) {
+function OrderReview({ title, content, bg, handlechange }) {
   const classes = useStyles();
   return (
-    <Paper elevation={3} className={classes.paper}>
+    <Paper elevation={3} className={classes.paper} onClick={handlechange}>
       <div
         className={classes.item}
         style={{ backgroundColor: bg, color: "white" }}

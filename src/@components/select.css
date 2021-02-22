@@ -1,0 +1,13 @@
+.select_test {
+  width: 100%;
+  border-radius: 2px;
+  height: 38px;
+  padding: 6px 6px;
+  border-left: none;
+  border-right: none;
+  border-color: lightgray;
+ 
+}
+select.select_test:focus {
+    outline: none;
+}
