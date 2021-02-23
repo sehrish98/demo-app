@@ -99,7 +99,8 @@ function CreateMenu({ open }) {
   const handleClose = () => {
     open(false);
   };
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault()
     const {name , displayName , description}=form
     if(name!=""){
       dispatch(MenuItemsCreate(form, history));

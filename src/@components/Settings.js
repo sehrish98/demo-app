@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core/";
+import { useHistory } from "react-router-dom";
 
 import CustomTabs from "./CustomTabs";
 import General from "./General"
@@ -35,6 +36,12 @@ const useStyles = makeStyles((theme) =>
 
 function Settings() {
   const classes = useStyles();
+  const history = useHistory();
+  useEffect(() => {let role =localStorage.getItem("role")
+  if(role === "STAFF"){
+    history.push("/order")
+  }
+  }, []);
   return (
     <div className={classes.paper}>
       <div className={classes.detail}>

@@ -89,6 +89,11 @@ const useStyles = makeStyles((theme) =>
 
 function Menus({ title, value }) {
   const history = useHistory();
+  useEffect(() => {let role =localStorage.getItem("role")
+  if(role === "STAFF"){
+    history.push("/order")
+  }
+  }, []);
   const menuList = useSelector(({ menu__reducer }) => menu__reducer.menu);
   const optionsetList = useSelector(
     ({ optionset__Reducer }) => optionset__Reducer.optionset
@@ -249,7 +254,7 @@ function Menus({ title, value }) {
               <div ref={provided.innerRef} style={{}}>
                 {arrays
                   ?.sort((a, b) => {
-                    console.log("fhfjhgjgu   ")
+                    console.log("fhfjhgjgu   ");
                     return a.position - b.position;
                   })
                   .map((c, index) => (

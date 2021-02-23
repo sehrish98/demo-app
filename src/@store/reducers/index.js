@@ -9,7 +9,7 @@ import optionset__Reducer from "../optionSet/Optionset.Reducers"
 import menu_caregory_items_Reducer from "../menu/MenuCategoryItems.Reducers"
 import menu_caregory_Reducer from "../menu/MenuCategory.Reducers"
 // import order__reducer from "../Order.Reducers"
-import ordertable__reducer from "../ordertable/OrderTable.Reducers"
+import order__Reducer from "../orders/Order.Reducers"
 import checkout__Reducer from "../checkout/Checkout.Reducer"
 
 const createReducer = (asyncReducers) =>
@@ -23,6 +23,7 @@ const createReducer = (asyncReducers) =>
     optionset__Reducer:optionset__Reducer,
     checkout__Reducer:checkout__Reducer,
     staff__reducer:staff__reducer,
+    order__Reducer:order__Reducer,
     ...asyncReducers,
   });
 

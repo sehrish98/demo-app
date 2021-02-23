@@ -1,10 +1,10 @@
 import { orderactiontypes } from "../redux/actionTypes";
 
 const initial_state = {
-  menu:[]
+  orders:[]
 };
 
-const ordertable__Reducer = function (state = initial_state, action) {
+const order__Reducer = function (state = initial_state, action) {
   switch (action.type) {
     case orderactiontypes.GETORDER_START: {
       return {
@@ -14,7 +14,7 @@ const ordertable__Reducer = function (state = initial_state, action) {
     case orderactiontypes.GETORDER_SUCCESS: {
       return {
         ...state,
-        menu:action.payload
+        orders:action.payload.data
       };
     }
     case orderactiontypes.GETORDER_FAIL: {
@@ -32,7 +32,7 @@ const ordertable__Reducer = function (state = initial_state, action) {
       case orderactiontypes.GETORDERDETAIL_SUCCESS: {
         return {
           ...state,
-          menu:action.payload
+          orders:action.payload.data
         };
       }
       case orderactiontypes.GETORDERDETAIL_FAIL: {
@@ -49,7 +49,7 @@ const ordertable__Reducer = function (state = initial_state, action) {
       case orderactiontypes.GETORDERREVENUE_SUCCESS: {
         return {
           ...state,
-          menu:action.payload
+          orders:action.payload.data
         };
       }
       case orderactiontypes.GETORDERREVENUE_FAIL: {
@@ -60,11 +60,9 @@ const ordertable__Reducer = function (state = initial_state, action) {
   
 
       case orderactiontypes.ORDERTABLEEDIT_SUCCESS: {
-        const { username, password } = action.payload;
         return {
           ...state,
-          username: username,
-          password: password,
+          orders:action.payload.data
         };
       }
       case orderactiontypes.ORDERTABLEEDIT_FAIL: {
@@ -79,4 +77,4 @@ const ordertable__Reducer = function (state = initial_state, action) {
     }
   }
 };
-export default ordertable__Reducer;
+export default order__Reducer;

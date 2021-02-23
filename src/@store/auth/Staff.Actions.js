@@ -8,7 +8,7 @@ export function GetStaff() {
         type: StaffActionTypes.GET_STAFF_START,
       });
       axios
-        .get("/auth/staff")
+        .get("/auth/client")
         .then((res) => {
             GetStaffSuccess(dispatch, res.data);
         })
@@ -40,8 +40,8 @@ export function GetStaff() {
       dispatch({
         type: StaffActionTypes.CREATE_STAFF_START,
       });
-      axios
-        .post("/auth/staff", obj)
+      axios      
+        .post("/auth/client", obj)
         .then((res) => {
           toast.success("Successfully Logged in");
           CreateStaffSuccess(dispatch, res.data ,history);
