@@ -17,7 +17,9 @@ import { GetOrder } from "../../@store/orders/Order.Actions";
 import OrderIcons from "../../@components/OrderIcons";
 import SettingModal from "../../@components/SettingModal";
 import OrderReview from "../../@components/OrderReview";
-
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Confirmation from "../../@components/Confirmation";
 const useStyles = makeStyles((theme) =>
   createStyles({
     detail: {
@@ -58,6 +60,29 @@ const useStyles = makeStyles((theme) =>
     font__weight: {
       fontWeight: "700",
     },
+    btnStyling: {
+      width: "150px",
+      border: "none",
+      color: "black",
+      backgroundColor: "white",
+      boxShadow: "1px 8px 11px #888888",
+      "&:focus": {
+        outline: "none",
+      },
+    },
+    btnStyling1: {
+      width: "150px",
+      border: "none",
+      color: "white",
+      backgroundColor: "rgb(81, 163, 81)",
+      boxShadow: "1px 8px 11px #888888",
+      "&:focus": {
+        outline: "none",
+      },
+      "&:hover": {
+        backgroundColor: "rgb(81, 140, 81)",
+      },
+    },
   })
 );
 
@@ -69,6 +94,18 @@ const confirmed_list = [
   },
   {
     bgolor: "rgb(183, 208, 36)",
+    title: "Confirmed (Up Comming)",
+    content: "Nothing here...",
+  },
+];
+const confirmed_list1 = [
+  {
+    bgolor: "#81BEFA",
+    title: "Confirmed (Due Soon)",
+    content: "Nothing here...",
+  },
+  {
+    bgolor: "#81BEFA",
     title: "Confirmed (Up Comming)",
     content: "Nothing here...",
   },
@@ -216,6 +253,12 @@ function Order({ title, value }) {
     } else {
     }
   };
+  const [buttonState, setbutton] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const setComboButton = (e) => {
+    console.log("state ios", buttonState);
+    setbutton(!buttonState);
+  };
   return (
     <div className={classes.paper}>
       <div className={classes.detail}>
@@ -326,7 +369,17 @@ function Order({ title, value }) {
               ))}
             </div>
           )}
-
+          <div className={classes.order__review}>
+            {confirmed_list1.map((l, index) => (
+              <OrderReview
+                title={l.title}
+                content={l.content}
+                i={index}
+                bg={l.bgolor}
+                handlechange={setComboButton}
+              />
+            ))}
+          </div>
           <div className={classes.order__review}>
             {confirmed_list.map((l, index) => (
               <OrderReview
@@ -334,6 +387,7 @@ function Order({ title, value }) {
                 content={l.content}
                 i={index}
                 bg={l.bgolor}
+                handlechange={setComboButton}
               />
             ))}
           </div>
@@ -344,6 +398,7 @@ function Order({ title, value }) {
                 content={l.content}
                 i={index}
                 bg={l.bgolor}
+                handlechange={setComboButton}
               />
             ))}
           </div>
@@ -354,6 +409,7 @@ function Order({ title, value }) {
                 content={l.content}
                 i={index}
                 bg={l.bgolor}
+                handlechange={setComboButton}
               />
             ))}
           </div>
@@ -364,12 +420,35 @@ function Order({ title, value }) {
                 content={l.content}
                 i={index}
                 bg={l.bgolor}
+                handlechange={setComboButton}
               />
             ))}
           </div>
         </div>
       </div>
+      {buttonState && (
+        <>
+          <ButtonGroup
+            // variant="contained"
+            color="lightgray"
+            aria-label="contained primary button group"
+            style={{ display: "flex", justifyContent: " center" }}
+          >
+            <Button
+              className={classes.btnStyling}
+              onClick={() => {
+                setOpenConfirm(true);
+              }}
+            >
+              Details
+            </Button>
+            <Button className={classes.btnStyling1}>Complete</Button>
+          </ButtonGroup>
+        </>
+      )}
       {openModal && <SettingModal open={setOpenModal} />}
+      {/* {openConfirm&&<Confirmation open={setOpenConfirm} name={name} email={email} status={status} phoneno={phoneno} />} */}
+      {openConfirm && <Confirmation open={setOpenConfirm} />}
     </div>
   );
 }

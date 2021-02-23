@@ -34,6 +34,7 @@ const MenuCategoryFail = (dispatch, errorMessage) => {
 };
 
 export function MenuCategoryCreate(obj , history) {
+
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYCREATE_START,
@@ -67,6 +68,7 @@ const MenuCategoryCreateFail = (dispatch, errorMessage) => {
 };
 
 export function MenuCategoryEdit(obj , history) {
+
   return (dispatch) => {
     dispatch({
       type: MenuCategoryActionTypes.MENUCATEGORYEDIT_START,

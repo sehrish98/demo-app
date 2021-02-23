@@ -8,7 +8,11 @@ import { useHistory } from "react-router-dom";
 import { DishEdit } from "../@store/dish/Dish.Actions";
 import OrderTime from "./OrderTime";
 import useForm from "./hooks/useForm";
-
+import ListItem from "@material-ui/core/ListItem";
+import Collapse from "@material-ui/core/Collapse";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import RemoveDishes from "./DropDown";
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -51,13 +55,16 @@ const useStyles = makeStyles((theme) =>
       "&:hover": {
         background: "rgb(238, 82, 82)",
       },
+      "&:focus": {
+        outline: "none",
+      },
     },
     detail: {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      marginBottom: "15px",
-      marginTop: "10px",
+      marginBottom: "37px",
+      marginTop: "22px",
     },
     cancelIcon: {
       cursor: "pointer",
@@ -76,9 +83,21 @@ const useStyles = makeStyles((theme) =>
       borderBottom: "1px solid lightgray",
       padding: "10px 0px",
     },
+    divTopStyling: {
+      backgroundColor: "coral",
+      padding: "0 7px",
+      borderRadius: "8px",
+      marginTop: "-30px",
+      width: "fit-content",
+      wordBreak: "break-all",
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
+    },
   })
 );
 function EditDishTag({ open, data }) {
+  
   const history = useHistory();
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
@@ -93,21 +112,100 @@ function EditDishTag({ open, data }) {
   const handleClose = () => {
     open(false);
   };
-  const handleClick = () => {
+  const handleClick = (e) => {
+   window.location.reload()
+    open(false);
     const data = {
       dishTagId: form._id,
       name: form.name,
-      displayName: form.displayName,
-      description: form.description,
+      tagText: form.tagText,
+      iconType: form.iconType,
+      iconText: form.iconText,
+      icon: form.icon,
+      tagColor: form.tagColor,
+      iconColor: form.iconColor,
     };
     if (form.name != "") {
-      dispatch(DishEdit(data, history));
+       dispatch(DishEdit(data, history));
     }
   };
   const handlefieldchange = (e) => {
     e.persist();
     handleChange(e);
     // setInput(e.target.value);
+  };
+  const [spanText, setSpanText] = useState("");
+  const [btnState, setBtnState] = useState("");
+
+  const changeBtnState = (btn) => {
+    form.iconType = btn;
+    if (form.iconType == "none") {
+      form.icon = form.iconText = " ";
+    }
+    if (form.iconType == "icon") {
+      form.iconText = " ";
+    }
+    if (form.iconType == "text") {
+      form.icon = " ";
+    }
+    setBtnState(btn);
+  };
+  const [dishData, setDishData] = useState("example");
+  const handleInput = (e) => {
+    handlefieldchange(e);
+    setDishData(e.target.value);
+  };
+  const handleIconText = (e) => {
+    handlefieldchange(e);
+    setSpanText(e.target.value);
+  };
+  const [classnames, setClassName] = useState("");
+  const handleIcon = (e) => {
+    let str = e.target.className;
+
+    let res = str.replace(/fa-2x/gi, "fa-1x");
+    setClassName(res);
+  };
+  const [backgroundColorset, setBackgroundColor] = useState({
+    color: "#8ed1fc",
+    backgroundColor: "#ff6900",
+    padding: "0 7px",
+    borderRadius: "8px",
+    marginTop: "-30px",
+    width: "fit-content",
+    wordBreak: "break-all",
+  });
+
+  const [iconStyling, setIconStyling] = useState({
+    color: "#8ed1fc",
+    backgroundColor: "#ff6900",
+    margin: "2px",
+  });
+
+  const spanColorChange = (e) => {
+    if (e.target.name === "backgroundDiv") {
+      setBackgroundColor({
+        ...backgroundColorset,
+        backgroundColor: e.target.value,
+      });
+      form.tagColor = e.target.value;
+    } else if (e.target.name === "divText") {
+      setBackgroundColor({
+        ...backgroundColorset,
+        color: e.target.value,
+      });
+    } else if (e.target.name === "spanBackground") {
+      setIconStyling({
+        ...iconStyling,
+        backgroundColor: e.target.value,
+      });
+      form.iconColor = e.target.value;
+    } else if (e.target.name === "spanText1") {
+      setIconStyling({
+        ...iconStyling,
+        color: e.target.value,
+      });
+    }
   };
 
   const body = (
@@ -122,6 +220,20 @@ function EditDishTag({ open, data }) {
         </Typography>
         <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
       </div>
+      <div>
+        <div style={backgroundColorset}>
+          {btnState === "icon" ? (
+            <span style={iconStyling}>
+              <i class={classnames}></i>
+            </span>
+          ) : btnState === "text" ? (
+            <span style={iconStyling}>{spanText}</span>
+          ) : (
+            ""
+          )}
+          {dishData}
+        </div>
+      </div>
       <div className={classes.allbtn}>
         <Button
           style={{ backgroundColor: "lightgray" }}
@@ -130,7 +242,7 @@ function EditDishTag({ open, data }) {
           General
         </Button>
         <Button variant="p" onClick={() => setInitial("credential")}>
-          Condition
+          Add/Remove From Dishes
         </Button>
       </div>
       {initial === "general" && (
@@ -138,49 +250,58 @@ function EditDishTag({ open, data }) {
           <OrderTime
             title="Name"
             inputname="name"
-            des="A unique name for your menu"
+            des="A unique name for your dish tag"
             handlechange={handlefieldchange}
-            value={form && form.name}
+            req={true}
           />
           <OrderTime
-            button
             btnname="optional"
-            inputname="displayName"
-            title="Display Name"
-            des="Will override the unique name in your store"
-            handlechange={handlefieldchange}
-            value={form && form.displayName}
+            inputname="tagText"
+            title="Tag Text"
+            des="The text to be displayed beside the tag icon"
+            handlechange={handleInput}
+            // values={dishData}
           />
           <OrderTime
-            button
             btnname="optional"
-            inputname="description"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
+            inputname="iconType"
+            title="Icon Type"
+            des="The type of icon to be used for the tag"
+            handlechange={handleIconText}
+            btngroup1
+            values={spanText}
+            onClick={handleIcon}
+            onButton={changeBtnState}
+          />
+
+          <OrderTime
+            colors
+            btnname="optional"
+            inputname="tagColor"
+            title="Tag Color"
+            des="This determines the main background and text color of the dish tag"
+            // handlechange={handlefieldchange}
+            spanColorChange={spanColorChange}
+            name1="backgroundDiv"
+            name2="divText"
+          />
+
+          <OrderTime
+            colors
+            btnname="optional"
+            inputname="iconColor"
+            title="Icon Color"
+            des="This determines the background and text/icon color of the icon component of the dish tag"
             handlechange={handlefieldchange}
-            value={form && form.description}
+            spanColorChange={spanColorChange}
+            name1="spanBackground"
+            name2="spanText1"
           />
         </>
       )}
       {initial == "credential" && (
         <>
-          <OrderTime
-            title="Name"
-            des="A unique name for your menu"
-            inputname="name"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Display Name"
-            des="Will override the unique name in your store"
-          />
-          <OrderTime
-            button
-            btnname="optional"
-            title="Description"
-            des="The number of outstanding orders before an increase in wait time is applied"
-          />
+          <RemoveDishes />
         </>
       )}
       <Button className={classes.btn} onClick={handleClick}>

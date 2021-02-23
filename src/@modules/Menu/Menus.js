@@ -192,19 +192,21 @@ function Menus({ title, value }) {
       setShow(false);
     }
   };
-
+  
   const handledelete = (e) => {
     if (e == "Menu") {
       const obj = { menuId: iid };
       dispatch(MenuItemsDelete(obj, history));
     } else if (e == "Dish_Tags") {
       const obj = { _id: iid };
+      
       dispatch(DisheTagDelete(obj, history));
     } else if (e == "Option_Set") {
       const obj = { _id: iid };
       dispatch(DeleteOptionSet(obj, history));
     }
   };
+  
   return (
     <div className={classes.paper}>
       <div
@@ -254,7 +256,7 @@ function Menus({ title, value }) {
               <div ref={provided.innerRef} style={{}}>
                 {arrays
                   ?.sort((a, b) => {
-                    console.log("fhfjhgjgu   ");
+                    
                     return a.position - b.position;
                   })
                   .map((c, index) => (
