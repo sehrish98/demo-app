@@ -94,10 +94,14 @@ const useStyles = makeStyles((theme) =>
     nested: {
       paddingLeft: theme.spacing(4),
     },
+    btnOutline:{
+      "&:focus":{
+        outline:"none"
+      }
+    }
   })
 );
 function EditDishTag({ open, data }) {
-  
   const history = useHistory();
   const [modalStyle] = React.useState(getModalStyle);
   const { form, setForm, handleChange } = useForm(null);
@@ -113,7 +117,7 @@ function EditDishTag({ open, data }) {
     open(false);
   };
   const handleClick = (e) => {
-   window.location.reload()
+    window.location.reload();
     open(false);
     const data = {
       dishTagId: form._id,
@@ -126,7 +130,7 @@ function EditDishTag({ open, data }) {
       iconColor: form.iconColor,
     };
     if (form.name != "") {
-       dispatch(DishEdit(data, history));
+      dispatch(DishEdit(data, history));
     }
   };
   const handlefieldchange = (e) => {
@@ -236,12 +240,22 @@ function EditDishTag({ open, data }) {
       </div>
       <div className={classes.allbtn}>
         <Button
-          style={{ backgroundColor: "lightgray" }}
+          style={{
+            backgroundColor: initial === "general" ? "lightgray" : "white",
+          }}
           onClick={() => setInitial("general")}
+          className={classes.btnOutline}
         >
           General
         </Button>
-        <Button variant="p" onClick={() => setInitial("credential")}>
+        <Button
+          variant="p"
+          style={{
+            backgroundColor: initial === "credential" ? "lightgray" : "white",
+          }}
+          onClick={() => setInitial("credential")}
+          className={classes.btnOutline}
+        >
           Add/Remove From Dishes
         </Button>
       </div>

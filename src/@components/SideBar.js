@@ -11,7 +11,7 @@ import {
   Input,
   Description,
 } from "@material-ui/icons";
-
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ListItems from "./ListItems";
 
 const drawerWidth = 65;
@@ -29,7 +29,7 @@ const list = [
   {
     name: "booking",
     icon: <DateRange />,
-    route:""
+    route: "",
   },
   {
     name: "Menu",
@@ -44,18 +44,23 @@ const list = [
   {
     name: "Settings",
     icon: <Settings />,
-    route:"/settings"
+    route: "/settings",
   },
   {
     name: "View Source",
     icon: <Input />,
-    route:""
+    route: "",
   },
   {
     name: "Documentation",
     icon: <Description />,
-    route:""
+    route: "",
   },
+  // {
+  //   name: "Cashier",
+  //   icon: <MonetizationOnIcon />,
+  //   route: "/cashier",
+  // },
 ];
 
 const useStyles = makeStyles((theme) =>

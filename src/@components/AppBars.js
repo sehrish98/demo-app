@@ -95,7 +95,7 @@ const StyledBadge = withStyles((theme) =>
   })
 )(Badge);
 export default function AppBars() {
-  const history=useHistory()
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleLoggout = () => {

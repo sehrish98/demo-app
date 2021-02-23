@@ -340,7 +340,7 @@ function OrderTime({
            value={values}
          >
             {options.map((item, i) => {
-              return <option value={i}>{item}</option>;
+              return <option value={item}>{item}</option>;
             })}
           </select>
         ) : btngroup ? (

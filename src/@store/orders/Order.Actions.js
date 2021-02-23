@@ -3,7 +3,6 @@ import { orderactiontypes} from "../redux/actionTypes";
 import { toast } from "react-toastify";
 
 export function GetOrder() {
-  console.log("hi i m geting order hdbsjhbjfbjdfbsd")
     return (dispatch) => {
       dispatch({
         type: orderactiontypes.GETORDER_START,
@@ -18,7 +17,21 @@ export function GetOrder() {
         });
     };
   }
-  
+  export function GetCasheirOrder() {
+    return (dispatch) => {
+      dispatch({
+        type: orderactiontypes.GETORDER_START,
+      });
+      axios
+        .get("/cashier")
+        .then((res) => {
+          GetOrderSuccess(dispatch, res.data);
+        })
+        .catch((error) => {
+            GetOrderFail(dispatch, error.message);
+        });
+    };
+  }
   const GetOrderSuccess = (dispatch, data, history) => {
       dispatch({
         type: orderactiontypes.GETORDER_SUCCESS,

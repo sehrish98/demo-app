@@ -12,7 +12,7 @@ import CustomRouter from "./@layouts/CustomRouter";
 import Dashboard from "./@modules/dashboard/Dashboard";
 import Footer from "./@modules/footer/Footer";
 import Settings from "./@components/Settings";
-
+import StickyHeadTable from "./@modules/Cashier/Cashier"
 import "./App.css";
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
           <CustomRouter exact path="/staff" component={Staff} />
           <CustomRouter exact path="/settings" component={Settings} />
           <CustomRouter exact path="/" component={Home} />
+          <CustomRouter exact path="/cashier" component={StickyHeadTable} />
         </Switch>
       </Router>
     </div>

@@ -2,7 +2,6 @@ import { instance as axios } from "../../@api/axios";
 import { UserActionTypes } from "../redux/actionTypes";
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
-
 export function userLogin(obj, history) {
   return (dispatch) => {
     dispatch({
@@ -34,7 +33,6 @@ export function userLogin(obj, history) {
       });
   };
 }
-
 const userLoginSuccess = (dispatch, data, history) => {
   const roles = localStorage.getItem("role");
   dispatch({
@@ -49,11 +47,14 @@ const userLoginSuccess = (dispatch, data, history) => {
   {
     history.push("/order");
   }
+  else if(roles=="CASHIER")
+  {
+    history.push("/cashier");
+  }
   else{
     history.push("/dash-board")
   }
 };
-
 const userLoginFail = (dispatch, errorMessage) => {
   dispatch({
     type: UserActionTypes.LOGIN_USER_FAIL,
@@ -62,7 +63,6 @@ const userLoginFail = (dispatch, errorMessage) => {
     },
   });
 };
-
 export function userloggedOut(history) {
   return (dispatch) => {
     dispatch({
@@ -79,14 +79,12 @@ export function userloggedOut(history) {
       });
   };
 }
-
 const userLoggedOutSuccess = (dispatch, history) => {
   dispatch({
     type: UserActionTypes.LOGOUT_USER_SUCCESS,
   });
   history.push("/login");
 };
-
 const userLoggedOutFail = (dispatch, errorMessage) => {
   dispatch({
     type: UserActionTypes.LOGOUT_USER_FAIL,
@@ -95,7 +93,6 @@ const userLoggedOutFail = (dispatch, errorMessage) => {
     },
   });
 };
-
 export function changePassword(data) {
   return (dispatch) => {
     dispatch({
@@ -111,13 +108,11 @@ export function changePassword(data) {
       });
   };
 }
-
 const changePasswordSuccess = (dispatch) => {
   dispatch({
     type: UserActionTypes.CHANGE_PASSWORD_SUCCESS,
   });
 };
-
 const changePasswordFail = (dispatch, errorMessage) => {
   dispatch({
     type: UserActionTypes.CHANGE_PASSWORD_FAIL,
@@ -126,7 +121,6 @@ const changePasswordFail = (dispatch, errorMessage) => {
     },
   });
 };
-
 export function deleteUser(data) {
   return (dispatch) => {
     dispatch({
@@ -142,14 +136,12 @@ export function deleteUser(data) {
       });
   };
 }
-
 const deleteUserSuccess = (dispatch, data) => {
   dispatch({
     type: UserActionTypes.DELETE_USER_SUCCESS,
     payload: data,
   });
 };
-
 const deleteUserFail = (dispatch, errorMessage) => {
   dispatch({
     type: UserActionTypes.DELETE_USER_FAIL,

@@ -164,7 +164,7 @@ const Home = () => {
   const history = useHistory();
 
   useEffect(() => {let role =localStorage.getItem("role")
-  if(role === "STAFF"){
+  if(role === "STAFF" || role === "CASHIER"){
     history.push("/order")
   }
   }, []);

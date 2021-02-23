@@ -35,7 +35,7 @@ export function GetStaff() {
   };
 
 
-  export function createStaff(obj , history) {
+  export function postStaff(obj , history) {
     return (dispatch) => {
       dispatch({
         type: StaffActionTypes.CREATE_STAFF_START,

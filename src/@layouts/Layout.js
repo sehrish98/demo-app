@@ -20,11 +20,6 @@ const useStyles = makeStyles((theme) =>
 
 const Layout = (props) => {
   const classes = useStyles();
-  // useEffect(() => {
-  //   if (localStorage.getItem("role") !== "MASTER") {
-  //     return <Redirect to="/order" />;
-  //   }
-  // }, []);
   const [role] = useState(localStorage.getItem("role"));
   return (
     <>
@@ -33,7 +28,7 @@ const Layout = (props) => {
       </div>
 
       <div className={classes.root}>
-        {role === "STAFF" ? "" : <SideBar />}
+        {role === "STAFF" || role === "CASHIER" ? "" : <SideBar />}
         <div className={classes.content}>{props.children}</div>
       </div>
     </>

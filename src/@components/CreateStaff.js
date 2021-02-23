@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "3px",
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[3],
-       padding: "5px 20px",
+      padding: "5px 20px",
       outline: "none",
       display: "flex",
       flexDirection: "column",
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       marginBottom: "15px",
       marginTop: "10px",
-      position:"relative"
+      position: "relative",
     },
     cancelIcon: {
       cursor: "pointer",
@@ -79,82 +79,59 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-const CreateStaff=({ open })=> {
+const CreateStaff = ({ open, handleClick, handlefieldchange }) => {
   const [modalStyle] = React.useState(getModalStyle);
-  const { form, setForm, handleChange } = useForm(null);
-  let dta = {
-    email: "",
-    password: "",
-    firstName: "",
-    lastName:"",
-  };
-  useEffect(() => {
-    if (!form) {
-      setForm(dta);
-    }
-  }, [form]);
-  const [initial, setInitial] = useState("general");
-  const history = useHistory();
   const classes = useStyles();
-  const dispatch = useDispatch();
   const handleClose = () => {
     open(false);
-  };
-  const handleClick = (e) => {
-    e.preventDefault()
-    const obj={...form , role:"STAFF"}
-    const {name ,lastName,firstName , password}=form
-    if(name!=""&&firstName!=""&&lastName!=""&&password!=""){
-      dispatch(createStaff(form, history));
-    }
-  };
-  const handlefieldchange = (e) => {
-    e.persist();
-    handleChange(e);
-    // setInput(e.target.value);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className={classes.detail}>
-        <Typography variant="h5">Create Customer</Typography>
+        <Typography variant="h5">create</Typography>
         <CloseIcon onClick={handleClose} className={classes.cancelIcon} />
       </div>
-     <form>
-      {initial === "general" && (
-        <>
-          <OrderTime
-            title="Email"
-            inputname="email"
-            des="The e-mail address your customer will login with"
-            handlechange={handlefieldchange}
-            req={true}
-          />
-          <OrderTime
-            inputname="password"
-            title="Password"
-            des="The password your customer will login with. Minimum 5 characters"
-            handlechange={handlefieldchange}
-            req={false}
-          />
-          <OrderTime
-            inputname="firstName"
-            title="First Name"
-            des="Confirm the password that your customer will login with"
-            handlechange={handlefieldchange}
-            req={false}
-          />
-            <OrderTime
-            inputname="lastName"
-            title="Last Name"
-            des="Confirm the password that your customer will login with"
-            handlechange={handlefieldchange}
-            req={false}
-          />
-        </>
-      )}
-      <Button className={classes.btn} onClick={handleClick} type="submit">
-        Create Menu
-      </Button>
+      <form>
+        <OrderTime
+          title="Email"
+          inputname="email"
+          des="The e-mail address your customer will login with"
+          handlechange={handlefieldchange}
+          req={true}
+        />
+        <OrderTime
+          inputname="password"
+          title="Password"
+          des="The password your customer will login with. Minimum 5 characters"
+          handlechange={handlefieldchange}
+          req={false}
+        />
+        <OrderTime
+          inputname="firstName"
+          title="First Name"
+          des="Confirm the password that your customer will login with"
+          handlechange={handlefieldchange}
+          req={false}
+        />
+        <OrderTime
+          inputname="lastName"
+          title="Last Name"
+          des="Confirm the password that your customer will login with"
+          handlechange={handlefieldchange}
+          req={false}
+        />
+        <OrderTime
+          dropdown
+          inputname="role"
+          title="Role"
+          des="Enter Role"
+          handlechange={handlefieldchange}
+          req={false}
+          options={["STAFF", "CASHIER"]}
+        />
+        <Button className={classes.btn} onClick={handleClick} type="submit">
+          Create Menu
+        </Button>
       </form>
     </div>
   );
@@ -171,6 +148,6 @@ const CreateStaff=({ open })=> {
       </Modal>
     </div>
   );
-}
+};
 
 export default CreateStaff;
