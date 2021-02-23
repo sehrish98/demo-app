@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typography } from "@material-ui/core";
 import DropDownIcon from "../../@components/DropDownIcon";
+import { useHistory } from "react-router-dom";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 import ScheduleDropDown from "../../@components/ScheduleDropDown";
@@ -160,6 +161,13 @@ const useStyles = makeStyles((theme) =>
 
 const Home = () => {
   const classes = useStyles();
+  const history = useHistory();
+
+  useEffect(() => {let role =localStorage.getItem("role")
+  if(role === "STAFF"){
+    history.push("/order")
+  }
+  }, []);
   const [open, setOpen] = useState(false);
   const HandleDropDownClick = () => {
     setOpen(!open);

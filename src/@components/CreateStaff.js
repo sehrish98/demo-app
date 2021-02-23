@@ -102,6 +102,7 @@ const CreateStaff=({ open })=> {
   };
   const handleClick = (e) => {
     e.preventDefault()
+    const obj={...form , role:"STAFF"}
     const {name ,lastName,firstName , password}=form
     if(name!=""&&firstName!=""&&lastName!=""&&password!=""){
       dispatch(createStaff(form, history));

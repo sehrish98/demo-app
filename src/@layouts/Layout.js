@@ -1,4 +1,4 @@
-import React ,{useEffect}from "react";
+import React, { useEffect, useState } from "react";
 import AppBars from "../@components/AppBars";
 import SideBar from "../@components/SideBar";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
@@ -20,16 +20,20 @@ const useStyles = makeStyles((theme) =>
 
 const Layout = (props) => {
   const classes = useStyles();
-    if (!localStorage.getItem("accessToken")) {
-      return <Redirect to="/login" />
-    }
+  // useEffect(() => {
+  //   if (localStorage.getItem("role") !== "MASTER") {
+  //     return <Redirect to="/order" />;
+  //   }
+  // }, []);
+  const [role] = useState(localStorage.getItem("role"));
   return (
     <>
       <div style={{ top: 0, position: "sticky", zIndex: "999" }}>
         <AppBars />
       </div>
+
       <div className={classes.root}>
-        <SideBar />
+        {role === "STAFF" ? "" : <SideBar />}
         <div className={classes.content}>{props.children}</div>
       </div>
     </>

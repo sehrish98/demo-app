@@ -12,6 +12,8 @@ import {
   List,
 } from "@material-ui/icons";
 
+import { useDispatch, useSelector } from "react-redux";
+import { GetOrder } from "../../@store/orders/Order.Actions";
 import OrderIcons from "../../@components/OrderIcons";
 import SettingModal from "../../@components/SettingModal";
 import OrderReview from "../../@components/OrderReview";
@@ -169,10 +171,26 @@ const unconfirm_list = [
   },
 ];
 function Order({ title, value }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetOrder());
+  }, [dispatch]);
   const classes = useStyles();
   const [un_confirm, setUn_confirm] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [compress, setCompress] = useState(90);
+  const [confirm, setConfirm] = useState(90);
+  const orderList = useSelector(({ order__Reducer }) => order__Reducer.orders);
+  console.log("hi i m sehrish:", orderList);
+  orderList.map((m)=>{
+    if(m.status=="un_confirmed")
+    {
+      setUn_confirm(m)
+    }
+    else if(m.status=="confirmed"){
+      setConfirm(m)
+    }
+  })
   const IconList = [
     {
       name: "Board",
@@ -271,6 +289,74 @@ function Order({ title, value }) {
             width: `${compress}%`,
           }}
         >
+          <div className={classes.order__review}>
+            {orderList?.map((l) =>
+              l.status == "un_confirmed" ? (
+                <OrderReview
+                  title="Un Confirmed"
+                  content="jhjgjgjg"
+                  // i={index}
+                  bg="rgb(239, 187, 30)"
+                />
+              ) : l.status == "confirmed" ? (
+                <OrderReview
+                  title="confirmed"
+                  content="hello"
+                  // i={index}
+                  bg="rgb(183, 208, 36)"
+                />
+              ) : l.status == "Ready" ? (
+                <OrderReview
+                  title="Ready"
+                  content="hi"
+                  // i={index}
+                  bg="rgb(0, 128, 255)"
+                />
+              ) : l.status == "complete" ? (
+                <OrderReview
+                  title="confirmed"
+                  content="hello"
+                  // i={index}
+                  bg="rgb(81, 163, 81)"
+                />
+              ) : l.status == "in complete" ? (
+                <OrderReview
+                  title="confirmed"
+                  content="hi"
+                  // i={index}
+                  bg="rgb(183, 208, 36)"
+                />
+              ) : l.status == "cancel" ? (
+                <OrderReview
+                  title="confirmed"
+                  content="jncxjv"
+                  // i={index}
+                  bg="rgb(189, 54, 47)"
+                />
+              ) : (
+                ""
+              )
+            )}
+          </div>
+
+          {orderList?.map(( l,i) => {
+            return li.status == "un_confirmed" ? (
+              <OrderReview
+                title="Un Confirmed"
+                content="jfhdvujdrfhgrfh"
+                // i={index}
+                bg="black"
+              />
+            ) : (
+              <OrderReview
+                title="un confirmed"
+                content="Nothing is here"
+                // i={index}
+                bg="pink"
+              />
+            );
+          })}
+
           {un_confirm && (
             <div className={classes.order__review}>
               {unconfirm_list.map((l, index) => (
@@ -307,17 +393,6 @@ function Order({ title, value }) {
           </div>
           <div className={classes.order__review}>
             {Ready_list.map((l, index) => (
-              <OrderReview
-                title={l.title}
-                content={l.content}
-                i={index}
-                bg={l.bgolor}
-                handlechange={setComboButton}
-              />
-            ))}
-          </div>
-          <div className={classes.order__review}>
-            {On_Route.map((l, index) => (
               <OrderReview
                 title={l.title}
                 content={l.content}
