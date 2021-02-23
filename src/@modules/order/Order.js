@@ -258,35 +258,35 @@ function Order({ title, value }) {
               ) : l.status == "confirmed" ? (
                 <OrderReview
                   title="confirmed"
-                  content="puneeet mera"
+                  content="hello"
                   // i={index}
                   bg="rgb(183, 208, 36)"
                 />
               ) : l.status == "Ready" ? (
                 <OrderReview
                   title="Ready"
-                  content="puneeet mera"
+                  content="hi"
                   // i={index}
                   bg="rgb(0, 128, 255)"
                 />
               ) : l.status == "complete" ? (
                 <OrderReview
                   title="confirmed"
-                  content="puneeet mera"
+                  content="hello"
                   // i={index}
                   bg="rgb(81, 163, 81)"
                 />
               ) : l.status == "in complete" ? (
                 <OrderReview
                   title="confirmed"
-                  content="puneeet mera"
+                  content="hi"
                   // i={index}
                   bg="rgb(183, 208, 36)"
                 />
               ) : l.status == "cancel" ? (
                 <OrderReview
                   title="confirmed"
-                  content="puneeet mera"
+                  content="jncxjv"
                   // i={index}
                   bg="rgb(189, 54, 47)"
                 />
@@ -296,9 +296,8 @@ function Order({ title, value }) {
             )}
           </div>
 
-          {orderList?.map(( li,) => {
-            console.log("guguiihui", l.status, i);
-            return l.status == "un_confirmed" ? (
+          {orderList?.map(( l,i) => {
+            return li.status == "un_confirmed" ? (
               <OrderReview
                 title="Un Confirmed"
                 content="jfhdvujdrfhgrfh"
