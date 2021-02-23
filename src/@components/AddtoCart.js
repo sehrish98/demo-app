@@ -269,7 +269,7 @@ function AddtoCart({ name, des, type, image, price, open }) {
               variant="h6"
               style={{ fontWeight: "800", fontSize: "18px" }}
             >
-             {cart_items.reduce((sum, i) => (sum += i.qty * i.price), 0)}
+              {cart_items.reduce((sum, i) => (sum += i.qty * i.price), 0)}
             </Typography>
           </div>
 

@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) =>
 function Menus({ title, value }) {
   const history = useHistory();
   useEffect(() => {let role =localStorage.getItem("role")
-  if(role === "STAFF"){
+  if(role === "STAFF"||role === "CASHIER"){
     history.push("/order")
   }
   }, []);

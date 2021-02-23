@@ -13,10 +13,9 @@ import { useHistory } from "react-router-dom";
 import StaffDetailModal from "../../@components/StaffDetailModal";
 import CustomButton from "../../@components/CustomButton";
 import CreateStaff from "../../@components/CreateStaff";
-import { GetStaff, postStaff } from "../../@store/auth/Staff.Actions";
-
-import useForm from "../../@components/hooks/useForm";
-
+import { GetStaff } from "../../@store/auth/Staff.Actions";
+import { GetOrder } from "../../@store/orders/Order.Actions";
+import { GetCasheirOrder } from "../../@store/orders/Order.Actions";
 const useStyles = makeStyles((theme) =>
   createStyles({
     detail: {
@@ -34,48 +33,21 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function Staff({ nameTop }) {
+function StickyHeadTable() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { form, setForm, handleChange } = useForm(null);
-  let dta = {
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    role: "STAFF",
-  };
-  useEffect(() => {
-    if (!form) {
-      setForm(dta);
-    }
-  }, [form]);
-  const classes = useStyles();
-  const handleClick = (e) => {
-    e.preventDefault();
-    const obj = { ...form };
-    const { name, lastName, firstName, password, role } = form;
-    if (name != "" && firstName != "" && lastName != "" && password != "") {
-      dispatch(postStaff(obj, history));
-    }
-  };
-  const handlefieldchange = (e) => {
-    e.persist();
-    handleChange(e);
-  };
   useEffect(() => {
     let role = localStorage.getItem("role");
     if (role === "STAFF") {
       history.push("/order");
     }
-    if (role === "CASHIER") {
-      history.push("/order");
-    }
   }, []);
   useEffect(() => {
-    dispatch(GetStaff());
+    dispatch(GetCasheirOrder());
   }, [dispatch]);
-  const staffList = useSelector(({ staff__reducer }) => staff__reducer.staff);
+  const staffList = useSelector(({ order__Reducer }) => order__Reducer.orders);
+
+  const classes = useStyles();
   const [showStaff, setShowStaff] = useState(false);
   const [createStaff, setCreateStaff] = useState(false);
   const [staffslist, setStaffList] = useState(false);
@@ -92,36 +64,24 @@ function Staff({ nameTop }) {
         sort: "true",
       },
       {
-        label: "Type",
-        field: "type",
+        label: "Price",
+        field: "price",
       },
       {
-        label: "Name",
-        field: "name",
-      },
-      {
-        label: "Email",
+        label: "Email ",
         field: "email",
       },
       {
-        label: "Verified",
-        field: "verified",
+        label: "Notes",
+        field: "Notes",
       },
       {
-        label: "Created",
-        field: "created",
+        label: "Phone Number",
+        field: "phoneNumber",
       },
       {
-        label: "Last Seen",
-        field: "lastseen",
-      },
-      {
-        label: "Sessions",
-        field: "session",
-      },
-      {
-        label: "Order",
-        field: "order",
+        label: "Status",
+        field: "status",
       },
     ],
     rows:
@@ -131,18 +91,14 @@ function Staff({ nameTop }) {
               return parseInt(b._id) - parseInt(a._id);
             })
             .map((staff, index) => {
-              // const sta = staff.session;
-              // var last = sta.slice(-1)[0];
               return {
                 ...staff,
                 id: index,
-                type: staff.type,
-                name: staff.firstName,
+                price: staff.price,
+                Notes: staff.Notes,
                 email: staff.email,
-                verified: staff.verified,
-                created: staff.createdAt,
-                // session: staff.session.length,
-                lastseen: staff.lastseen,
+                phoneNumber: staff.phoneNumber,
+                status: staff.status,
                 clickEvent: () => {
                   setShowStaff(true);
                   setObjectStaff(staff);
@@ -161,9 +117,9 @@ function Staff({ nameTop }) {
           variant="h1"
           style={{ fontWeight: "600", fontSize: "30px" }}
         >
-          Staff
+          Cashier
         </Typography>
-        <div>
+        {/* <div>
           <Add
             onClick={() => setCreateStaff(true)}
             fontSize="medium"
@@ -185,7 +141,7 @@ function Staff({ nameTop }) {
               padding: "3px",
             }}
           />
-        </div>
+        </div> */}
       </div>
       <Paper style={{ padding: "20px", margin: "10px" }}>
         <MDBDataTable bordered small data={paginationData} />
@@ -194,15 +150,9 @@ function Staff({ nameTop }) {
       {showStaff && (
         <StaffDetailModal open={setShowStaff} staff={objectStaff} />
       )}
-      {createStaff && (
-        <CreateStaff
-          handleClick={handleClick}
-          handlefieldchange={handlefieldchange}
-          open={setCreateStaff}
-        />
-      )}
+      {createStaff && <CreateStaff open={setCreateStaff} />}
     </div>
   );
 }
 
-export default Staff;
+export default StickyHeadTable;

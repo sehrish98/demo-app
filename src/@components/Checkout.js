@@ -8,18 +8,17 @@ import { useHistory } from "react-router-dom";
 import TitleValue from "./TitleValue";
 import { CheckoutOrder } from "../@store/checkout/Checkout.Actions";
 import CustomButton from "./CustomButton";
-import Confirmation from "./Confirmation"
+import Confirmation from "./Confirmation";
 function getModalStyle() {
   const top = 50;
   const left = 50;
-
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-    overflow: "scroll",
-    height: "100%",
-    // display:'block'
+    maxHeight: "90vh",
+    margin: "0 auto",
+    overflow: "auto",
   };
 }
 const useStyles = makeStyles((theme) =>
@@ -95,6 +94,13 @@ const useStyles = makeStyles((theme) =>
         flexGrow: "1",
         marginLeft: "20px",
       },
+      cancelDiv: {
+        display: "flex",
+        top: "8px",
+        right: "10px",
+        position: "fixed",
+        zIndex: "22",
+      },
       input_style: {
         margin: "5px 10px",
         padding: "5px",
@@ -118,33 +124,40 @@ function Checkout({ open }) {
   const [phoneno, setPhoneno] = useState("");
   const [notes, setNotes] = useState("");
   const [status, setStatus] = useState(0);
-  const [total,setTotal]=useState(0)
-  const [openConfirm , setOpenConfirm]=useState(false)
+  const [total, setTotal] = useState(0);
+  const [openConfirm, setOpenConfirm] = useState(false);
   const handleClose = () => {
     open(false);
   };
-  const useEffect=(()=>{
-    setTotal(cart_items.reduce((sum, i) => (sum += i.qty * i.price), 0))
-  },[])
+  const useEffect =
+    (() => {
+      setTotal(cart_items.reduce((sum, i) => (sum += i.qty * i.price), 0));
+    },
+    []);
+  let [inputString, setInputString] = useState("");
+  const validate = (e) => {
+    setInputString(e.target.value);
+    let str = e.target.value;
+  };
+
   const handleCheckout = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
     const data = {
       fullName: name,
       email: email,
       phoneNumber: phoneno,
-      price:total,
+      price: total,
       payByCard: status,
       Notes: notes,
-      Items:cart_items,
-      type:0,
-
+      Items: cart_items,
+      type: 0,
     };
-    if(name!=""&&email!=""&&phoneno!="")
-    {
+
+    if (name != "" && email != "" && phoneno != "") {
       dispatch(CheckoutOrder(data));
-      setOpenConfirm(true)
-    }
-    else{
+      setOpenConfirm(true);
+    } else {
     }
   };
   const handleLogin = () => {
@@ -161,9 +174,11 @@ function Checkout({ open }) {
           color: "white",
           backgroundColor: "black",
           padding: "5px",
-          position: "absolute",
-          top: "-10",
-          right: "-10",
+          display: "flex",
+          top: "0px",
+          left: "399px",
+          position: "relative",
+          // zIndex: "22",
         }}
       />
       <div className={classes.detail}>
@@ -190,90 +205,102 @@ function Checkout({ open }) {
         />
         <TitleValue title="Location" value="Rawalpindi Arts Council" />
       </div>
-      <div
-        style={{
-          display: "flex",
-          padding: "20px",
-          justifyContent: "space-between",
-          alignItems: "center",
-          backgroundColor: "rgb(247, 247, 247)",
-          border: "1px solid rgb(214, 214, 214)",
-          margin: "5px 0px",
-        }}
-      >
-        <div>
-          <Typography
+
+      {localStorage.getItem("role") === "STAFF" ? (
+        ""
+      ) : (
+        <>
+          <div
             style={{
-              fontWeight: "700",
+              display: "flex",
+              padding: "20px",
+              justifyContent: "space-between",
+              alignItems: "center",
+              backgroundColor: "rgb(247, 247, 247)",
+              border: "1px solid rgb(214, 214, 214)",
+              margin: "5px 0px",
             }}
           >
-            Customer
-          </Typography>
-          <Typography>Login to save your order & details</Typography>
-        </div>
-        <CustomButton name="Login" activ handlechange={handleLogin} />
-      </div>
+            <div>
+              <Typography
+                style={{
+                  fontWeight: "700",
+                }}
+              >
+                Customer
+              </Typography>
+              <Typography>Login to save your order & details</Typography>
+            </div>
+            <CustomButton name="Login" activ handlechange={handleLogin} />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: "5px",
+            }}
+          >
+            <input
+              type="text"
+              style={{
+                margin: "5px 10px",
+                padding: "5px",
+                outline: "0",
+                border: "1px solid rgb(214, 214, 214)",
+                fontSize: "14px",
+                borderRadius: "3px",
+              }}
+              required
+              placeholder="Full Name"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="email"
+              style={{
+                margin: "5px 10px",
+                padding: "5px",
+                outline: "0",
+                border: "1px solid rgb(214, 214, 214)",
+                fontSize: "14px",
+                borderRadius: "3px",
+              }}
+              required
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="text"
+              style={{
+                margin: "5px 10px",
+                padding: "5px",
+                outline: "0",
+                border: "1px solid rgb(214, 214, 214)",
+                fontSize: "14px",
+                borderRadius: "3px",
+              }}
+              required
+              placeholder="Phone no"
+              onChange={(e) => setPhoneno(e.target.value)}
+            />
+            <input
+              type="text"
+              style={{
+                margin: "5px 10px",
+                padding: "5px",
+                outline: "0",
+                border: "1px solid rgb(214, 214, 214)",
+                fontSize: "14px",
+                borderRadius: "3px",
+              }}
+              required
+              placeholder="Order Notes"
+              onChange={(e) => setNotes(e.target.value)}
+            />
+          </div>
+        </>
+      )}
+
       <form>
-        <div
-          style={{ display: "flex", flexDirection: "column", padding: "5px" }}
-        >
-          <input
-            type="text"
-            style={{
-              margin: "5px 10px",
-              padding: "5px",
-              outline: "0",
-              border: "1px solid rgb(214, 214, 214)",
-              fontSize: "14px",
-              borderRadius: "3px",
-            }}
-            required
-            placeholder="Full Name"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="email"
-            style={{
-              margin: "5px 10px",
-              padding: "5px",
-              outline: "0",
-              border: "1px solid rgb(214, 214, 214)",
-              fontSize: "14px",
-              borderRadius: "3px",
-            }}
-            required
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="text"
-            style={{
-              margin: "5px 10px",
-              padding: "5px",
-              outline: "0",
-              border: "1px solid rgb(214, 214, 214)",
-              fontSize: "14px",
-              borderRadius: "3px",
-            }}
-            required
-            placeholder="Phone no"
-            onChange={(e) => setPhoneno(e.target.value)}
-          />
-          <input
-            type="text"
-            style={{
-              margin: "5px 10px",
-              padding: "5px",
-              outline: "0",
-              border: "1px solid rgb(214, 214, 214)",
-              fontSize: "14px",
-              borderRadius: "3px",
-            }}
-            required
-            placeholder="Order Notes"
-            onChange={(e) => setNotes(e.target.value)}
-          />
-        </div>
         <div>
           <Typography
             style={{
@@ -292,45 +319,62 @@ function Checkout({ open }) {
               padding: "5px 20px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "5px 10px",
-                width: "100%",
-                border: "1px solid lightgray",
-                margin: "5px",
-                borderRadius: "3px",
-              }}
-            >
+            {localStorage.getItem("role") === "STAFF" && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "5px 10px",
+                  width: "100%",
+                  border: "1px solid lightgray",
+                  margin: "5px",
+                  borderRadius: "3px",
+                }}
+              >
+                <input
+                  type="radio"
+                  name="payment"
+                  onChange={() => setStatus(0)}
+                  checked
+                />
+                <Typography>Cash</Typography>
+              </div>
+            )}
+            {localStorage.getItem("role") === "STAFF" && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "5px 10px",
+                  width: "100%",
+                  border: "1px solid lightgray",
+                  margin: "5px",
+                  borderRadius: "3px",
+                }}
+              >
+                <input
+                  type="radio"
+                  name="payment"
+                  onChange={() => setStatus(1)}
+                />
+                <Typography variant="p">Card</Typography>
+              </div>
+            )}
+            {localStorage.getItem("role") !== "STAFF" && (
               <input
-                type="radio"
-                name="payment"
-                onChange={() => setStatus(0)}
-                checked
-              />
-              <Typography>Cash</Typography>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "5px 10px",
-                width: "100%",
-                border: "1px solid lightgray",
-                margin: "5px",
-                borderRadius: "3px",
-              }}
-            >
-              <input
-                type="radio"
-                name="payment"
-                onChange={() => setStatus(1)}
-              />
-              <Typography variant="p">Card</Typography>
-            </div>
+                style={{
+                  position: "relative",
+                  left: "5px",
+                  border: "1px solid lightgray",
+                  height: "31px",
+                }}
+                value={inputString}
+                onChange={validate}
+                maxLength="14"
+              ></input>
+            )}
           </div>
         </div>
         <center>
@@ -342,7 +386,15 @@ function Checkout({ open }) {
           />
         </center>
       </form>
-      {openConfirm&&<Confirmation open={setOpenConfirm} name={name} email={email} status={status} phoneno={phoneno} />}
+      {openConfirm && (
+        <Confirmation
+          open={setOpenConfirm}
+          name={name}
+          email={email}
+          status={status}
+          phoneno={phoneno}
+        />
+      )}
     </div>
   );
   return (

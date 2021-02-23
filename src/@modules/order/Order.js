@@ -11,7 +11,7 @@ import {
   Help,
   List,
 } from "@material-ui/icons";
-
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { GetOrder } from "../../@store/orders/Order.Actions";
 import OrderIcons from "../../@components/OrderIcons";
@@ -171,6 +171,12 @@ const unconfirm_list = [
   },
 ];
 function Order({ title, value }) {
+  // const history = useHistory();
+  // useEffect(() => {let role =localStorage.getItem("role")
+  // if(role === "CASHIER"){
+  //   history.push("/order")
+  // }
+  // }, []);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(GetOrder());
@@ -181,16 +187,15 @@ function Order({ title, value }) {
   const [compress, setCompress] = useState(90);
   const [confirm, setConfirm] = useState(90);
   const orderList = useSelector(({ order__Reducer }) => order__Reducer.orders);
-  console.log("hi i m sehrish:", orderList);
-  orderList.map((m)=>{
-    if(m.status=="un_confirmed")
-    {
-      setUn_confirm(m)
-    }
-    else if(m.status=="confirmed"){
-      setConfirm(m)
-    }
-  })
+  // orderList.map((m)=>{
+  //   if(m.status=="un_confirmed")
+  //   {
+  //     setUn_confirm(m)
+  //   }
+  //   else if(m.status=="confirmed"){
+  //     setConfirm(m)
+  //   }
+  // })
   const IconList = [
     {
       name: "Board",
@@ -256,8 +261,9 @@ function Order({ title, value }) {
   const [buttonState, setbutton] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
   const setComboButton = (e) => {
-    console.log("state ios", buttonState);
+
     setbutton(!buttonState);
+    window.scrollTo(0,document.body.scrollHeight)
   };
   return (
     <div className={classes.paper}>
@@ -340,7 +346,7 @@ function Order({ title, value }) {
           </div>
 
           {orderList?.map(( l,i) => {
-            return li.status == "un_confirmed" ? (
+            return l.status == "un_confirmed" ? (
               <OrderReview
                 title="Un Confirmed"
                 content="jfhdvujdrfhgrfh"
