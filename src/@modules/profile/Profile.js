@@ -149,7 +149,7 @@ function Profile() {
               flexGrow: "0.35",
             }}
           >
-            <h4>Edit Profile</h4>
+            <h4 style={{textAlign:"center"}}>Edit Profile</h4>
             <TextField
               style={{ marginBottom: "10px" }}
               label="Name"
