@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 import Header from "./Header";
@@ -57,6 +57,10 @@ const useStyles = makeStyles((theme) =>
       backgroundColor: "#ececec",
       display: "flex",
       flexWrap: "wrap",
+      [theme.breakpoints.down('sm')]: {
+        display: "flex",
+        flexDirection:"column",
+      },
     },
     detail: {
       width: "100%",

@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) =>
       outline: "none",
       display: "flex",
       flexDirection: "column",
+      [theme.breakpoints.down('sm')]: {
+        width: "355px",
+      },
     },
     detail: {
       width: "100%",

@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) =>
       padding: "5px 10px",
       cursor: "pointer",
       marginTop: "30px",
+      outlineWidth:"0px",
       "&:hover": {
         backgroundColor: "rgb(238, 82, 82)",
       },

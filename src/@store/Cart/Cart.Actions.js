@@ -16,7 +16,7 @@ export function AddtoCartstart(obj , history) {
       type: CartActionTypes.ADDTOCART_SUCCESS,
       payload: data,
     });
-    history.push("/dash-board")
+    history.push("/")
   };
   
   const AddtocartFail = (dispatch, errorMessage) => {

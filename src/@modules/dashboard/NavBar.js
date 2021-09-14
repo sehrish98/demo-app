@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { Typography } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { Search } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 
-import CustomTabs from "../../@components/CustomTabs";
-import SearchModal from "../../@components/SearchModal";
+import { useHistory } from "react-router-dom";
 import AddtoCart from "../../@components/AddtoCart";
-import BookTable from "../../@components/BookTable";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -25,12 +22,18 @@ const useStyles = makeStyles((theme) =>
       maxWidth: "1300px",
       padding: "0px 40px",
       alignItems: "center",
+      [theme.breakpoints.down('sm')]: {
+        padding: "0px 10px",
+      },
     },
     paper: {
       width: "100%",
-      padding: "20px 20px",
-      height: "120px",
+      padding: "10px 20px",
+      height: "80px",
       backgroundColor: "white",
+      [theme.breakpoints.down('sm')]: {
+        padding:"5px 5px 0px 5px"
+      },
     },
     btn: {
       padding: "8px 10px",
@@ -43,24 +46,21 @@ const useStyles = makeStyles((theme) =>
 );
 function NavBar() {
   const classes = useStyles();
-  const [opensearch, setSearch] = useState(false);
+  const history = useHistory();
   const [cart, setAddtocart] = useState(false);
-  const [bookTable, setbookTable] = useState(false);
+  const [setbookTable] = useState(false);
   const cart_items = useSelector(({ cartreducer }) => cartreducer.cart);
+  
+  const HandleClick =()=>{
+    history.push("/")
+  }
   return (
     <div elevation={5} className={classes.paper}>
       <div className={classes.detail} style={{ paddingBottom: "10px" }}>
         <div>
-          <Typography variant="h6" style={{ fontWeight: "700" }}>
-            Papa Booms
+          <Typography variant="h6" style={{ fontWeight: "700" , cursor:"pointer" }} onClick={HandleClick}>
+            Demo
           </Typography>
-        </div>
-        <div
-          className={classes.btn}
-          style={{ marginLeft: "auto", cursor: "pointer", borderRadius: "3px" }}
-          onClick={() => setSearch(true)}
-        >
-          <Search fontSize="medium" />
         </div>
         <div style={{ display: "flex", marginLeft: "30px" }}>
           <Typography
@@ -95,13 +95,9 @@ function NavBar() {
           width: "100%",
         }}
       >
-        <div className={classes.detail}>
-          <CustomTabs item1="All" item2="Combo Deals" item3="Sides" />
-        </div>
+
       </div>
-      {opensearch && <SearchModal open={setSearch} />}
       {cart && <AddtoCart open={setAddtocart} />}
-      {bookTable && <BookTable open={setbookTable} />}
     </div>
   );
 }

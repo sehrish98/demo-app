@@ -16,12 +16,13 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-function Footer({ title, value }) {
+
+function Footer({ }) {
   const classes = useStyles();
   return (
     <div elevation={5} className={classes.paper}>
         <Typography variant="p">
-        Powered By CloudWaitress
+        Powered By Demo
         </Typography>
     </div>
   );

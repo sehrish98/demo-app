@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { Modal, Typography, ButtonGroup, Button } from "@material-ui/core";
+import { Modal, Typography} from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 
 import CustomButton from "./CustomButton";
 import {
-  AddtoCartstart,
-  RemoveCart,
   RemoveQuantyCart,
 } from "../@store/Cart/Cart.Actions";
-import Checkout from "./Checkout";
 
 function getModalStyle() {
   const top = 50;
@@ -30,10 +27,12 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "3px",
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
-      //   padding: theme.spacing(2, 4, 3),
       outline: "none",
       display: "flex",
       flexDirection: "column",
+      [theme.breakpoints.down("sm")]: {
+        width: "355px",
+      },
     },
     detail: {
       width: "100%",
@@ -63,16 +62,6 @@ const useStyles = makeStyles((theme) =>
         backgroundColor: "red",
         width: "100%",
       },
-      // cancelIcon: {
-      //   cursor: "pointer",
-      //   borderRadius: "20px",
-      //   color: "white",
-      //   backgroundColor: "black",
-      //   padding: "5px",
-      //   position: "absolute",
-      //   top: "-10",
-      //   right: "-10",
-      // },
       typoCart: {
         fontWeight: "800",
         fontSize: "20px",
@@ -143,7 +132,7 @@ function AddtoCart({ name, des, type, image, price, open }) {
     dispatch(RemoveQuantyCart(obj));
   };
   const handleCheckout = () => {
-    setOpenCheck(true);
+    handleClose();
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -359,7 +348,6 @@ function AddtoCart({ name, des, type, image, price, open }) {
           </div>
         </>
       )}
-      {opencheck && <Checkout open={setOpenCheck} />}
     </div>
   );
   return (

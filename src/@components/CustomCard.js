@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) =>
       cursor: "pointer",
       margin: "20px 1px 10px 1px",
       backgroundColor: "white",
+      [theme.breakpoints.down('sm')]: {
+        width: "100%",
+      },
     },
     image: {
       height: "120px",
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) =>
     btn: {
       border: "0",
       padding: "8px 15px",
-      backgroundColor: "f2f2f2",
+      backgroundColor: "beige !important",
       borderTopLeftRadius: "5px",
       fontWeight: "600",
       fontSize: "16px",
